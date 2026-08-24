@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>منصة إحسان — خدمة التشجير | نموذج أولي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+--g-dark:#0F4A2F; --g-main:#1B5E3A; --g-soft:#E8F5EC; --g-text:#2E7D52;
+--gold:#A97B2B; --bg:#F5F7F6; --card:#fff; --line:#E5E9E7;
+--ink:#1A1A1A; --ink2:#667571;
+--ai:#14708C; --ai-bg:#E3F1F5; --ai-br:#A7CFDD;
+--cream:#FDF4E0; --cream-tx:#7A5A12;
+--amber-bg:#FDF6E3; --amber-br:#E8CF8F;
+--blue-bg:#EAF3FB; --blue-br:#B8D4EC; --blue-tx:#1B5A8A;
+--q-bg:#FBF0E4; --q-br:#E0BE93; --q-tx:#9E5F26;
+--ok:#2E7D52; --warn:#C08A2E; --bad:#C0392B;
+--f:'IBM Plex Sans Arabic','Tajawal','Segoe UI',Tahoma,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--f);background:var(--bg);color:var(--ink);font-size:15px;line-height:1.75}
+.ltr{direction:ltr;display:inline-block;font-family:ui-monospace,monospace;font-size:.9em}
+
+/* ===== banner / header ===== */
+.banner{background:var(--cream);color:var(--cream-tx);text-align:center;padding:9px 16px;font-size:13px;font-weight:500;border-bottom:1px solid #F0E3C4}
+.hdr{background:var(--g-dark);padding:20px 0}
+.wrap{max-width:1280px;margin:0 auto;padding:0 26px}
+.hdr-in{display:flex;align-items:center;gap:16px}
+.logo{width:62px;height:62px;background:#fff;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo svg{width:36px;height:36px}
+.hdr h1{color:#fff;font-size:23px;font-weight:700;line-height:1.4}
+.hdr p{color:rgba(255,255,255,.72);font-size:13.5px}
+
+.nav{background:var(--g-main)}
+.nav-in{display:flex;gap:4px}
+.nav .navb{color:rgba(255,255,255,.85);padding:14px 22px;font-size:15px;font-weight:600;background:none;border:none;border-bottom:3px solid transparent;display:flex;align-items:center;gap:8px;cursor:pointer;font-family:var(--f)}
+.nav .navb.on{color:#fff;border-bottom-color:var(--gold)}
+
+.credit{background:#fff;border-bottom:1px solid var(--line);padding:11px 0;font-size:13px;color:var(--ink2)}
+.credit b{color:var(--ink)}
+.dot{color:var(--gold);font-size:16px;line-height:1}
+
+.tabs{background:#fff;border-bottom:1px solid var(--line);padding:10px 0}
+.tabs-in{display:flex;gap:8px;flex-wrap:wrap}
+.tab{padding:9px 17px;font-size:14px;font-weight:600;color:var(--ink2);border:1.5px solid transparent;border-radius:9px;cursor:pointer;background:none;font-family:var(--f)}
+.tab:hover{background:var(--bg)}
+.tab.on{color:var(--ink);border-color:#1A1A1A;background:#fff}
+
+/* ===== mode toggle ===== */
+.modebar{position:sticky;top:0;z-index:40;background:rgba(245,247,246,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:12px 0}
+.modebar-in{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.switch{display:flex;background:#fff;border:1px solid var(--line);border-radius:11px;padding:4px;gap:3px}
+.switch button{padding:8px 18px;font-size:13.5px;font-weight:600;border:none;background:none;border-radius:8px;cursor:pointer;color:var(--ink2);font-family:var(--f);display:flex;align-items:center;gap:7px}
+.switch button.on{background:var(--ink);color:#fff}
+.mode-note{font-size:12.5px;color:var(--ink2)}
+
+/* ===== page head ===== */
+.crumb{color:var(--gold);font-size:12.5px;font-weight:600;margin:26px 0 7px}
+.ptitle{font-size:30px;font-weight:700;letter-spacing:-.01em}
+.pdesc{color:var(--ink2);font-size:14.5px;margin-top:7px;max-width:80ch}
+
+/* ===== legend ===== */
+.legend{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:18px 0 22px;display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+.legend .lb{font-size:13px;font-weight:700;margin-left:6px}
+.tg{display:inline-flex;align-items:center;font-size:11.5px;font-weight:600;padding:3px 11px;border-radius:20px;white-space:nowrap}
+.tg-base{background:#EFF2F0;color:#5F6C66;border:1px solid #DDE3E0}
+.tg-cons{background:var(--g-soft);color:var(--g-text);border:1px solid #B6DCC5}
+.tg-ai{background:var(--ai-bg);color:var(--ai);border:1px solid var(--ai-br)}
+.tg-q{background:var(--q-bg);color:var(--q-tx);border:1px solid var(--q-br)}
+.tg-req{background:var(--ai-bg);color:var(--ai);border:1px solid var(--ai-br)}
+.tg-imp{background:#EFEFF9;color:#5C5A9E;border:1px solid #C3C2E4}
+.ni,.mi{display:inline-flex;width:17px;height:17px}
+.ni svg,.mi svg{width:100%;height:100%}
+.num svg{width:17px;height:17px}
+.sec.imp-sec{border-color:#C3C2E4}
+.sec.imp-sec .sec-h{background:#EFEFF9;border-bottom-color:#C3C2E4}
+.sec.imp-sec .num{background:#5C5A9E}
+.lg-txt{font-size:12px;color:var(--ink2);margin-left:14px}
+
+/* ===== card / section ===== */
+.grid{display:grid;grid-template-columns:1fr 380px;gap:20px;align-items:start;margin-bottom:60px}
+.sec{background:var(--card);border:1px solid var(--line);border-radius:13px;margin-bottom:18px;overflow:hidden}
+.sec-h{background:#FAFBFA;border-bottom:1px solid var(--line);padding:14px 18px;display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+.num{width:30px;height:30px;border-radius:50%;background:var(--g-main);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.sec-h h3{font-size:17px;font-weight:700;flex:1}
+.ref{font-size:11.5px;color:var(--ink2);font-family:ui-monospace,monospace;direction:ltr}
+.sec-b{padding:18px}
+.sec.ai-sec{border-color:var(--ai-br)}
+.sec.ai-sec .sec-h{background:var(--ai-bg);border-bottom-color:var(--ai-br)}
+.sec.ai-sec .num{background:var(--ai)}
+
+/* ===== fields ===== */
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px}
+.f label{display:block;font-size:13px;color:var(--ink2);font-weight:500;margin-bottom:5px}
+.f .req{color:#C0392B}
+.f input,.f select,.f textarea{width:100%;padding:10px 13px;border:1px solid var(--line);border-radius:9px;font-family:var(--f);font-size:14px;background:#fff;color:var(--ink)}
+.f input:disabled,.f .ro{background:#F4F6F5;color:var(--ink2)}
+.ro{padding:10px 13px;border:1px solid var(--line);border-radius:9px;font-size:14px;background:#F4F6F5;color:var(--ink2)}
+.hint{font-size:11.5px;color:var(--ink2);margin-top:4px}
+
+/* ===== boxes ===== */
+.box{border-radius:10px;padding:13px 16px;font-size:13.5px;margin-bottom:15px;border-right:3px solid}
+.box-amber{background:var(--amber-bg);border-color:var(--amber-br);color:var(--cream-tx);border:1px solid var(--amber-br);border-right:3px solid var(--amber-br)}
+.box-blue{background:var(--blue-bg);border:1px solid var(--blue-br);border-right:3px solid var(--blue-tx);color:var(--blue-tx)}
+.box-ai{background:var(--ai-bg);border:1px solid var(--ai-br);border-right:3px solid var(--ai);color:var(--ai)}
+.box-q{background:var(--q-bg);border:1px solid var(--q-br);border-right:3px solid var(--q-tx);color:var(--q-tx)}
+.box-imp{background:#EFEFF9;border:1px solid #C3C2E4;border-right:3px solid #5C5A9E;color:#5C5A9E}
+
+/* ===== checklist ===== */
+.ck{display:flex;align-items:flex-start;gap:12px;padding:12px 4px;border-bottom:1px solid #F1F4F2}
+.ck:last-child{border-bottom:none}
+.ck input[type=checkbox]{width:18px;height:18px;margin-top:3px;accent-color:var(--g-main);cursor:pointer;flex-shrink:0}
+.ck-main{flex:1;min-width:0}
+.ck-t{font-size:14px;font-weight:500}
+.ck-s{font-size:12px;color:var(--ink2);margin-top:2px}
+.res{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+.r-ok{background:#E8F5EC;color:var(--ok)}
+.r-warn{background:#FDF6E3;color:var(--warn)}
+.r-bad{background:#FBEAE8;color:var(--bad)}
+.evbtn{background:none;border:1px solid var(--ai-br);color:var(--ai);font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:7px;cursor:pointer;font-family:var(--f);white-space:nowrap}
+.evbtn:hover{background:var(--ai-bg)}
+
+/* ===== tooltip ===== */
+.qwrap{position:relative;display:inline-block}
+.qwrap .tip{visibility:hidden;opacity:0;position:absolute;top:calc(100% + 8px);right:0;width:400px;max-width:78vw;background:#fff;border:1px solid var(--q-br);border-right:3px solid var(--q-tx);border-radius:9px;padding:12px 14px;font-size:12.5px;line-height:1.7;color:var(--q-tx);box-shadow:0 8px 26px rgba(0,0,0,.13);z-index:60;transition:opacity .15s;font-weight:500;text-align:right}
+.qwrap:hover .tip{visibility:visible;opacity:1}
+
+/* ===== score ===== */
+.score{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.ring{width:118px;height:118px;flex-shrink:0;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring-v{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-v b{font-size:26px;font-weight:700;color:var(--ai);line-height:1}
+.ring-v span{font-size:10.5px;color:var(--ink2);margin-top:2px}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{background:#fff;border:1px solid var(--line);border-radius:9px;padding:8px 14px;text-align:center;min-width:88px}
+.pill b{display:block;font-size:19px;font-weight:700}
+.pill span{font-size:11px;color:var(--ink2)}
+
+/* ===== summary / notes ===== */
+.sumtx{background:#fff;border:1px solid var(--ai-br);border-radius:10px;padding:13px 16px;font-size:13.5px;line-height:1.85;margin:15px 0}
+.nlist{list-style:none}
+.nlist li{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 14px;margin-bottom:8px;display:flex;gap:11px;align-items:flex-start;font-size:13.5px}
+.nlist .ni{width:22px;height:22px;border-radius:6px;background:var(--ai);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.nlist .nb{flex:1}
+.nlist .nc{font-size:11px;color:var(--ink2);font-family:ui-monospace,monospace;direction:ltr;margin-top:3px}
+
+/* ===== tables ===== */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:#F4F6F5;text-align:right;padding:10px 13px;font-weight:600;font-size:12.5px;color:var(--ink2);border-bottom:1px solid var(--line)}
+td{padding:11px 13px;border-bottom:1px solid #F1F4F2;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.tw{overflow-x:auto}
+.st-badge{display:inline-flex;font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}
+
+/* ===== decisions ===== */
+.dec{background:#FAFBFA;border:1px solid var(--line);border-radius:11px;padding:16px;margin-bottom:14px}
+.dec-t{font-size:14.5px;font-weight:700;margin-bottom:11px}
+.radios{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.radios label{display:flex;align-items:center;gap:7px;font-size:14px;cursor:pointer}
+.radios input{width:17px;height:17px;accent-color:var(--g-main);cursor:pointer}
+.rec{background:var(--ai-bg);border:1px solid var(--ai-br);border-radius:9px;padding:9px 13px;font-size:13px;color:var(--ai);margin-bottom:12px}
+.rec b{font-weight:700}
+.blocked{background:#F4F6F5;border:1px dashed #C9D2CE;border-radius:9px;padding:14px;font-size:13.5px;color:var(--ink2);text-align:center}
+.btn{background:var(--g-main);color:#fff;border:none;padding:11px 26px;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--f)}
+.btn:hover{background:var(--g-dark)}
+.btn-o{background:#fff;color:var(--g-main);border:1px solid var(--g-main)}
+.btn-sm{padding:6px 14px;font-size:12.5px}
+
+/* ===== side ===== */
+.side{position:sticky;top:78px}
+.ev-empty{text-align:center;color:var(--ink2);font-size:13px;padding:36px 18px}
+.ev-doc{background:#F9FAF9;border:1px solid var(--line);border-radius:9px;padding:16px;font-size:12.5px;line-height:2.1;min-height:210px}
+.hl{background:#FFF3B0;padding:2px 5px;border-radius:4px;font-weight:600}
+.stat-row{display:flex;justify-content:space-between;padding:7px 0;font-size:13px;border-bottom:1px solid #F1F4F2}
+.stat-row:last-child{border-bottom:none}
+.stat-row b{color:var(--ai);font-weight:700}
+
+/* ===== dashboard ===== */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:22px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:17px}
+.kpi .kl{font-size:12.5px;color:var(--ink2);margin-bottom:6px}
+.kpi .kv{font-size:29px;font-weight:700;line-height:1.15}
+.kpi .kd{font-size:11.5px;margin-top:5px;font-weight:600}
+.up{color:var(--ok)} .dn{color:var(--bad)}
+.d2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.bar{margin-bottom:13px}
+.bar-h{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
+.bar-h b{font-weight:600}
+.bar-t{height:9px;background:#EFF2F0;border-radius:5px;overflow:hidden}
+.bar-f{height:100%;border-radius:5px}
+.dist{display:flex;height:34px;border-radius:9px;overflow:hidden;margin:14px 0 10px}
+.dist div{display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700}
+.dl{display:flex;gap:16px;font-size:12.5px;flex-wrap:wrap}
+.dl span{display:flex;align-items:center;gap:6px}
+.sw{width:11px;height:11px;border-radius:3px}
+
+
+
+.refbtn{background:#fff;border:1px solid var(--line);color:var(--ink2);font-size:11px;font-weight:600;padding:3px 9px;border-radius:7px;cursor:pointer;font-family:ui-monospace,monospace;direction:ltr;display:inline-flex;align-items:center;gap:5px}
+.refbtn:hover{border-color:var(--g-main);color:var(--g-main);background:#F4FBF6}
+.vswitch{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:10px;padding:4px;gap:3px}
+.vswitch button{padding:7px 16px;font-size:13px;font-weight:600;border:none;background:none;border-radius:7px;cursor:pointer;color:var(--ink2);font-family:var(--f)}
+.vswitch button.on{background:var(--g-main);color:#fff}
+/* ===== tour & modal ===== */
+.ovl{position:fixed;inset:0;background:rgba(12,26,20,.62);backdrop-filter:blur(3px);z-index:200;display:flex;align-items:center;justify-content:center;padding:24px}
+.ovl.hidden{display:none!important}
+body.mode-future .cur-only{display:none!important}
+.tcard{background:#fff;border-radius:16px;max-width:560px;width:100%;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.3)}
+.tc-h{background:var(--g-dark);color:#fff;padding:20px 24px}
+.tc-h .step{font-size:11.5px;color:rgba(255,255,255,.7);letter-spacing:.08em;font-weight:600;margin-bottom:6px}
+.tc-h h3{font-size:20px;font-weight:700}
+.tc-b{padding:22px 24px;font-size:14.5px;line-height:1.9;color:var(--ink)}
+.tc-b .kv2{background:#F7FAF8;border:1px solid var(--line);border-radius:10px;padding:12px 15px;margin-top:14px;font-size:13px}
+.tc-f{padding:16px 24px;background:#FAFBFA;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.dots{display:flex;gap:6px}
+.dots i{width:7px;height:7px;border-radius:50%;background:#D5DCD8}
+.dots i.on{background:var(--g-main);width:20px;border-radius:4px}
+.tbtns{display:flex;gap:9px}
+.tourbtn{background:#fff;border:1px solid var(--line);color:var(--ink2);font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:9px;cursor:pointer;font-family:var(--f);display:flex;align-items:center;gap:6px}
+.tourbtn:hover{background:var(--bg)}
+
+/* ===== dashboard v2 ===== */
+.dhead{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:11px;padding:12px 18px;margin-bottom:16px;font-size:13px}
+.dhead-r{font-size:12px;color:var(--ink2)}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:13px;margin-bottom:18px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 17px}
+.kpi .kl{font-size:12.5px;color:var(--ink2);margin-bottom:7px;font-weight:500}
+.kpi .kv{font-size:31px;font-weight:700;line-height:1.05;letter-spacing:-.02em}
+.kpi .unit{font-size:14px;color:var(--ink2);font-weight:500;margin-right:4px}
+.kmeta{display:flex;align-items:center;gap:7px;margin-top:9px;font-size:11.5px;color:var(--ink2);flex-wrap:wrap}
+.chip{font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px}
+.chip-g{background:#E8F5EC;color:#2E7D52}
+.chip-a{background:#FDF6E3;color:#A97B2B}
+.d3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px;align-items:start}
+.d2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;align-items:start}
+.span2{grid-column:span 2}
+.chart{display:flex;align-items:flex-end;gap:11px;height:180px;padding-top:6px}
+.col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.stack{width:100%;display:flex;flex-direction:column;justify-content:flex-end;gap:2px;height:152px}
+.seg{border-radius:3px;min-height:3px}
+.col small{font-size:11px;color:var(--ink2)}
+.donut{position:relative;width:150px;height:150px;margin:4px auto 16px}
+.donut-c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.donut-c b{font-size:27px;font-weight:700;line-height:1}
+.donut-c span{font-size:11px;color:var(--ink2)}
+.lrow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:13px;border-bottom:1px solid #F1F4F2}
+.lrow:last-child{border-bottom:none}
+.lrow b{font-weight:700}
+.lrow span{display:flex;align-items:center;gap:8px}
+.lrow.lg{padding:10px 0}
+.bar-n{margin-top:4px}
+.insight{background:#F7FAFB;border:1px solid var(--ai-br);border-radius:9px;padding:10px 13px;font-size:12px;color:var(--ai);margin-top:15px;line-height:1.7}
+.minik{display:flex;gap:10px;margin-bottom:15px}
+.mk{flex:1;background:#FAFBFA;border:1px solid var(--line);border-radius:9px;padding:11px 12px;text-align:center}
+.mk b{display:block;font-size:20px;font-weight:700;line-height:1.2}
+.mk span{font-size:11px;color:var(--ink2)}
+.rvw{display:flex;gap:11px;align-items:center;margin-bottom:13px}
+.av{width:36px;height:36px;border-radius:10px;background:var(--ai-bg);color:var(--ai);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.rv-b{flex:1;min-width:0}
+.rv-t{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px}
+.rv-t b{font-weight:700}
+@media(max-width:1180px){.kpis{grid-template-columns:repeat(3,1fr)}.d3{grid-template-columns:1fr}.span2{grid-column:auto}}
+@media(max-width:760px){.kpis{grid-template-columns:1fr 1fr}}
+
+.hidden{display:none!important}
+body.mode-future .cur-only{display:none!important}
+.foot{text-align:center;padding:34px 0;color:var(--ink2);font-size:12.5px;border-top:1px solid var(--line);margin-top:30px}
+@media(max-width:1080px){.grid{grid-template-columns:1fr}.side{position:static}.d2{grid-template-columns:1fr}}
+@media(max-width:680px){.fr{grid-template-columns:1fr}.ptitle{font-size:23px}}
+</style>
+</head>
+<body class="mode-future">
+
+
+<div class="ovl hidden" id="tour"><div class="tcard">
+  <div class="tc-h"><div class="step" id="tStep"></div><h3 id="tTitle"></h3></div>
+  <div class="tc-b" id="tBody"></div>
+  <div class="tc-f">
+    <div class="dots" id="tDots"></div>
+    <div class="tbtns">
+      <button class="tourbtn" onclick="tEnd()">تخطي</button>
+      <button class="tourbtn" id="tPrev" onclick="tGo(-1)">السابق</button>
+      <button class="btn btn-sm" id="tNext" onclick="tGo(1)">التالي</button>
+    </div>
+  </div>
+</div></div>
+
+
+
+<div class="ovl hidden" id="brd" style="z-index:320"><div class="tcard" style="max-width:640px">
+  <div class="tc-h"><div class="step" id="brdRef"></div><h3 id="brdTitle"></h3></div>
+  <div class="tc-b" style="max-height:56vh;overflow-y:auto" id="brdBody"></div>
+  <div class="tc-f"><span style="font-size:12px;color:var(--ink2)">نص منقول من وثيقة متطلبات الأعمال، الإصدار 1.0</span><button class="btn btn-sm" onclick="document.getElementById('brd').classList.add('hidden')">إغلاق</button></div>
+</div></div>
+
+
+<div class="ovl hidden" id="vmodal"><div class="tcard" style="max-width:620px">
+  <div class="tc-h"><div class="step" id="vmRef"></div><h3>تسجيل نتيجة التحقق الإداري</h3></div>
+  <div class="tc-b" style="max-height:62vh;overflow-y:auto">
+    <div id="vmNote"></div>
+    <div class="fr">
+      <div class="f"><label>تاريخ إصدار خطاب الموافقة <span class="req">*</span> <span class="tg tg-cons">حقل 3</span></label><input id="fx1" placeholder="يُدخله المراجع"></div>
+      <div class="f"><label>تاريخ انتهاء صلاحية الخطاب <span class="req">*</span> <span class="tg tg-cons">حقل 4</span></label><input id="fx2" placeholder="يُدخله المراجع"></div>
+    </div>
+    <div class="fr">
+      <div class="f"><label>الجهة المصدرة للخطاب <span class="req">*</span> <span class="tg tg-cons">حقل 5</span></label><input id="fx3" placeholder="من قائمة المراجع المعتمدة"><div class="hint">تُختار من قائمة المراجع الفنية المعتمدة <button class="refbtn" onclick="brd('V05')">القسم 5.6 ⌕</button></div></div>
+      <div class="f"><label>رقم خطاب الموافقة <span class="req">*</span> <span class="tg tg-cons">حقل 6</span></label><input id="fx4" placeholder="يُدخله المراجع"></div>
+    </div>
+    <div class="f" style="border-top:1px solid var(--line);margin-top:18px;padding-top:16px"><label>نتيجة التحقق الإداري <span class="req">*</span> <span class="tg tg-cons">حقل 2</span></label>
+      <select id="verRes" onchange="vres()"><option>قيد المراجعة</option><option>مقبول إداريًا</option><option>يحتاج خطابًا محدثًا</option><option>مرفوض إداريًا</option></select></div>
+    <div class="f hidden" id="adminNotes" style="margin-top:14px"><label>ملاحظات إدارية على الخطاب <span class="req">*</span> <span class="tg tg-cons">حقل 7</span></label><textarea rows="3" placeholder="أسباب إدارية بحتة (سريان، تطابق، اعتماد الجهة) — لا أحكام فنية"></textarea><div class="hint">إلزامي، ويظهر فقط عند «يحتاج خطابًا محدثًا» أو «مرفوض إداريًا»</div></div>
+  </div>
+  <div class="tc-f">
+    <span style="font-size:12px;color:var(--ink2)">سبعة حقول · الفقرة (ب) ص 16 و17</span>
+    <div class="tbtns">
+      <button class="tourbtn" onclick="document.getElementById('vmodal').classList.add('hidden')">إغلاق</button>
+      <button class="btn btn-sm" onclick="saveVer()">حفظ نتيجة التحقق</button>
+    </div>
+  </div>
+</div></div>
+
+<div class="banner">◆ نموذج لعرض الحل فقط — الواجهة قد تختلف عند التطبيق الفعلي.</div>
+
+<header class="hdr"><div class="wrap"><div class="hdr-in">
+  <div class="logo"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C9 5 7 8 7 11a5 5 0 0 0 10 0c0-3-2-6-5-9z" fill="#1B5E3A"/><path d="M12 13v9" stroke="#1B5E3A" stroke-width="2" stroke-linecap="round"/></svg></div>
+  <div><h1>منصة إحسان — خدمة التشجير</h1><p>منصة وطنية للعمل الخيري · وسيط تبرّعي موثوق</p></div>
+</div></div></header>
+
+<nav class="nav"><div class="wrap"><div class="nav-in">
+  <button class="navb" data-r="assocside"><i class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h6"/></svg></i> واجهة الجمعية</button>
+  <button class="navb on" data-r="staff"><i class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9zM8.5 12.5l2 2 4-4"/></svg></i> واجهة الموظف المراجع</button>
+</div></div></nav>
+
+<div class="credit"><div class="wrap">إعداد: <span class="dot">●</span> <b>نابه / إثبات مفهوم</b> — حل الذكاء الاصطناعي لمراجعة وتدقيق الطلبات</div></div>
+
+<div class="tabs"><div class="wrap">
+  <div class="tabs-in hidden" id="tg-assocside">
+    <button class="tab" data-p="form">نموذج تسجيل الجمعية</button>
+    <button class="tab" data-p="assoc">صفحة الجمعية</button>
+  </div>
+  <div class="tabs-in" id="tg-staff">
+    <button class="tab on" data-p="review">لوحة المراجعة الذكية</button>
+    <button class="tab" data-p="files">إدارة ملفات الجمعيات</button>
+    <button class="tab" data-p="dash">لوحة المؤشرات التشغيلية</button>
+  </div>
+</div></div>
+
+<div class="modebar"><div class="wrap"><div class="modebar-in">
+  <div class="switch">
+    <button id="btnCur"><i class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.6"/></svg></i> الوضع الحالي</button>
+    <button id="btnFut" class="on"><i class="mi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></svg></i> الوضع المستقبلي</button>
+  </div>
+  <button class="tourbtn" onclick="tStart()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><circle cx="12" cy="12" r="9"/><path d="M9.2 9.5a2.9 2.9 0 1 1 4 2.7c-.8.4-1.2 1-1.2 1.9"/><circle cx="12" cy="17.6" r=".9" fill="currentColor"/></svg> جولة تعريفية</button>
+  <div class="mode-note" id="modeNote">يعرض الشاشة بعد إضافة طبقة الحل الذكي فوق الإجراء القائم</div>
+</div></div></div>
+
+<div class="wrap">
+
+<!-- ══════════════ PAGE: REVIEW ══════════════ -->
+<section id="p-review">
+  <div class="crumb">بوابة تسجيل الجمعيات · 5.2.2 · مراجعة طلبات تسجيل جمعية</div>
+  <h2 class="ptitle">لوحة المراجعة الذكية</h2>
+  <p class="pdesc">شاشة مراجعة طلب تسجيل الجمعية كما هي في الإجراء القائم، مضافًا إليها طبقة الفحص الآلي التي تحلل المرفقات وتطابقها مع الضوابط قبل وصول الطلب إلى المراجع. القرار يبقى بيد المراجع في كل الحالات.</p>
+
+  <div class="legend">
+    <span class="lb">مفتاح الوسوم:</span>
+    <span class="tg tg-base">أصلي</span><span class="lg-txt">قائم قبل ملحق التشجير</span>
+    <span class="tg tg-cons">إضافة الاستشاري</span><span class="lg-txt">أضافه ملحق التشجير</span>
+    <span class="tg tg-req">الحل · متطلب</span><span class="lg-txt">يحقق قاعدة منصوصة في وثيقة المتطلبات</span>
+    <span class="tg tg-imp">الحل · تحسين</span><span class="lg-txt">اقتراح منا، غير مطلوب في الوثيقة</span>
+    
+  </div>
+
+  <div class="grid">
+   <div>
+    <!-- 1 -->
+    <div class="sec"><div class="sec-h"><div class="num">1</div><h3>بيانات الطلب</h3><span class="tg tg-base">أصلي</span><span class="ref">5.2.2</span></div>
+    <div class="sec-b">
+      <div class="fr">
+        <div class="f"><label>رقم الطلب</label><div class="ro"><span class="ltr">REG-2026-0418</span></div></div>
+        <div class="f"><label>اسم الجمعية</label><div class="ro">جمعية البيئة المستدامة</div></div>
+      </div>
+      <div class="fr">
+        <div class="f"><label>مجال الجمعية</label><div class="ro">بيئي</div></div>
+        <div class="f"><label>التخصص البيئي <span class="tg tg-cons">إضافة الاستشاري</span></label><div class="ro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;display:inline-block;vertical-align:-1px"><path d="M20 4c0 9-5.5 14-12 14M8 18C5 15 4 9 8 6c3.5-2.6 9-2 12-2"/></svg> بيئي / تشجير</div></div>
+      </div>
+      <div class="f"><label>حالة الطلب</label><div class="ro">قيد المراجعة</div></div>
+
+    </div></div>
+
+    <!-- 2 : AI SUMMARY -->
+    <div class="sec imp-sec ai-only"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18a8.5 8.5 0 1 1 16 0"/><path d="M12 14l3.5-3.5"/></svg></div><h3>ملخص فحص المطابقة</h3><span class="tg tg-imp">الحل · تحسين</span><span class="ref">مخرج معلن في وثيقة إثبات المفهوم</span></div>
+    <div class="sec-b">
+      <p style="font-size:12.5px;color:var(--ink2);margin-bottom:14px;line-height:1.8">الفحص الفوري عند الجمعية يتحقق من <b>اكتمال</b> النموذج والمرفقات. وهذا الفحص يتحقق من <b>مطابقة محتوى المرفقات</b> للضوابط: السريان، واعتماد الجهة، وتطابق الاسم والنطاق، ووجود الختم. فالطلب قد يكون مكتملًا وغير مطابق.</p>
+      <div class="score">
+        <div class="ring">
+          <svg width="118" height="118"><circle cx="59" cy="59" r="50" fill="none" stroke="#E5E9E7" stroke-width="11"/><circle cx="59" cy="59" r="50" fill="none" stroke="#14708C" stroke-width="11" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="57"/></svg>
+          <div class="ring-v"><b>82%</b><span>درجة المطابقة</span></div>
+        </div>
+        <div class="pills">
+          <div class="pill"><b style="color:var(--ok)">11</b><span>مطابق</span></div>
+          <div class="pill"><b style="color:var(--warn)">2</b><span>ملاحظة</span></div>
+          <div class="pill"><b style="color:var(--bad)">1</b><span>ناقص</span></div>
+        </div>
+      </div>
+      <div class="sumtx"><b>ملخص الطلب:</b> جمعية بيئية في منطقة الرياض، أربع سنوات خبرة في التشجير، سبعة مشاريع منفّذة، مرجعها الفني وزارة البيئة والمياه والزراعة. خطاب الموافقة صادر بتاريخ <span class="ltr">2025-11-03</span> وينتهي <span class="ltr">2026-11-03</span>، وهو ساري المفعول.</div>
+      <h4 style="font-size:13.5px;margin:16px 0 9px">الملاحظات المرصودة</h4>
+      <ul class="nlist">
+        <li><div class="ni">1</div><div class="nb">التقرير المالي لعام 2025 غير مرفق، والمرفق تقرير 2024 فقط<div class="nc">تدقيق المرفقات · إجراء قائم</div></div><button class="evbtn" onclick="ev('fin')">عرض المرفق</button></li>
+        <li><div class="ni">2</div><div class="nb">الخطاب يذكر نطاق التشجير والتأهيل البيئي، ونطاقه الجغرافي الرياض بينما أدخلت الجمعية الرياض والقصيم<div class="nc">BR-T-V05 (هـ) · معلومة للمراجع، والقاعدة تطلب ذكر النطاق البيئي لا مطابقة الجغرافي</div></div><button class="evbtn" onclick="ev('scope')">عرض المرفق</button></li>
+        <li><div class="ni">3</div><div class="nb">الجهة المصدرة تحتاج تأكيد المراجع مقابل قائمة المراجع الفنية المعتمدة<div class="nc">BR-T-V05 (ب)</div></div><button class="evbtn" onclick="ev('ref')">عرض المرفق</button></li>
+      </ul>
+    </div></div>
+
+    <!-- 3 : ATTACHMENTS -->
+    <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11l-8.3 8.3a4.5 4.5 0 0 1-6.4-6.4l8.6-8.6a3 3 0 1 1 4.3 4.3l-8.6 8.6a1.5 1.5 0 0 1-2.1-2.1L15 7.5"/></svg></div><h3>تدقيق المرفقات <span style="font-weight:500;color:var(--ink2);font-size:14px">(إجراء قائم)</span></h3><span class="tg tg-base">أصلي</span></div>
+    <div class="sec-b">
+      <p class="ai-only" style="font-size:12.5px;color:var(--ink2);margin-bottom:10px">الخانات بيد المراجع يضغطها بنفسه — النظام يعرض نتيجة الفحص الآلي ولا يعلّم الخانة تلقائيًا.</p>
+      <div class="ck"><input type="checkbox"><div class="ck-main"><div class="ck-t">شهادة تسجيل الجمعية مرفقة وسارية</div><div class="ck-s ai-only">صالحة حتى <span class="ltr">2027-04-12</span></div></div><span class="res r-ok ai-only">✓ مطابق</span></div>
+      <div class="ck"><input type="checkbox"><div class="ck-main"><div class="ck-t">اللائحة الأساسية مرفقة</div><div class="ck-s ai-only">12 صفحة</div></div><span class="res r-ok ai-only">✓ مطابق</span></div>
+      <div class="ck"><input type="checkbox"><div class="ck-main"><div class="ck-t">التقارير المالية مكتملة</div><div class="ck-s ai-only">تقرير 2024 مرفق، 2025 غير موجود</div></div><span class="res r-warn ai-only">⚠ ملاحظة</span><button class="evbtn ai-only" onclick="ev('fin')">المرفق</button></div>
+      <div class="ck"><input type="checkbox"><div class="ck-main"><div class="ck-t">تقرير الحوكمة حديث</div><div class="ck-s ai-only">صادر <span class="ltr">2025-08-01</span></div></div><span class="res r-ok ai-only">✓ مطابق</span></div>
+    </div></div>
+
+    <!-- 4 : ADMIN VERIFY -->
+    <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7.5 3v6c0 4.5-3.1 7.9-7.5 9.3C7.6 19.9 4.5 16.5 4.5 12V6L12 3z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>التحقق الإداري من أدلة التأهيل</h3><span class="tg tg-cons">إضافة الاستشاري</span><button class="refbtn" onclick="brd('V04')">BR-T-V04 ⌕</button><span class="ref">خطوة مُضافة</span></div>
+    <div class="sec-b">
+      <div class="box box-amber">◆ <b>تنبيه المراجع (<span class="ltr">CA01-T07</span>):</b> صلاحياتك إدارية فقط — التحقق من <b>وجود واكتمال</b> أدلة التأهيل. <b>الحكم على كفاية الخبرة فنيًا خارج نطاق المراجعة.</b></div>
+      <!-- ═══ مبدّل العرض · الوضع الحالي فقط ═══ -->
+      <div class="cur-only" style="margin-bottom:16px">
+        <div style="font-size:12.5px;color:var(--ink2);margin-bottom:8px">اعرض هذا القسم بحسب:</div>
+        <div class="vswitch">
+          <button id="vbProto" class="on" onclick="vview('proto')">النموذج المشارك</button>
+          <button id="vbDoc" onclick="vview('doc')">وثيقة المتطلبات</button>
+        </div>
+      </div>
+
+      <!-- عرض (أ): كما في النموذج المشارك -->
+      <div class="cur-only" id="vProto">
+        <div class="box box-blue">ℹ البيانات التالية مسترجعة من إدخال الجمعية — دور المراجع التحقق منها مقابل المرفقات، لا إعادة إدخالها.</div>
+        <div class="fr">
+          <div class="f"><label>المسار المثبت (مسترجع)</label><div class="ro">المسار (أ): خبرة ذاتية موثّقة</div></div>
+          <div class="f"><label>سنوات الخبرة (مسترجع)</label><div class="ro">4 سنوات</div></div>
+        </div>
+        <div class="fr">
+          <div class="f"><label>عدد المشاريع المنفّذة (مسترجع)</label><div class="ro">7 مشاريع</div></div>
+          <div class="f"><label>الشريك الفني الدائم (مسترجع)</label><div class="ro">—</div></div>
+        </div>
+        <div class="f" style="max-width:48%"><label>الجهة المشرفة فنيًا (مسترجع)</label><div class="ro">وزارة البيئة والمياه والزراعة</div></div>
+        <div class="box box-q" style="margin-top:14px">◆ أسماء هذه الحقول الثلاثة الأولى غير واردة في وثيقة متطلبات الأعمال، والبحث شمل الوثيقة كاملة. وهي بيانات نموذج التسجيل معروضة للقراءة، لا حقول المراجعة التي تحددها الوثيقة. <button class="refbtn" onclick="brd('DIFF')">تفاصيل الفرق ⌕</button></div>
+      </div>
+
+<div class="box box-blue" style="margin:20px 0 0;padding:10px 14px;font-size:12.5px">ℹ حدود صلاحية المراجع كما تنص عليها <b>BR-T-V05</b>. راجع البنود الستة مقابل المرفق، وزر «عرض المرفق» يفتح الدليل في اللوحة الجانبية. ثم سجّل النتيجة في الخطوة التالية.</div>
+      <h4 id="ckList" style="font-size:14px;margin:22px 0 10px;display:flex;align-items:center;gap:9px">قائمة التحقق الإداري <button class="refbtn" onclick="brd('V05')">BR-T-V05 ⌕</button> <span id="ckCount" style="font-size:12px;font-weight:600;color:var(--ink2)">0 من 6</span></h4>
+      <div class="ck"><input type="checkbox"><div class="ck-main"><div class="ck-t">أ. سريان الخطاب</div><div class="ck-s ai-only">ساري حتى <span class="ltr">2026-11-03</span> · متبقٍ 8 أشهر</div></div><span class="res r-ok ai-only">✓ مطابق</span></div>
+      <div class="ck"><input type="checkbox"><div class="ck-main"><div class="ck-t">ب. الجهة المصدرة معتمدة</div>
+        <div class="ck-s ai-only">يتحقق النظام من الجهة المصدرة مقابل قائمة المراجع الفنية المعتمدة</div></div><span class="res r-ok ai-only">✓ مطابق</span></div>
+      <div class="ck"><input type="checkbox"><div class="ck-main"><div class="ck-t">ج. تطابق اسم الجمعية</div><div class="ck-s ai-only">مطابق للسجل</div></div><span class="res r-ok ai-only">✓ مطابق</span></div>
+      <div class="ck"><input type="checkbox"><div class="ck-main"><div class="ck-t">د. الختم الرسمي والتوقيع</div><div class="ck-s ai-only">مرصود في الصفحة 2</div></div><span class="res r-ok ai-only">✓ مطابق</span><button class="evbtn ai-only" onclick="ev('seal')">المرفق</button></div>
+      <div class="ck"><input type="checkbox"><div class="ck-main"><div class="ck-t">هـ. ذكر نطاق التشجير أو البيئة</div><div class="ck-s ai-only">ورد نصًا: «أعمال التشجير والتأهيل البيئي» — النطاق الجغرافي: الرياض فقط</div></div><span class="res r-warn ai-only">⚠ ملاحظة</span><button class="evbtn ai-only" onclick="ev('scope')">المرفق</button></div>
+      <div class="ck"><input type="checkbox"><div class="ck-main"><div class="ck-t">و. توافق الجهة مع نشاط الجمعية</div><div class="ck-s ai-only">يحتاج تأكيد المراجع</div></div><span class="res r-warn ai-only">⚠ ملاحظة</span></div>
+    
+
+      <!-- عرض (ب): كما تنص عليه الوثيقة -->
+      <div class="cur-only hidden" id="vDoc">
+        <div class="box box-blue">ℹ تنص الوثيقة على <b>إجراء واحد جديد للمراجع</b>: زر «تسجيل نتيجة التحقق الإداري» يفتح نافذة منبثقة لإدخال نتيجة التحقق وبيانات خطاب الموافقة (التواريخ، الرقم، الجهة) والملاحظات الإدارية. ويظهر الزر فقط للطلبات التي تحتوي تأهيلًا بيئيًا. <button class="refbtn" onclick="brd('V04E')">الفقرة هـ · ص 20 ⌕</button></div>
+        <button class="btn" id="vBtnDoc" onclick="openVer('doc')">تسجيل نتيجة التحقق الإداري</button>
+        <div class="hint" style="margin-top:8px">تفتح نافذة بحقول الخطاب فارغة يملؤها المراجع يدويًا.</div>
+      </div>
+
+      <!-- الوضع المستقبلي -->
+      <div class="ai-only">
+        <div class="box box-ai">◆ <b>الزر نفسه الذي تنص عليه الوثيقة</b>، لكن النافذة تفتح بحقول <b>معبّأة آليًا</b> من خطاب الموافقة، ويراجعها الموظف ويعتمدها بدل كتابتها. <button class="refbtn" onclick="brd('V04E')">الفقرة هـ · ص 20 ⌕</button></div>
+        <button class="btn" id="vBtnAi" onclick="openVer('ai')">تسجيل نتيجة التحقق الإداري</button>
+        <div class="hint" style="margin-top:8px" id="ckHint">تفتح النافذة بحقول الخطاب مستخرجة من المرفق، والمراجع يعتمدها أو يصححها</div>
+      </div>
+
+      <!-- ملخص النتيجة بعد الحفظ -->
+      <div id="verSummary" class="hidden" style="margin-top:16px"></div>
+
+    </div></div>
+
+    <!-- 5 : CONFLICTS (AI) -->
+    <div class="sec ai-sec ai-only"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 7l-4 5 4 5M17 7l4 5-4 5"/></svg></div><h3>رصد التعارضات</h3><span class="tg tg-req">الحل · متطلب</span><button class="refbtn" onclick="brd('V05JW')">BR-T-V05 (ج) و(و) ⌕</button></div>
+    <div class="sec-b">
+      <p style="font-size:12.5px;color:var(--ink2);margin-bottom:12px;line-height:1.9">البندان <b>(ج)</b> و<b>(و)</b> من <span class="ltr">BR-T-V05</span> هما الوحيدان اللذان يفرضان مقارنة فعلية. وخطاب موافقة المرجع الفني هو المرفق المعتمد الذي يُقارَن به، لأنه صادر من جهة خارجية معتمدة. والنظام يرفع الاختلاف كملاحظة ولا يصدر حكمًا.</p>
+      <div class="tw"><table>
+        <thead><tr><th>البند</th><th>المرجع المقارَن به</th><th>المستخرج من الخطاب</th><th>النتيجة</th></tr></thead>
+        <tbody>
+          <tr><td>اسم الجمعية <span class="ref">البند (ج)</span></td><td>جمعية البيئة المستدامة<div style="font-size:11px;color:var(--ink2)">سجل إحسان</div></td><td>جمعية البيئة المستدامة</td><td><span class="res r-ok">✓ مطابق</span></td></tr>
+          <tr><td>الجهة المصدرة <span class="ref">البند (و)</span></td><td>وزارة البيئة والمياه والزراعة<div style="font-size:11px;color:var(--ink2)">الوزارة المشرفة على نشاط الجمعية</div></td><td>وزارة البيئة والمياه والزراعة</td><td><span class="res r-ok">✓ مطابق</span></td></tr>
+        </tbody>
+      </table></div>
+    </div></div>
+
+    <!-- 6 : DECISIONS -->
+    <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 11.5l2.5 2.5L16 8.5"/></svg></div><h3>القراران المنفصلان</h3><span class="tg tg-cons">إضافة الاستشاري</span><button class="refbtn" onclick="brd('V06')">BR-T-V06 ⌕</button></div>
+    <div class="sec-b">
+      <div class="box box-blue">القراران منفصلان: يمكن قبول التسجيل العام مع رفض التأهيل البيئي. <b>«تأجيل القرارين معًا» غير مسموح.</b></div>
+
+      <div class="dec">
+        <div class="dec-t">القرار الأول: التسجيل العام للجمعية في إحسان</div>
+        <div class="rec ai-only"><b>توصية الحل:</b> قبول — المستندات الأربعة مطابقة عدا التقرير المالي لعام 2025</div>
+        <div class="radios">
+          <label><input type="radio" name="d1" value="accept" onchange="d1()"> قبول</label>
+          <label><input type="radio" name="d1" value="reject" onchange="d1()"> رفض</label>
+        </div>
+        <div id="d1r" class="f hidden" style="margin-top:13px"><label>سبب الرفض <span class="req">*</span></label><textarea rows="2" placeholder="يُعرض على الجمعية عبر الرسالة CA01-T08"></textarea><div class="hint">إلزامي — يُعرض على الجمعية في صفحتها</div></div>
+      </div>
+
+      <div class="dec" id="d2box">
+        <div class="dec-t">القرار الثاني: التأهيل البيئي للتشجير</div>
+        <div class="box box-ai ai-only" id="d2lock" style="margin-bottom:12px">◆ <b>معطّل — متطلب منصوص وغير منفّذ في النموذج المشارك:</b> القاعدة تنص على أنه «لا يُسمح للمراجع بإصدار قرار قبول التأهيل البيئي قبل التحقق الإداري». اختر نتيجة التحقق في القسم 3 أولًا. <button class="refbtn" onclick="brd('V05')">BR-T-V05 ⌕</button></div>
+        <div class="rec ai-only"><b>توصية الحل:</b> يحتاج توضيحًا — ثلاثة بنود من ستة تحتاج تأكيد المراجع، وأبرزها تأكيد اعتماد الجهة المصدرة</div>
+        <div class="radios">
+          <label><input type="radio" name="d2" value="accept" onchange="d2()"> قبول</label>
+          <label><input type="radio" name="d2" value="reject" onchange="d2()"> رفض</label>
+        </div>
+        <div id="d2r" class="f hidden" style="margin-top:13px"><label>سبب الرفض <span class="req">*</span></label><textarea rows="2" placeholder="يُعرض على الجمعية عبر الرسالة CA01-T09"></textarea><div class="hint">إلزامي — يُعرض على الجمعية في صفحتها</div></div>
+      </div>
+
+      <div class="blocked hidden" id="d2blocked">التأهيل البيئي ساقط تلقائيًا تبعًا لرفض التسجيل العام — <span class="ltr">BR-T-V06</span></div>
+
+      <button class="btn" onclick="save()">حفظ القرار</button>
+      <div id="saveMsg" style="margin-top:11px;font-size:13px"></div>
+    </div></div>
+
+    <!-- 7 : AUDIT -->
+    <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 4.5V9H8M12 8v4.5l3 1.8"/></svg></div><h3>سجل المراجعة</h3><span class="tg tg-cons">إضافة الاستشاري</span><button class="refbtn" onclick="brd('V06')">BR-T-V06 ⌕</button></div>
+    <div class="sec-b">
+
+      <p style="font-size:12.5px;color:var(--ink2);margin-bottom:10px">«كل قرار يُسجَّل في سجل المراجعة باستقلالية مع تاريخه ومراجعه وسببه». والقراران يُسجَّلان منفصلين.</p>
+      <div class="tw"><table>
+        <thead><tr><th style="width:18%">القرار</th><th style="width:16%">النتيجة</th><th style="width:18%">التاريخ</th><th style="width:16%">المراجع</th><th style="width:32%">السبب</th></tr></thead>
+        <tbody id="decLog"><tr><td colspan="5" style="text-align:center;color:var(--ink2);padding:20px">لم يُسجَّل قرار بعد — اتخذ القرار في القسم 5 واضغط «حفظ القرار»</td></tr></tbody>
+      </table></div>
+
+    </div></div>
+   </div>
+
+   <!-- SIDE -->
+   <aside class="side">
+     <div class="sec ai-sec ai-only"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z"/><circle cx="12" cy="13" r="2.6"/><path d="M14.2 15.2L16 17"/></svg></div><h3 style="font-size:15px">عارض المرفق</h3></div>
+       <div class="sec-b"><div id="evBox"><div class="ev-empty">اضغط «عرض المرفق» بجانب أي ملاحظة لعرض موضعها داخل الملف هنا.</div></div></div>
+     </div>
+     
+     <div class="sec" id="curNote"><div class="sec-b" style="font-size:13px;color:var(--ink2);line-height:1.8">
+       <b style="color:var(--ink)">أنت في الوضع الحالي.</b><br>الشاشة معروضة كما يصل المراجع اليوم: بيانات خام، وخانات تحقق يملؤها بنفسه بعد فتح كل مرفق يدويًا، دون ملخص ولا نتائج فحص ولا رصد تعارضات.
+     </div></div>
+   </aside>
+  </div>
+</section>
+
+<!-- ══════════════ PAGE: FORM ══════════════ -->
+<section id="p-form" class="hidden">
+  <div class="crumb">بوابة تسجيل الجمعيات · 5.1.3 · النموذج الكامل</div>
+  <h2 class="ptitle">نموذج تسجيل الجمعية</h2>
+  <p class="pdesc">النموذج الكامل بأقسامه السبعة، مع قسم «التأهيل البيئي للتشجير» الذي يظهر عند اختيار المجال البيئي، ولوحة الفحص الفوري التي تكشف النواقص قبل الإرسال.</p>
+
+  <div class="legend"><span class="lb">مفتاح الوسوم:</span>
+    <span class="tg tg-base">أصلي</span><span class="tg tg-cons">إضافة الاستشاري</span><span class="tg tg-imp">الحل · تحسين</span>
+  </div>
+
+  <div class="sec"><div class="sec-h"><div class="num">1</div><h3>بيانات مقدم الطلب</h3><span class="tg tg-base">أصلي</span></div>
+    <div class="sec-b"><div class="fr">
+      <div class="f"><label>الاسم الثلاثي <span class="req">*</span></label><input value="عبدالله محمد الشهري"></div>
+      <div class="f"><label>رقم هوية المفوض <span class="req">*</span></label><input value="1043928471" placeholder="10 أرقام"></div>
+    </div></div>
+  </div>
+
+  <div class="sec"><div class="sec-h"><div class="num">2</div><h3>بيانات الجمعية</h3><span class="tg tg-base">أصلي</span></div>
+    <div class="sec-b">
+      <div class="fr">
+        <div class="f"><label>اسم الجمعية <span class="req">*</span></label><input value="جمعية البيئة المستدامة"></div>
+        <div class="f"><label>رقم التسجيل <span class="req">*</span></label><input value="4471"></div>
+      </div>
+      <div class="fr">
+        <div class="f"><label>مجال الجمعية <span class="req">*</span></label>
+          <select id="fld" onchange="tog()">
+            <option>اجتماعي</option><option>صحي</option><option>تعليمي</option>
+            <option selected>بيئي</option><option>ثقافي</option><option>إسكاني</option>
+          </select>
+          <div class="hint">اختيار «بيئي» يفتح قسم التأهيل البيئي للتشجير <button class="refbtn" onclick="brd('T5')">التعديل 5 ⌕</button></div>
+        </div>
+        <div class="f"><label>مدينة العمل <span class="req">*</span></label><input value="الرياض"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec" id="envSec"><div class="sec-h"><div class="num">3</div><h3>التأهيل البيئي للتشجير</h3><span class="tg tg-cons">إضافة الاستشاري</span><button class="refbtn" onclick="brd('V01')">BR-T-V01 ⌕</button><span class="ref">قسم مشروط</span></div>
+    <div class="sec-b">
+      <div class="box box-blue">ℹ يظهر هذا القسم عند اختيار «بيئي» فقط. عند تغيير المجال تُحفظ البيانات وتُخفى، وتُسترجع عند إعادة الاختيار.</div>
+      <div class="fr">
+        <div class="f"><label>التصنيف البيئي للجمعية <span class="req">*</span> <span class="tg tg-cons">حقل 1</span></label><select><option>حضري</option><option>ريفي</option><option>حِمائي</option><option>ساحلي</option><option>عام</option></select></div>
+        <div class="f"><label>النطاق الجغرافي للتنفيذ <span class="req">*</span> <span class="tg tg-cons">حقل 2</span></label><input value="الرياض، القصيم"></div>
+      </div>
+      <div class="fr">
+        <div class="f"><label>سنوات الخبرة في التشجير <span class="req">*</span> <span class="tg tg-cons">حقل 3</span></label><input id="yrs" type="number" value="4" oninput="chk()"><div class="hint">حد أدنى سنتان، أو شهادة شراكة فنية بديلة <button class="refbtn" onclick="brd('V02')">BR-T-V02 ⌕</button></div></div>
+        <div class="f"><label>عدد المشاريع التشجيرية المنفّذة <span class="req">*</span> <span class="tg tg-cons">حقل 4</span></label><input type="number" value="7"><div class="hint">صفر مقبول مع شهادة شراكة فنية</div></div>
+      </div>
+      <div class="fr">
+        <div class="f"><label>شراكات فنية حالية <span class="tg tg-cons">حقل 5 · اختياري</span></label><input placeholder="جامعات / جهات بحثية / مراجع فنية"><div class="hint">يعزّز الأفضلية في الإسناد</div></div>
+        <div class="f"></div>
+      </div>
+      <h4 style="font-size:13.5px;margin:18px 0 9px">المرفقات</h4>
+      <div class="ck"><input type="checkbox" checked disabled><div class="ck-main"><div class="ck-t">سجل المشاريع التشجيرية السابقة <span class="tg tg-cons">مرفق 7</span></div><div class="ck-s">مرفوع · <span class="ltr">PDF ≤ 10MB</span> · تفاصيل أهم 5 مشاريع</div></div></div>
+      <div class="ck"><input type="checkbox" disabled><div class="ck-main"><div class="ck-t">شهادة الشراكة الفنية <span class="tg tg-cons">مرفق 8 · بديل</span></div><div class="ck-s">بديل عن السجل لمن لا يملك خبرة سابقة · <span class="ltr">PDF ≤ 5MB</span></div></div></div>
+      <div class="ck"><input type="checkbox" checked disabled><div class="ck-main"><div class="ck-t">خطاب موافقة عام من المرجع الفني <span class="tg tg-cons">مرفق 9 · إجباري</span></div><div class="ck-s">مرفوع · <span class="ltr">PDF ≤ 5MB</span> · يُسجل منه تاريخ الإصدار والانتهاء والجهة المصدرة والرقم المرجعي والنطاق</div></div></div>
+      <div class="ck" style="margin-top:10px"><input type="checkbox" id="ack" checked onchange="chk()"><div class="ck-main"><div class="ck-t">أقر بالالتزام بمنهجية العناية المعتمدة <span class="tg tg-cons">حقل 6</span></div><div class="ck-s">إلزامي — <span class="ltr">CA01-T02</span> عند عدم الإقرار</div></div></div>
+    </div>
+  </div>
+
+  <div class="sec"><div class="sec-h"><div class="num">4</div><h3>بيانات التواصل · البيانات البنكية · مجلس الإدارة · الوثائق والاتفاقية</h3><span class="tg tg-base">أصلي</span></div>
+    <div class="sec-b"><p style="color:var(--ink2);font-size:13.5px">الأقسام الأربعة المتبقية من النموذج القائم، معروضة مطوية في هذا النموذج الأولي لتركيز العرض على مسار التأهيل البيئي.</p></div>
+  </div>
+
+  <div class="sec imp-sec ai-only"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18a8.5 8.5 0 1 1 16 0"/><path d="M12 14l3.5-3.5"/></svg></div><h3>الفحص الفوري قبل الإرسال</h3><span class="tg tg-imp">الحل · تحسين</span><span class="ref">يقلّل دورات الرد</span></div>
+    <div class="sec-b">
+      <div class="bar"><div class="bar-h"><span>اكتمال الطلب</span><b id="pctT">14 من 15 عنصرًا</b></div><div class="bar-t"><div class="bar-f" id="barF" style="width:93%;background:var(--ai)"></div></div></div>
+      <ul class="nlist" id="issues"></ul>
+    </div>
+  </div>
+  <div style="margin-bottom:60px"><button class="btn" id="sub">إرسال طلب التأهيل البيئي</button></div>
+</section>
+
+<!-- ══════════════ PAGE: FILES ══════════════ -->
+<section id="p-files" class="hidden">
+  <div class="crumb">بوابة تسجيل الجمعيات · 5.4 · استعراض ملفات الجمعيات</div>
+  <h2 class="ptitle">إدارة ملفات الجمعيات</h2>
+  <p class="pdesc">جدول الجمعيات المعتمدة مع الشارة والفلتر المضافين في ملحق التشجير. ويوضح القسم التالي الفرق بين حالات النظام الخمس وما يُعرض منها في كل شاشة.</p>
+
+  <div class="legend"><span class="lb">مفتاح الوسوم:</span>
+    <span class="tg tg-base">أصلي</span><span class="tg tg-cons">إضافة الاستشاري</span><span class="tg tg-req">الحل · متطلب</span><span class="tg tg-imp">الحل · تحسين</span>
+  </div>
+
+  <div class="sec"><div class="sec-h"><div class="num">1</div><h3>الجمعيات المعتمدة</h3><span class="tg tg-base">أصلي</span><button class="refbtn" onclick="brd('T3')">التعديل 3 · ص 21 ⌕</button></div>
+    <div class="sec-b">
+      <label style="display:flex;align-items:center;gap:9px;font-size:13.5px;margin-bottom:15px;cursor:pointer"><input type="checkbox" id="filt" onchange="filt()" style="width:17px;height:17px;accent-color:var(--g-main)"> عرض المؤهلات للتشجير فقط <span class="tg tg-cons">إضافة الاستشاري</span></label>
+      <div class="tw"><table id="tbl">
+        <thead><tr><th>الكود</th><th>الجمعية</th><th>المنطقة</th><th>التصنيف البيئي <span class="tg tg-cons">إضافة</span></th><th>الشارة</th><th class="ai-only">حالة النظام <span class="tg tg-imp">الحل · تحسين</span></th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div class="sec ai-sec ai-only"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 7l-4 5 4 5M17 7l4 5-4 5"/></svg></div><h3 style="font-size:16px">الفرق بين ما يراه المراجع وما تراه الجمعية</h3><span class="tg tg-imp">الحل · تحسين</span></div>
+  <div class="sec-b">
+    <p style="font-size:13.5px;line-height:1.9;margin-bottom:14px">النظام يعرّف <b>خمس حالات</b> في الملحق 5.1 صفحة 25. لكن ما يُعرض منها يختلف بحسب الشاشة، لأن كل شاشة تحكمها قاعدة مختلفة. والجدول التالي يوضح الفرق.</p>
+    <div class="tw"><table>
+      <thead><tr><th style="width:16%">الحالة</th><th style="width:22%">في النظام<br><span style="font-weight:400;font-size:11px">ملحق 5.1 · ص 25</span></th><th style="width:31%">جدول ملفات الجمعيات<br><span style="font-weight:400;font-size:11px">التعديل 3 · ص 21</span></th><th style="width:31%">صفحة الجمعية<br><span style="font-weight:400;font-size:11px">BR-T-V07 · ص 22 و23</span></th></tr></thead>
+      <tbody>
+        <tr><td><span class="ltr">ENV-Q-01</span> قيد المراجعة</td><td><span class="res r-ok">✓ معرّفة</span></td><td><span style="color:var(--ink2)">لا شارة</span></td><td>«قيد المراجعة»</td></tr>
+        <tr><td><span class="ltr">ENV-Q-02</span> مؤهلة</td><td><span class="res r-ok">✓ معرّفة</span></td><td><b style="color:var(--ok)">شارة «مؤهلة للتشجير»</b></td><td>«مؤهلة للتشجير»</td></tr>
+        <tr><td><span class="ltr">ENV-Q-03</span> مرفوضة</td><td><span class="res r-ok">✓ معرّفة</span></td><td><span style="color:var(--ink2)">لا شارة</span></td><td>«مرفوضة — تستطيع إعادة التقدم»</td></tr>
+        <tr><td><span class="ltr">ENV-Q-04</span> منتهية</td><td><span class="res r-ok">✓ معرّفة</span></td><td><span style="color:var(--ink2)">لا شارة</span></td><td><span style="color:var(--ink2)">خارج نطاق القاعدة</span></td></tr>
+        <tr><td><span class="ltr">ENV-Q-05</span> معلّقة</td><td><span class="res r-ok">✓ معرّفة</span></td><td><span style="color:var(--ink2)">لا شارة</span></td><td><span style="color:var(--ink2)">خارج نطاق القاعدة</span></td></tr>
+        <tr><td>لم تتقدم</td><td><span style="color:var(--ink2)">ليست حالة</span></td><td><span style="color:var(--ink2)">لا شارة</span></td><td>زر «هل تنوي التشجير؟»</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="box box-blue" style="margin:16px 0 0">ℹ <b>خلاصة:</b> يحصر التعديل الثالث الإضافة في <b>شارة واحدة</b> تظهر للحالة <span class="ltr">ENV-Q-02</span>، والجدول أعلاه ملتزم بهذا الحصر. <button class="refbtn" onclick="brd('T3')">التعديل 3 · ص 21 ⌕</button></div>
+    <div class="box box-imp" style="margin:12px 0 0">◆ <b>ما يضيفه الحل:</b> عمود «حالة النظام» في الوضع المستقبلي، يعرض الحالة الفعلية لكل جمعية، فيتيح لمدير النظام تمييز الحالات دون تغيير في الجدول المعتمد.</div>
+  </div></div>
+
+  <div style="height:50px"></div>
+</section>
+
+<!-- ══════════════ PAGE: ASSOC ══════════════ -->
+<section id="p-assoc" class="hidden">
+  <div class="crumb">بوابة تسجيل الجمعيات · 5.6.1 · صفحة الجمعية</div>
+  <h2 class="ptitle">صفحة الجمعية</h2>
+  <p class="pdesc">الصفحة كما تراها الجمعية، مع سطر حالة التأهيل البيئي المضاف في ملحق التشجير. بدّل بين حالات العرض الأربع التي تنص عليها القاعدة لمعاينة ما يصل الجمعية في كل حالة.</p>
+
+  <div class="legend"><span class="lb">مفتاح الوسوم:</span>
+    <span class="tg tg-base">أصلي</span><span class="tg tg-cons">إضافة الاستشاري</span><span class="tg tg-req">الحل · متطلب</span><span class="tg tg-imp">الحل · تحسين</span>
+  </div>
+
+  <div class="sec"><div class="sec-h"><div class="num">1</div><h3>بيانات الجمعية</h3><span class="tg tg-base">أصلي</span></div>
+    <div class="sec-b"><div class="fr">
+      <div class="f"><label>اسم الجمعية</label><div class="ro">جمعية البيئة المستدامة</div></div>
+      <div class="f"><label>كود الجمعية</label><div class="ro"><span class="ltr">ASSOC-1043</span></div></div>
+    </div></div>
+  </div>
+
+  <div class="sec"><div class="sec-h"><div class="num">2</div><h3>حالة التأهيل البيئي للتشجير</h3><span class="tg tg-cons">إضافة الاستشاري</span><button class="refbtn" onclick="brd('V07')">BR-T-V07 ⌕</button></div>
+    <div class="sec-b">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+        <button class="tab" onclick="st('01')" id="s01">ENV-Q-01 قيد المراجعة</button>
+        <button class="tab on" onclick="st('02')" id="s02">ENV-Q-02 مؤهلة</button>
+        <button class="tab" onclick="st('03')" id="s03">ENV-Q-03 مرفوضة</button>
+        <button class="tab" onclick="st('00')" id="s00">لم تتقدم</button>
+      </div>
+      <div id="stBox"></div>
+    </div>
+  </div>
+  <div style="height:50px"></div>
+</section>
+
+<!-- ══════════════ PAGE: DASHBOARD ══════════════ -->
+<section id="p-dash" class="hidden">
+  <div class="crumb">لوحة المؤشرات التشغيلية · مبنية على مخرجات سجل المراجعة</div>
+  <h2 class="ptitle">لوحة المؤشرات التشغيلية</h2>
+  <p class="pdesc">مؤشرات مشتقة من سجل المراجعة المتراكم، تمثل خط الأساس الذي يُقاس عليه أثر الحل بعد التطبيق. الأرقام المعروضة توضيحية لأغراض العرض.</p>
+
+  <div class="legend"><span class="lb">مفتاح الوسوم:</span>
+    <span class="tg tg-imp">الحل · تحسين</span><span class="lg-txt">اللوحة بالكامل اقتراح من الاستشاري. وثيقة متطلبات الأعمال لا تنص على لوحة مؤشرات، لكنها تتيحها لأن سجل المراجعة مطلوب فيها</span>
+  </div>
+
+  <div id="dashCur" class="sec hidden"><div class="sec-b" style="text-align:center;padding:52px 20px;color:var(--ink2)">
+    <div style="margin-bottom:14px;color:var(--ink2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:44px;height:44px"><path d="M4 20V4M4 20h16"/><rect x="7.5" y="12" width="3" height="5" rx=".6"/><rect x="12.5" y="8" width="3" height="9" rx=".6"/><rect x="17" y="14" width="3" height="3" rx=".6"/></svg></div>
+    <b style="color:var(--ink);font-size:16px;display:block;margin-bottom:8px">لا توجد لوحة مؤشرات في الوضع الحالي</b>
+    نتائج المراجعة اليوم لا تُحفظ كبيانات مهيكلة، فلا يتراكم منها ما يُقاس عليه. هذه اللوحة كاملة من مخرجات الحل المقترح.
+  </div></div>
+
+  <div id="dashFut">
+
+    <div class="dhead">
+      <div><b>الفترة:</b> يوليو 2026 · <span style="color:var(--ink2)">آخر تحديث قبل 4 دقائق</span></div>
+      <div class="dhead-r">جميع المؤشرات مشتقة من سجل المراجعة · أرقام توضيحية لأغراض العرض</div>
+    </div>
+
+    <!-- KPI ROW -->
+    <div class="kpis">
+      <div class="kpi"><div class="kl">الطلبات الواردة</div><div class="kv">184</div>
+        <div class="kmeta"><span>يوليو 2026</span></div></div>
+      <div class="kpi"><div class="kl">قيد المراجعة الآن</div><div class="kv">18</div>
+        <div class="kmeta"><span class="chip chip-a">6 تجاوزت 3 أيام</span></div></div>
+      <div class="kpi"><div class="kl">متوسط زمن المراجعة</div><div class="kv">21<span class="unit">دقيقة</span></div>
+        <div class="kmeta"><span>على 184 طلبًا</span></div></div>
+      <div class="kpi"><div class="kl">مكتملة من أول تقديم</div><div class="kv">76<span class="unit">%</span></div>
+        <div class="kmeta"><span>139 من 184</span></div></div>
+      <div class="kpi"><div class="kl">متوسط دورات الرد</div><div class="kv">1.3</div>
+        <div class="kmeta"><span>لكل طلب أُعيد</span></div></div>
+    </div>
+
+    <!-- ROW 2 -->
+    <div class="d3">
+      <div class="sec span2"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4M4 20h16"/><path d="M7 15l3.5-4 3 2.5L20 8"/></svg></div><h3 style="font-size:16px">حركة الطلبات الأسبوعية</h3><span class="ref">آخر 8 أسابيع</span></div>
+        <div class="sec-b">
+          <div id="lineChart"></div>
+          <div class="dl" style="margin-top:12px">
+            <span><i class="sw" style="background:#14708C"></i> واردة</span>
+            <span><i class="sw" style="background:#2E7D52"></i> مُنجَزة</span>
+            <span><i class="sw" style="background:#C08A2E;border-radius:50%"></i> متراكمة في نهاية الأسبوع</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9h-9V3z"/></svg></div><h3 style="font-size:16px">مآل الطلبات</h3></div>
+        <div class="sec-b">
+          <div class="donut">
+            <svg viewBox="0 0 42 42" width="150" height="150">
+              <circle cx="21" cy="21" r="15.9" fill="none" stroke="#EFF2F0" stroke-width="5.2"/>
+              <circle cx="21" cy="21" r="15.9" fill="none" stroke="#2E7D52" stroke-width="5.2" stroke-dasharray="78 22" stroke-dashoffset="25"/>
+              <circle cx="21" cy="21" r="15.9" fill="none" stroke="#C08A2E" stroke-width="5.2" stroke-dasharray="12 88" stroke-dashoffset="-53"/>
+              <circle cx="21" cy="21" r="15.9" fill="none" stroke="#C0392B" stroke-width="5.2" stroke-dasharray="10 90" stroke-dashoffset="-65"/>
+            </svg>
+            <div class="donut-c"><b>184</b><span>طلبًا</span></div>
+          </div>
+          <div class="lrow"><span><i class="sw" style="background:#2E7D52"></i> معتمدة</span><b>143</b></div>
+          <div class="lrow"><span><i class="sw" style="background:#C08A2E"></i> أُعيدت للتعديل</span><b>22</b></div>
+          <div class="lrow"><span><i class="sw" style="background:#C0392B"></i> مرفوضة</span><b>19</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 3 -->
+    <div class="d2">
+      <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h12l-2.2 3.6L17 11H5"/></svg></div><h3 style="font-size:16px">أكثر الملاحظات تكرارًا</h3><span class="ref">2,562 فحصًا</span></div>
+        <div class="sec-b">
+          <div class="bar"><div class="bar-h"><span>تأكيد اعتماد الجهة المصدرة</span><b>142</b></div><div class="bar-t"><div class="bar-f" style="width:92%;background:#14708C"></div></div><div class="bar-n"><span class="ref">BR-T-V05 (ب)</span></div></div>
+          <div class="bar"><div class="bar-h"><span>النطاق الجغرافي في الخطاب أضيق من المدخل</span><b>87</b></div><div class="bar-t"><div class="bar-f" style="width:57%;background:#14708C"></div></div><div class="bar-n"><span class="ref">BR-T-V05 (هـ)</span></div></div>
+          <div class="bar"><div class="bar-h"><span>نقص في التقارير المالية</span><b>64</b></div><div class="bar-t"><div class="bar-f" style="width:42%;background:#14708C"></div></div><div class="bar-n"><span class="ref">تدقيق المرفقات</span></div></div>
+          <div class="bar"><div class="bar-h"><span>سنوات الخبرة دون الحد الأدنى</span><b>39</b></div><div class="bar-t"><div class="bar-f" style="width:26%;background:#14708C"></div></div><div class="bar-n"><span class="ref">BR-T-V02</span></div></div>
+          <div class="bar" style="margin-bottom:0"><div class="bar-h"><span>الختم يحتاج تأكيدًا في مرفق ممسوح</span><b>28</b></div><div class="bar-t"><div class="bar-f" style="width:18%;background:#14708C"></div></div><div class="bar-n"><span class="ref">BR-T-V05 (د)</span></div></div>
+          <div class="insight">الملاحظة الأولى تمثل <b>24%</b> من الإجمالي، ومعالجتها ترفع نسبة الاعتماد من أول مراجعة بشكل ملحوظ.</div>
+        </div>
+      </div>
+
+      <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6z"/><path d="M10 19a2.2 2.2 0 0 0 4 0"/></svg></div><h3 style="font-size:16px">الرصد الاستباقي لصلاحية خطابات التأهيل البيئي</h3><span class="ref">BR-T-V12</span></div>
+        <div class="sec-b">
+          <div class="minik">
+            <div class="mk"><b style="color:var(--ok)">96</b><span>خطاب ساري</span></div>
+            <div class="mk"><b style="color:var(--warn)">5</b><span>ينتهي خلال 60 يومًا</span></div>
+            <div class="mk"><b style="color:var(--bad)">7</b><span>منتهٍ دون تجديد</span></div>
+          </div>
+          <div class="tw"><table>
+            <thead><tr><th>الجمعية</th><th>الانتهاء</th><th>المتبقي</th><th>الحالة</th></tr></thead>
+            <tbody>
+              <tr><td>جمعية الواحة الخضراء</td><td><span class="ltr">2026-09-28</span></td><td><b style="color:var(--warn)">39 يومًا</b></td><td><span class="st-badge" style="background:#FDF6E3;color:var(--warn)">تنبيه مرسل</span></td></tr>
+              <tr><td>جمعية نماء البيئية</td><td><span class="ltr">2026-10-11</span></td><td><b style="color:var(--warn)">52 يومًا</b></td><td><span class="st-badge" style="background:#FDF6E3;color:var(--warn)">تنبيه مرسل</span></td></tr>
+              <tr><td>جمعية أرض الخير</td><td><span class="ltr">2026-10-19</span></td><td><b style="color:var(--warn)">60 يومًا</b></td><td><span class="st-badge" style="background:#FDF6E3;color:var(--warn)">تنبيه اليوم</span></td></tr>
+              <tr><td>جمعية البيئة المستدامة</td><td><span class="ltr">2026-11-03</span></td><td>75 يومًا</td><td><span class="st-badge" style="background:#E8F5EC;color:var(--ok)">ساري</span></td></tr>
+              <tr><td>جمعية رواد الاستدامة</td><td><span class="ltr">2026-06-14</span></td><td><b style="color:var(--bad)">منتهٍ</b></td><td><span class="st-badge" style="background:#EFF2F0;color:#5F6C66">ENV-Q-04</span></td></tr>
+            </tbody>
+          </table></div>
+          <div class="insight">التنبيه يُرسل آليًا قبل الانتهاء بستين يومًا عبر <span class="ltr">CA01-T10</span>، والانتقال إلى <span class="ltr">ENV-Q-04</span> يتم آليًا عند الانتهاء.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 4 -->
+    <div class="d3">
+      <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c0 9-5.5 14-12 14M8 18C5 15 4 9 8 6c3.5-2.6 9-2 12-2"/></svg></div><h3 style="font-size:16px">حالات التأهيل البيئي</h3></div>
+        <div class="sec-b">
+          <div class="lrow lg"><span><span class="st-badge" style="background:#E8F5EC;color:#2E7D52">ENV-Q-02</span> مؤهلة</span><b>96</b></div>
+          <div class="lrow lg"><span><span class="st-badge" style="background:#FDF6E3;color:#A97B2B">ENV-Q-01</span> قيد المراجعة</span><b>18</b></div>
+          <div class="lrow lg"><span><span class="st-badge" style="background:#FBEAE8;color:#C0392B">ENV-Q-03</span> مرفوضة</span><b>12</b></div>
+          <div class="lrow lg"><span><span class="st-badge" style="background:#EFF2F0;color:#5F6C66">ENV-Q-04</span> منتهية</span><b>7</b></div>
+          <div class="lrow lg"><span><span class="st-badge" style="background:#FBF0E4;color:#9E5F26">ENV-Q-05</span> معلّقة</span><b style="color:var(--ink2)">—</b></div>
+        </div>
+      </div>
+
+      <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg></div><h3 style="font-size:16px">توزيع الطلبات على المناطق</h3></div>
+        <div class="sec-b">
+          <div class="bar"><div class="bar-h"><span>الرياض</span><b>62</b></div><div class="bar-t"><div class="bar-f" style="width:100%;background:#1B5E3A"></div></div></div>
+          <div class="bar"><div class="bar-h"><span>القصيم</span><b>34</b></div><div class="bar-t"><div class="bar-f" style="width:55%;background:#2E7D52"></div></div></div>
+          <div class="bar"><div class="bar-h"><span>عسير</span><b>29</b></div><div class="bar-t"><div class="bar-f" style="width:47%;background:#4E9C72"></div></div></div>
+          <div class="bar"><div class="bar-h"><span>المدينة المنورة</span><b>24</b></div><div class="bar-t"><div class="bar-f" style="width:39%;background:#76B893"></div></div></div>
+          <div class="bar"><div class="bar-h"><span>الشرقية</span><b>21</b></div><div class="bar-t"><div class="bar-f" style="width:34%;background:#9BCEB1"></div></div></div>
+          <div class="bar" style="margin-bottom:0"><div class="bar-h"><span>مناطق أخرى</span><b>14</b></div><div class="bar-t"><div class="bar-f" style="width:23%;background:#C1E0CE"></div></div></div>
+        </div>
+      </div>
+
+      <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 19a6 6 0 0 1 12 0"/><path d="M16 6.2a3 3 0 0 1 0 5.6M17.5 19a6 6 0 0 0-2-4.5"/></svg></div><h3 style="font-size:16px">حمل المراجعين</h3></div>
+        <div class="sec-b">
+          <div class="rvw"><div class="av">م.أ</div><div class="rv-b"><div class="rv-t"><span>مراجع 1</span><b>68 طلبًا</b></div><div class="bar-t"><div class="bar-f" style="width:100%;background:#14708C"></div></div></div></div>
+          <div class="rvw"><div class="av">م.ب</div><div class="rv-b"><div class="rv-t"><span>مراجع 2</span><b>61 طلبًا</b></div><div class="bar-t"><div class="bar-f" style="width:90%;background:#14708C"></div></div></div></div>
+          <div class="rvw"><div class="av">م.ج</div><div class="rv-b"><div class="rv-t"><span>مراجع 3</span><b>55 طلبًا</b></div><div class="bar-t"><div class="bar-f" style="width:81%;background:#14708C"></div></div></div></div>
+          <div class="minik" style="margin:16px 0 0">
+            <div class="mk"><b>61</b><span>متوسط لكل مراجع</span></div>
+            <div class="mk"><b>3.2</b><span>طلبات في الساعة</span></div>
+          </div>
+          <div class="insight">توزيع الحمل متقارب، ما يدل على ثبات معيار التوزيع بعد إدخال الفحص الآلي.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div style="height:50px"></div>
+</section>
+
+
+
+</div>
+
+<div class="foot"><div class="wrap">نموذج أولي — نابه / إثبات مفهوم · حل الذكاء الاصطناعي لمراجعة وتدقيق الطلبات · مبني على وثيقة متطلبات الأعمال، الإصدار 1.0 بتاريخ 2026-05-14</div></div>
+
+<script>
+// ===== mode =====
+var mode='future';
+function setMode(m){
+  mode=m;
+  document.body.className='mode-'+m;
+  document.getElementById('btnCur').classList.toggle('on',m==='current');
+  document.getElementById('btnFut').classList.toggle('on',m==='future');
+  document.querySelectorAll('.ai-only').forEach(function(e){e.classList.toggle('hidden',m==='current')});
+  var vs=document.getElementById('verSummary'); if(vs) vs.classList.add('hidden');
+  var dl=document.getElementById('decLog');
+  if(dl) dl.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--ink2);padding:20px">لم يُسجَّل قرار بعد — اتخذ القرار في القسم 5 واضغط «حفظ القرار»</td></tr>';
+  var vr=document.getElementById('verRes'); if(vr) vr.selectedIndex=0;
+  document.getElementById('curNote').classList.toggle('hidden',m==='future');
+  document.getElementById('modeNote').textContent = m==='current'
+    ? 'تعرض الشاشة كما يصل المراجع اليوم، دون طبقة الحل الذكي'
+    : 'يعرض الشاشة بعد إضافة طبقة الحل الذكي فوق الإجراء القائم';
+  document.getElementById('dashCur').classList.toggle('hidden',m==='future');
+  document.getElementById('dashFut').classList.toggle('hidden',m==='current');
+  renderFiles(); if(typeof vres==='function') vres();
+}
+document.getElementById('btnCur').onclick=function(){setMode('current')};
+document.getElementById('btnFut').onclick=function(){setMode('future')};
+
+
+
+// ===== BRD text viewer =====
+var BRD={
+'V01':{r:'BR-T-V01 · القسم 5.1.ج · صفحة 12',t:'العرض المشروط لقسم التأهيل البيئي',
+ b:'«يظهر قسم <b>التأهيل البيئي للتشجير</b> في نموذج تسجيل الجمعية فقط عند اختيار المجال = <b>بيئي</b>. وعند تغيير المجال إلى غير بيئي تُحفظ البيانات المدخلة وتُخفى، وتُسترجع عند إعادة اختيار المجال البيئي.»<div class="kv2"><b>الأثر على النموذج:</b> قسم 3 في نموذج تسجيل الجمعية يظهر ويختفي فعليًا مع حقل المجال.</div>'},
+'V02':{r:'BR-T-V02 · القسم 5.1.ج · صفحة 13',t:'شرط الخبرة في التشجير',
+ b:'«يُشترط لقبول طلب التأهيل البيئي أحد أمرين: <b>سنتان خبرة</b> موثقة في التشجير، <b>أو</b> شهادة شراكة فنية سارية مع مرجع معتمد. وعند عدم استيفاء أيٍّ منهما تظهر الرسالة <span class="ltr">CA01-T01</span> ولا يُسمح بإرسال الطلب.»<div class="kv2"><b>الأثر على النموذج:</b> حقل سنوات الخبرة يتحقق فوريًا، وزر الإرسال يبقى معطّلًا حتى الاستيفاء.</div>'},
+'V04':{r:'BR-T-V04 · القسم 5.2.ج · صفحة 18',t:'شرط ظهور خطوة التحقق الإداري',
+ b:'«تظهر خطوة <b>التحقق الإداري من أدلة التأهيل</b> للمراجع بشرطين معًا: اجتياز خطوة تدقيق المرفقات، ووجود خطاب موافقة مرفق ضمن الطلب. ويظهر معها التنبيه <span class="ltr">CA01-T07</span>.»<div class="kv2"><b>الأثر على النموذج:</b> قسم 3 في لوحة المراجعة مشروط، ويحمل التنبيه العنبري.</div>'},
+'V05JW':{r:'BR-T-V05 · البندان (ج) و(و) · صفحة 18',t:'البندان اللذان يفرضان مقارنة',
+ b:'من بين البنود الستة في <span class="ltr">BR-T-V05</span>، بندان فقط يفرضان مقارنة بين مصدرين:<div class="kv2"><b>(ج)</b> «تطابق اسم الجمعية <b>في الخطاب</b> مع <b>تسجيلها في إحسان</b>»<br><span style="color:var(--ink2)">المقارنة: المستخرج من الخطاب ← سجل المنصة</span></div><div class="kv2"><b>(و)</b> «الجهة المُصدِّرة <b>تتوافق مع نشاط الجمعية والوزارة المُشرِفة</b>»<br><span style="color:var(--ink2)">المقارنة: المستخرج من الخطاب ← الوزارة المشرفة على نشاط الجمعية</span></div><div class="kv2"><b>وبقية البنود ليست مقارنة:</b><br>(أ) سريان الخطاب — فحص تاريخ مقابل تاريخ اليوم<br>(ب) اعتماد الجهة — مطابقة مع قائمة مرجعية<br>(د) الختم والتوقيع — تحقق من وجود عنصر<br>(هـ) ذكر نطاق التشجير أو البيئة — قراءة نص</div><div class="kv2" style="background:var(--q-bg);border-color:var(--q-br);color:var(--q-tx)"><b>ملاحظة على النطاق الجغرافي:</b> البند (هـ) يطلب أن <b>يذكر</b> الخطاب نطاق التشجير أو البيئة، ولا يطلب <b>مطابقة</b> النطاق الجغرافي بما أدخلته الجمعية. فاختلافه يُعرض للمراجع معلومةً لا حكمًا.</div>'},
+'V05':{r:'BR-T-V05 · القسم 5.2.ج · صفحة 18',t:'نطاق صلاحيات المراجع وقائمة التحقق',
+ b:'«<b>صلاحيات المراجع تقتصر على الجوانب الإدارية فقط:</b><br>(أ) سريان الخطاب<br>(ب) اعتماد الجهة المصدرة، مدرجة في قائمة المراجع الفنية المعتمدة، القسم 5.6<br>(ج) تطابق اسم الجمعية مع السجل<br>(د) وجود الختم الرسمي والتوقيع<br>(هـ) ذكر نطاق التشجير أو البيئة<br>(و) توافق الجهة المصدرة مع نشاط الجمعية<br><br>ولا يملك المراجع صلاحية إصدار حكم فني مستقل على القدرة البيئية للجمعية. وأي شك في الجانب الفني يُحال إلى الجمعية لإحضار وثيقة من جهة أعلى، لا يُرفض الطلب ذاتيًا.»'},
+'V06':{r:'BR-T-V06 · القسم 5.2.ج · صفحتا 18 و19',t:'استقلال قرار التسجيل عن قرار التأهيل',
+ b:'«للمراجع صلاحية اتخاذ قرارين مستقلين لكل طلب يتضمن تأهيلًا بيئيًا:<br>(أ) قبول أو رفض <b>التسجيل العام</b> للجمعية في إحسان<br>(ب) قبول أو رفض <b>التأهيل البيئي</b> للتشجير<br><br><b>التركيبات الممكنة:</b><br>· قبول عام + قبول التأهيل ← جمعية معتمدة كاملًا وتستطيع رفع فرص تشجير<br>· قبول عام + رفض التأهيل ← جمعية معتمدة بدون فرص تشجير، وتُحفظ البيانات لإعادة التقدم عبر إجراء 5.8.5<br>· <b>رفض عام ← التأهيل البيئي ساقط تلقائيًا</b>، لا حاجة لقرار مستقل<br>· تأجيل القرارين معًا ← <b>غير مسموحة</b><br><br>وكل قرار يُسجل في سجل المراجعة باستقلالية مع تاريخه ومراجعه وسببه.»<div class="kv2"><b>الأثر على النموذج:</b> القرار الثاني يختفي عند رفض الأول، وحفظ القرارين فارغين ممنوع.</div>'},
+'V07':{r:'BR-T-V07 · القسم 5.4.ب · صفحتا 22 و23',t:'عرض سطر حالة التأهيل للجمعية',
+ b:'«يظهر سطر حالة التأهيل البيئي للجمعية في الحالات التالية:<br>(أ) لها تأهيل بيئي سارٍ (<span class="ltr">ENV-Q-02</span>) ← «مؤهلة للتشجير»<br>(ب) لها طلب قيد المراجعة (<span class="ltr">ENV-Q-01</span>) ← «قيد المراجعة»<br>(ج) رُفض طلبها (<span class="ltr">ENV-Q-03</span>) ← «مرفوضة — تستطيع إعادة التقدم»<br>(د) لم تتقدم أصلًا ← لا يظهر السطر، ويُستبدل بزر «هل تنوي التشجير؟»»'},
+'EXP':{r:'BR-T-V12 · الرسالة CA01-T10 · ملحق 5.1 ص 25',t:'مسار انتهاء الخطاب وتجديده',
+ b:'<b>التسلسل كما تنص عليه الوثيقة:</b><div class="kv2"><b>يوميًا:</b> «النظام يفحص يوميًا تواريخ انتهاء خطابات الموافقة»<br><b>قبل 60 يومًا:</b> «يُرسَل تنبيه <span class="ltr">CA01-T10</span> للجمعية»<br><b>عند الانتهاء:</b> «تنتقل الحالة لـ<span class="ltr">ENV-Q-04</span> آليًا، ويختفي خيار رفع فرص تشجير جديدة»<br><b>بعد الانتهاء:</b> «الفرص النشطة تستمر» — جدول الحالات ص 25</div><div class="kv2"><b>نص الرسالة <span class="ltr">CA01-T10</span>:</b><br>«تم تحديث حالة تأهيلكم البيئي للتشجير إلى <b>منتهية الصلاحية</b> لانتهاء صلاحية خطاب الموافقة. <b>تستطيعون إعادة التقدم عبر «تعديل بيانات الجمعية» بإرفاق خطاب موافقة سارٍ من المرجع الفني</b>»</div><div class="kv2"><b>مسار التجديد:</b> خطاب جديد ← الإجراء <span class="ltr">5.8.5</span> ← المراجعة الإدارية (<span class="ltr">BR-T-V03</span>) ← العودة إلى <span class="ltr">ENV-Q-02</span>.<br>ولا يحتاج إعادة تسجيل ولا طلبًا جديدًا.</div><div class="kv2"><b>نطاق الأثر:</b> الخطاب يخص <b>التأهيل البيئي للتشجير</b> لا تسجيل الجمعية. فالجمعية تبقى معتمدة في إحسان، ويُمنع عنها رفع فرص تشجيرية جديدة فقط. وهذا يتسق مع فصل القرارين في <span class="ltr">BR-T-V06</span>.</div>'},
+'V12':{r:'BR-T-V12 · القسم 5.2.ج',t:'المراقبة الزمنية لصلاحية خطاب الموافقة',
+ b:'«يفحص النظام <b>يوميًا</b> تواريخ انتهاء خطابات الموافقة لجميع الجمعيات المؤهلة. ويرسل التنبيه <span class="ltr">CA01-T10</span> إلى الجمعية <b>قبل الانتهاء بستين يومًا</b>. وعند بلوغ تاريخ الانتهاء دون تجديد تنتقل حالة الجمعية آليًا إلى <span class="ltr">ENV-Q-04</span> منتهية الصلاحية، مع استمرار فرصها النشطة.»<div class="kv2"><b>الأثر على النموذج:</b> جدول الرصد الاستباقي في لوحة المؤشرات.</div>'},
+'F7':{r:'حقل 7 · القسم 5.2.ب · صفحة 17',t:'ملاحظات إدارية على الخطاب',
+ b:'«<b>اسم الحقل:</b> ملاحظات إدارية على الخطاب<br><b>النوع:</b> نص طويل · <b>العرض:</b> نعم · <b>الحفظ:</b> نعم · <b>المصدر:</b> مدخل من المراجع<br><br><b>ملاحظات وقيود الحقل:</b> تُكتب فقط في حال «يحتاج خطابًا محدثًا» أو «مرفوض إداريًا». تشمل أسبابًا إدارية بحتة (سريان، تطابق، اعتماد الجهة، إلخ) ولا تشمل أحكامًا فنية.»<div class="kv2"><b>الأثر على النموذج:</b> الحقل مشروط بقائمة نتيجة التحقق الإداري.</div>'},
+'ENV':{r:'ملحق 5.1 · صفحة 25',t:'حالات التأهيل البيئي الخمس',
+ b:'<span class="ltr">ENV-Q-01</span> <b>قيد المراجعة</b> — أُرسل الطلب وينتظر التحقق الإداري<br><span class="ltr">ENV-Q-02</span> <b>مؤهلة للتشجير</b> — اعتُمد إداريًا والخطاب سارٍ<br><span class="ltr">ENV-Q-03</span> <b>مرفوضة</b> — رُفضت لأسباب إدارية<br><span class="ltr">ENV-Q-04</span> <b>منتهية الصلاحية</b> — مر تاريخ الانتهاء دون تجديد، والفرص النشطة تستمر<br><span class="ltr">ENV-Q-05</span> <b>معلّقة إداريًا</b> — إيقاف مؤقت بقرار من إحسان (ملاحظات أداء، شكوى، مراجعة). الانتقالات: ← <span class="ltr">ENV-Q-02</span> عند رفع التعليق، ← <span class="ltr">ENV-Q-03</span> عند الرفض النهائي'},
+ 'V04E':{r:'الفقرة (هـ) · الإجراءات الجديدة للمراجع · صفحة 20',t:'إجراء تسجيل نتيجة التحقق الإداري',
+ b:'<b>اسم الزر:</b> تسجيل نتيجة التحقق الإداري<br><b>نوع الحقل:</b> خيار تفاعلي<br><b>الإجراء عند النقر:</b> «يفتح نافذة منبثقة لإدخال نتيجة التحقق + بيانات خطاب الموافقة (تواريخ، رقم، جهة) + ملاحظات إدارية إن وُجدت»<br><b>ملاحظات:</b> «يظهر فقط للطلبات التي تحتوي تأهيلًا بيئيًا (<span class="ltr">BR-T-V04</span>)»<div class="kv2">هذا هو <b>الإجراء الجديد الوحيد</b> الذي أضافه الملحق لشاشة المراجعة. والفقرة (ب) في صفحتي 16 و17 تحدد الحقول السبعة، والفقرة (هـ) هنا تحدد كيف يصل إليها المراجع: بزر يفتح نافذة، لا حقولًا مبثوثة في الصفحة.</div>'},
+'DIFF':{r:'مقارنة بين ثلاثة مراجع · الحقول 2 إلى 7 · ص 16 و17',t:'قسم التحقق الإداري: أين يختلف المرجعان؟',
+ b:'<b>وثيقة متطلبات الأعمال (ص 16 و17):</b> ستة حقول، مصدرها جميعًا «<b>مدخل من المراجع</b>»:<br>3 · تاريخ إصدار الخطاب<br>4 · تاريخ انتهاء الصلاحية<br>5 · الجهة المصدرة<br>6 · رقم الخطاب<br>2 · نتيجة التحقق الإداري<br>7 · ملاحظات إدارية (مشروطة)<br><br><b>النموذج المشارك:</b> خمسة حقول مسترجعة: المسار المثبت، سنوات الخبرة، عدد المشاريع، الشريك الفني الدائم، الجهة المشرفة فنيًا.<div class="kv2"><b>ما يقدمه الحل:</b> استخراج بيانات الخطاب <b>آليًا من المرفق</b>، وعرضها للموظف ليراجعها ويعتمدها بدل كتابتها يدويًا.</div>'},
+'S12':{r:'القسم 1.2 · الأثر على المنظومة الحالية · صفحة 9',t:'مدخل الجمعيات المسجّلة سابقًا',
+ b:'<b>على المستخدمين الحاليين:</b> «لا أثر مباشر — الجمعيات غير المهتمة بالبيئة لن ترى الحقول الجديدة (Display Conditional)»<br><br><b>على الجمعيات المسجّلة سابقًا:</b> «<b>يمكنها التقدم بطلب تأهيل بيئي إضافي عبر «تعديل بيانات الجمعية» (<span class="ltr">5.8.5</span>) دون إعادة تسجيل</b>»<div class="kv2"><b>الأثر على الحل:</b> مسار التأهيل له مدخلان ينتهيان عند شاشة المراجعة نفسها. والتسجيل الأول <span class="ltr">5.1.3</span> يخدم الجمعيات الجديدة، بينما <span class="ltr">5.8.5</span> يخدم كل الجمعيات القائمة في المنصة. فيُتوقع أن تأتي غالبية طلبات التأهيل عند الإطلاق من المدخل الثاني.</div><div class="kv2">ويكتمل المسار بالبند (د) من <b>BR-T-V07</b>: الجمعية التي لم تتقدم يظهر لها زر «هل تنوي التشجير؟» ينقلها إلى الإجراء <span class="ltr">5.8.5</span>.</div>'},
+'V03':{r:'BR-T-V03 · القسم 5.1.ب · صفحة 14',t:'تعديل التأهيل بعد الاعتماد',
+ b:'«في حالة التعديل على بيانات التأهيل البيئي <b>بعد اعتماد الجمعية</b>، يستحق إرسال طلب تعديل لمراجعة جديدة عبر الإجراء القائم «تعديل بيانات الجمعية» (<span class="ltr">5.8.5</span>) — مع توجيه الطلب لمسار المراجعة الإدارية للتحقق من خطاب الموافقة الجديد.<br><br>هذا يُورث منطق <span class="ltr">5.8.5</span> ويضيف عليه شرط مسار.»<div class="kv2"><b>الأثر على الحل:</b> مسار التأهيل له مدخلان لا مدخل واحد: التسجيل الأول <span class="ltr">5.1.3</span>، والتعديل بعد الاعتماد <span class="ltr">5.8.5</span>. وكلاهما ينتهي عند شاشة المراجعة الإدارية نفسها.</div>'},
+'T3':{r:'التعديل 3 · القسم 5.3 · صفحة 21',t:'نطاق التعديل على جدول ملفات الجمعيات',
+ b:'«<b>تعديل في إجراء قائم</b> ◆ إضافة شارة بسيطة «مؤهلة للتشجير» + فلتر بسيط — <b>لا أكثر</b>.<br><br><b>السياق الحالي:</b> إجراء 5.4 يتيح لمدير النظام استعراض ملفات الجمعيات المعتمدة، مع إمكانية إيقاف رفع الفرص للجمعية بشكل عام (5.7.2). والإيقاف الحالي ثنائي: «الجمعية مفعّلة» أو «موقوفة كليًا».»'},
+'T5':{r:'التعديل 5 · القسم 5.5 · صفحة 23',t:'قائمة أنواع المجالات',
+ b:'«القائمة الحالية في <span class="ltr">V5.16</span> تحتوي تسعة خيارات: تعليمي / غذائي / سكني / صحي / ديني / اجتماعي / بيئي / تقني / أخرى. و«بيئي» قائم فعلًا في القائمة (الخيار رقم 7).»<div class="kv2"><b>الأثر على النموذج:</b> لا إضافة، فقط ربط منطق العرض المشروط بالخيار القائم.</div>'}
+};
+function brd(k){
+  var d=BRD[k]; if(!d)return;
+  document.getElementById('brdRef').textContent=d.r;
+  document.getElementById('brdTitle').textContent=d.t;
+  document.getElementById('brdBody').innerHTML=d.b;
+  document.getElementById('brd').classList.remove('hidden');
+}
+
+// ===== tour =====
+var TOUR=[
+ {n:'assocside',p:'form',t:'ما هذا النموذج؟',
+  b:'نموذج يعرض <b>الحل المقترح</b> لمسار مراجعة وتدقيق طلبات تسجيل الجمعيات في خدمة التشجير، بمقارنة بين الوضع الحالي والوضع بعد تطبيقه.<div class="kv2"><b>تنويه:</b> هذا نموذج لعرض الحل فقط. الواجهة قد تختلف تمامًا عند التطبيق الفعلي.</div>'},
+ {n:null,p:null,t:'المبدّل: الوضع الحالي والمستقبلي',
+  b:'أعلى كل شاشة مبدّل بين وضعين.<br><b>الوضع الحالي:</b> الشاشة كما يعمل عليها الموظف اليوم.<br><b>الوضع المستقبلي:</b> الشاشة نفسها بعد إضافة طبقة الحل.<div class="kv2">بدّل بينهما في أي وقت لترى الفرق بضغطة واحدة.</div>'},
+ {n:null,p:null,t:'كيف تقرأ الوسوم',
+  b:'كل قسم يحمل وسمًا يبيّن مصدره:<div class="kv2"><b>أصلي</b> — قائم قبل ملحق التشجير<br><b>إضافة الاستشاري</b> — أضافه ملحق خدمة التشجير<br><b>الحل · متطلب</b> — يحقق قاعدة منصوصة في الوثيقة، ومعه كودها<br><b>الحل · تحسين</b> — يضيفه الحل، وغير مطلوب في الوثيقة</div><div class="kv2">وبجانب كل قسم زر بكود القاعدة، يفتح نصها من وثيقة متطلبات الأعمال مباشرة.</div>'},
+ {n:'assocside',p:'form',t:'واجهة الجمعية',
+  b:'<b>نموذج تسجيل الجمعية:</b> سبعة أقسام، ويظهر بينها قسم التأهيل البيئي بستة حقول وثلاثة مرفقات عند اختيار المجال البيئي.<br><b>صفحة الجمعية:</b> تعرض حالة التأهيل، وبها مبدّل لحالات العرض الأربع لمعاينة ما يصل الجمعية في كل حالة.<div class="kv2">في الوضع المستقبلي يظهر فحص فوري أسفل النموذج يكشف النواقص قبل الإرسال.</div>'},
+ {n:'staff',p:'review',t:'واجهة الموظف المراجع',
+  b:'ثلاث شاشات:<br><b>لوحة المراجعة الذكية:</b> بيانات الطلب، ملخص المطابقة، تدقيق المرفقات، التحقق الإداري بست نقاط، رصد التعارضات، القراران المنفصلان، وسجل المراجعة.<br><b>إدارة ملفات الجمعيات:</b> جدول الجمعيات وحالات تأهيلها.<br><b>لوحة المؤشرات التشغيلية:</b> أداء المراجعة والرصد الاستباقي.<div class="kv2">القرار يبقى بيد المراجع في كل الحالات. النظام يرصد وينبّه ولا يقرر.</div>'},
+];
+var ti=0;
+function tRender(){
+  var s=TOUR[ti];
+  document.getElementById('tStep').textContent='خطوة '+(ti+1)+' من '+TOUR.length;
+  document.getElementById('tTitle').textContent=s.t;
+  document.getElementById('tBody').innerHTML=s.b;
+  document.getElementById('tDots').innerHTML=TOUR.map(function(_,i){return '<i class="'+(i===ti?'on':'')+'"></i>'}).join('');
+  document.getElementById('tPrev').style.visibility=ti===0?'hidden':'visible';
+  document.getElementById('tNext').textContent=ti===TOUR.length-1?'ابدأ التصفح':'التالي';
+  if(s.n){navTo(s.n,s.p);}
+}
+function tGo(d){ if(ti+d>=TOUR.length){tEnd();return;} ti=Math.max(0,ti+d); tRender(); }
+function tEnd(){ document.getElementById('tour').classList.add('hidden'); navTo('staff','review'); }
+function tStart(){ ti=0; document.getElementById('tour').classList.remove('hidden'); tRender(); }
+
+// ===== tabs =====
+function show(p){
+  ['form','review','files','assoc','dash'].forEach(function(x){
+    document.getElementById('p-'+x).classList.toggle('hidden',x!==p);
+  });
+  document.querySelectorAll('.tab[data-p]').forEach(function(x){x.classList.toggle('on',x.dataset.p===p)});
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('.tab[data-p]').forEach(function(t){
+  t.onclick=function(){show(t.dataset.p)};
+});
+function navTo(r,p){
+  document.querySelectorAll('.nav .navb[data-r]').forEach(function(x){x.classList.toggle('on',x.dataset.r===r)});
+  ['assocside','staff'].forEach(function(g){document.getElementById('tg-'+g).classList.toggle('hidden',g!==r)});
+  show(p||(r==='assocside'?'form':'review'));
+}
+document.querySelectorAll('.nav .navb[data-r]').forEach(function(a){
+  a.onclick=function(){ navTo(a.dataset.r); };
+});
+
+// ===== evidence viewer =====
+var EV={
+ fin:{t:'التقارير المالية',h:'التقرير المالي المرفق يغطي السنة المالية <span class="hl">2024</span> فقط. لا يوجد تقرير للسنة المالية 2025 ضمن المرفقات الأربعة.'},
+ scope:{t:'خطاب الموافقة — الصفحة 1',h:'... وعليه نفيد بموافقتنا على تأهيل الجمعية للقيام بـ<span class="hl">أعمال التشجير والتأهيل البيئي</span> ضمن نطاق <span class="hl">منطقة الرياض</span> وذلك اعتبارًا من تاريخ 2025-11-03 وحتى 2026-11-03 ...'},
+ seal:{t:'خطاب الموافقة — الصفحة 2',h:'... والله ولي التوفيق.<br><br>وكيل الوزارة للشؤون البيئية<br><span class="hl">[ختم رسمي + توقيع]</span><br>رقم الخطاب: MEWA-2025-8871'},
+ ref:{t:'الجهة المصدرة',h:'الجهة المصدرة المستخرجة: <span class="hl">وزارة البيئة والمياه والزراعة</span>.<br><br>تعذّر التحقق من اعتمادها، لأن «قائمة المراجع الفنية المعتمدة» المشار إليها في القسم 5.6 غير موجودة في وثيقة متطلبات الأعمال.'}
+};
+function ev(k){
+  var d=EV[k];
+  document.getElementById('evBox').innerHTML='<div style="font-size:12.5px;color:var(--ink2);margin-bottom:9px;font-weight:600">'+d.t+'</div><div class="ev-doc">'+d.h+'</div>';
+}
+
+function vres(){
+  var v=document.getElementById('verRes').value;
+  document.getElementById('adminNotes').classList.toggle('hidden', v!=='يحتاج خطابًا محدثًا' && v!=='مرفوض إداريًا');
+  var locked = (v==='قيد المراجعة') && mode==='future';
+  var lk=document.getElementById('d2lock'); if(lk) lk.classList.toggle('hidden',!locked);
+  document.querySelectorAll('input[name=d2]').forEach(function(r){
+    r.disabled=locked; if(locked) r.checked=false;
+    r.parentNode.style.opacity = locked?.4:1;
+  });
+  if(locked){var e=document.getElementById('d2r'); if(e) e.classList.add('hidden');}
+}
+
+// ===== verification modal =====
+var vmode='proto';
+function vview(v){
+  vmode=v;
+  document.getElementById('vbProto').classList.toggle('on',v==='proto');
+  document.getElementById('vbDoc').classList.toggle('on',v==='doc');
+  document.getElementById('vProto').classList.toggle('hidden',v!=='proto');
+  document.getElementById('vDoc').classList.toggle('hidden',v!=='doc');
+}
+var EXV={fx1:'2025-11-03',fx2:'2026-11-03',fx3:'وزارة البيئة والمياه والزراعة',fx4:'MEWA-2025-8871'};
+function bindCk(){
+  var b=document.getElementById('ckList'); if(!b)return;
+  b.parentNode.querySelectorAll('.ck input[type=checkbox]').forEach(function(c){ c.onchange=ckSync; });
+}
+function openVer(kind){
+  var fill = (kind==='ai');
+  Object.keys(EXV).forEach(function(id){
+    var el=document.getElementById(id); if(!el)return;
+    el.value = fill?EXV[id]:'';
+    el.style.background = fill?'#E3F1F5':'#fff';
+    el.style.borderColor = fill?'#A7CFDD':'#E5E9E7';
+  });
+  document.getElementById('vmRef').textContent = fill
+    ? 'الوضع المستقبلي · حقول مستخرجة آليًا من المرفق'
+    : 'الوضع الحالي · حقول يملؤها المراجع يدويًا';
+  document.getElementById('vmNote').innerHTML = fill
+    ? '<div class="box box-ai" style="margin-bottom:16px">◆ الحقول الأربعة أدناه <b>مستخرجة آليًا</b> من خطاب الموافقة المرفق. راجعها واعتمدها أو صححها.</div>'
+    : '<div class="box box-amber" style="margin-bottom:16px">◆ الحقول الأربعة أدناه <b>يُدخلها المراجع يدويًا</b> بعد فتح الخطاب وقراءته، كما تنص الوثيقة على أن مصدرها «مدخل من المراجع».</div>';
+  document.getElementById('vmodal').classList.remove('hidden');
+}
+
+function ckDone(){
+  var box=document.getElementById('ckList'); if(!box)return true;
+  var wrap=box.parentNode;
+  var cbs=wrap.querySelectorAll('.ck input[type=checkbox]');
+  if(!cbs.length) return true;
+  var n=0; cbs.forEach(function(c){if(c.checked)n++;});
+  return n===cbs.length;
+}
+function ckSync(){
+  var done=ckDone();
+  var n=document.getElementById('ckCount');
+  if(n){
+    var b=document.getElementById('ckList');
+    var cbs=b?b.parentNode.querySelectorAll('.ck input[type=checkbox]'):[];
+    var k=0; cbs.forEach(function(c){if(c.checked)k++;});
+    n.textContent=k+' من '+cbs.length;
+    n.style.color = done?'var(--ok)':'var(--ink2)';
+  }
+  vres();
+}
+
+function saveVer(){
+  var v=document.getElementById('verRes').value;
+  var f1=document.getElementById('fx1').value||'—';
+  var f2=document.getElementById('fx2').value||'—';
+  var col = v==='مقبول إداريًا'?'var(--ok)':(v==='قيد المراجعة'?'var(--warn)':'var(--bad)');
+  var box=document.getElementById('verSummary');
+  box.innerHTML='<div class="box" style="background:#FAFBFA;border:1px solid var(--line);border-right:3px solid '+col+';margin:0">'
+   +'<b style="color:'+col+'">نتيجة التحقق الإداري: '+v+'</b>'
+   +'<div style="font-size:12.5px;color:var(--ink2);margin-top:6px">تاريخ الإصدار: <span class="ltr">'+f1+'</span> · تاريخ الانتهاء: <span class="ltr">'+f2+'</span></div></div>';
+  box.classList.remove('hidden');
+  document.getElementById('vmodal').classList.add('hidden');
+  vres();
+}
+
+// ===== decisions =====
+function d1(){
+  var v=document.querySelector('input[name=d1]:checked').value;
+  var rej=v==='reject';
+  document.getElementById('d1r').classList.toggle('hidden',!rej);
+  document.getElementById('d2box').classList.toggle('hidden',rej);
+  document.getElementById('d2blocked').classList.toggle('hidden',!rej);
+  if(rej){document.querySelectorAll('input[name=d2]').forEach(function(r){r.checked=false});document.getElementById('d2r').classList.add('hidden');}
+}
+function d2(){
+  var v=document.querySelector('input[name=d2]:checked').value;
+  document.getElementById('d2r').classList.toggle('hidden',v!=='reject');
+}
+function logDec(name,res,reason){
+  var tb=document.getElementById('decLog'); if(!tb)return;
+  if(tb.querySelector('td[colspan]')) tb.innerHTML='';
+  var d=new Date(), p=function(n){return (n<10?'0':'')+n};
+  var stamp='<span class="ltr">2026-08-23 '+p(d.getHours())+':'+p(d.getMinutes())+'</span>';
+  var col = res==='قبول' ? 'var(--ok)' : 'var(--bad)';
+  tb.insertAdjacentHTML('beforeend','<tr><td>'+name+'</td><td><b style="color:'+col+'">'+res+'</b></td><td>'+stamp+'</td><td>م. عبدالله الشهري</td><td>'+reason+'</td></tr>');
+}
+function save(){
+  var a=document.querySelector('input[name=d1]:checked');
+  var b=document.querySelector('input[name=d2]:checked');
+  var m=document.getElementById('saveMsg');
+  if(!a&&!b){m.style.color='var(--bad)';m.innerHTML='✗ «تأجيل القرارين معًا» غير مسموح — <span class="ltr">BR-T-V06</span>';return;}
+  if(!a){m.style.color='var(--bad)';m.textContent='✗ يلزم اتخاذ القرار الأول أولًا.';return;}
+  var rs1=(document.querySelector('#d1r textarea')||{}).value||'—';
+  if(a.value==='reject'){
+    logDec('التسجيل العام','رفض',rs1);
+    logDec('التأهيل البيئي','ساقط تلقائيًا','رفض التسجيل العام — BR-T-V06');
+    m.style.color='var(--ok)';m.innerHTML='✓ حُفظ القرار: رفض التسجيل العام. التأهيل البيئي ساقط تلقائيًا. الحالة: <span class="ltr">ENV-Q-03</span> · إشعار <span class="ltr">CA01-T09</span>';return;}
+  if(mode==='future' && document.getElementById('verRes').value==='قيد المراجعة'){m.style.color='var(--bad)';m.innerHTML='✗ لا يُسمح بإصدار قرار التأهيل قبل اكتمال التحقق الإداري — <span class="ltr">BR-T-V05</span>';return;}
+  if(!b){m.style.color='var(--bad)';m.textContent='✗ يلزم اتخاذ قرار التأهيل البيئي.';return;}
+  var rs2=(document.querySelector('#d2r textarea')||{}).value||'—';
+  logDec('التسجيل العام','قبول','المستندات الأربعة مطابقة');
+  logDec('التأهيل البيئي', b.value==='accept'?'قبول':'رفض', b.value==='accept'?'التحقق الإداري من الخطاب: مقبول':rs2);
+  m.style.color='var(--ok)';
+  m.innerHTML = b.value==='accept'
+    ? '✓ حُفظ القراران: قبول التسجيل العام + قبول التأهيل البيئي. الحالة: <span class="ltr">ENV-Q-02</span> · إشعار <span class="ltr">CA01-T08</span>'
+    : '✓ حُفظ القراران: قبول التسجيل العام + رفض التأهيل البيئي. الحالة: <span class="ltr">ENV-Q-03</span> · إشعار <span class="ltr">CA01-T09</span>';
+}
+
+// ===== form =====
+function tog(){
+  var on=document.getElementById('fld').value==='بيئي';
+  document.getElementById('envSec').classList.toggle('hidden',!on);
+  chk();
+}
+function chk(){
+  var y=parseInt(document.getElementById('yrs').value||0);
+  var ack=document.getElementById('ack').checked;
+  var env=document.getElementById('fld').value==='بيئي';
+  var iss=[];
+  if(env){
+    if(y<2) iss.push(['سنوات الخبرة أقل من سنتين، ولم تُرفق شهادة شراكة فنية بديلة','BR-T-V02 · CA01-T01']);
+    if(!ack) iss.push(['لم يتم الإقرار بمنهجية العناية المعتمدة','CA01-T02']);
+    iss.push(['شهادة الشراكة الفنية غير مرفوعة — اختيارية عند توفر سجل المشاريع','مرفق بديل']);
+  }
+  var tot=env?15:9, done=tot-iss.filter(function(x){return x[1].indexOf('CA01')>-1}).length;
+  var ul=document.getElementById('issues');
+  var ok=iss.filter(function(x){return x[1].indexOf('CA01')>-1}).length===0;
+  ul.innerHTML = ok
+    ? '<li style="border-color:#B6DCC5;background:#F4FBF6"><div class="ni" style="background:var(--ok)">✓</div><div class="nb"><b>الطلب مكتمل وجاهز للإرسال</b><div class="nc">لا نواقص إلزامية</div></div></li>'
+      + (iss.length?'<li><div class="ni" style="background:#C08A2E">i</div><div class="nb">'+iss[iss.length-1][0]+'<div class="nc">'+iss[iss.length-1][1]+'</div></div></li>':'')
+    : iss.map(function(x,i){return '<li><div class="ni" style="background:'+(x[1].indexOf('CA01')>-1?'var(--bad)':'#C08A2E')+'">'+(i+1)+'</div><div class="nb">'+x[0]+'<div class="nc">'+x[1]+'</div></div></li>'}).join('');
+  var pct=Math.round(done/tot*100);
+  document.getElementById('barF').style.width=pct+'%';
+  document.getElementById('barF').style.background = ok?'var(--ok)':'var(--warn)';
+  document.getElementById('pctT').textContent=done+' من '+tot+' عنصرًا';
+  document.getElementById('sub').disabled=!ok;
+  document.getElementById('sub').style.opacity=ok?1:.5;
+}
+
+// ===== files table =====
+var ROWS=[
+ ['ASSOC-1043','جمعية البيئة المستدامة','الرياض','حضري','02'],
+ ['ASSOC-0876','جمعية الواحة الخضراء','القصيم','ريفي','02'],
+ ['ASSOC-1188','جمعية نماء البيئية','عسير','حِمائي','02'],
+ ['ASSOC-2077','جمعية غراس الشمال','الجوف','ريفي','01'],
+ ['ASSOC-0912','جمعية رواد الاستدامة','المدينة','ساحلي','04'],
+ ['ASSOC-1655','جمعية أرض الخير','تبوك','عام','05'],
+ ['ASSOC-1490','جمعية بذور العطاء','حائل','حضري','03'],
+ ['ASSOC-1301','جمعية عطاء الخير','الرياض','—','—'],
+ ['ASSOC-1422','جمعية بناء المجتمع','جدة','—','—']
+];
+var STN={'01':'قيد المراجعة','02':'مؤهلة','03':'مرفوضة','04':'منتهية الصلاحية','05':'معلّقة إداريًا'};
+var STC={'01':'#FDF6E3;color:#A97B2B','02':'#E8F5EC;color:#2E7D52','03':'#FBEAE8;color:#C0392B','04':'#EFF2F0;color:#5F6C66','05':'#FBF0E4;color:#9E5F26'};
+function renderFiles(){
+  var only=document.getElementById('filt') && document.getElementById('filt').checked;
+  var tb=document.querySelector('#tbl tbody'); if(!tb)return;
+  tb.innerHTML=ROWS.filter(function(r){return !only||r[4]==='02'}).map(function(r){
+    var leaf='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;display:inline-block;vertical-align:-1px"><path d="M20 4c0 9-5.5 14-12 14M8 18C5 15 4 9 8 6c3.5-2.6 9-2 12-2"/></svg>';
+    var badge = r[4]==='02'
+      ? '<span class="st-badge" style="background:#E8F5EC;color:#2E7D52">'+leaf+' مؤهلة للتشجير</span>'
+      : '<span style="color:var(--ink2)">—</span>';
+    var sys = r[4]==='—' ? '<span style="color:var(--ink2)">لم تتقدم</span>'
+      : '<span class="st-badge" style="background:'+STC[r[4]]+'"><span class="ltr">ENV-Q-'+r[4]+'</span> · '+STN[r[4]]+'</span>';
+    return '<tr><td><span class="ltr">'+r[0]+'</span></td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td>'+badge+'</td>'
+      +(mode==='future'?'<td>'+sys+'</td>':'')+'</tr>';
+  }).join('');
+}
+function filt(){renderFiles()}
+
+
+// ===== association status =====
+var ST={
+'01':{c:'#A97B2B',bg:'#FDF6E3',t:'قيد المراجعة',d:'طلب التأهيل البيئي قيد المراجعة الإدارية. المدة المتوقعة من 3 إلى 5 أيام عمل.',x:'CA01-T03'},
+'02':{c:'#2E7D52',bg:'#E8F5EC',t:'مؤهلة للتشجير',d:'الجمعية مؤهلة لرفع الفرص التشجيرية. خطاب الموافقة ساري حتى 2026-11-03.',x:'CA01-T08'},
+'03':{c:'#C0392B',bg:'#FBEAE8',t:'مرفوضة — تستطيع إعادة التقدم',d:'لم يُعتمد التأهيل البيئي للأسباب الإدارية المبينة أدناه.',x:'CA01-T09'},
+'00':{c:'#5F6C66',bg:'#EFF2F0',t:'لم تتقدم للتأهيل البيئي',d:'الجمعية مسجّلة في إحسان ولم تتقدم بطلب تأهيل بيئي. ولا يظهر لها سطر الحالة، بل زر يدعوها للتقدم.',x:'—'}
+};
+function st(k){
+  ['01','02','03','00'].forEach(function(x){document.getElementById('s'+x).classList.toggle('on',x===k)});
+  var s=ST[k];
+  var h='<div style="background:'+s.bg+';border:1px solid '+s.c+'33;border-right:3px solid '+s.c+';border-radius:10px;padding:15px 18px">'
+   +'<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:7px"><b style="color:'+s.c+';font-size:15px">'+s.t+'</b>'+(k==='00'?'<span class="st-badge" style="background:#fff;color:'+s.c+'">BR-T-V07 (د)</span>':'<span class="st-badge" style="background:#fff;color:'+s.c+'">ENV-Q-'+k+'</span>')
+   +'</div>'
+   +'<div style="font-size:13.5px;color:var(--ink)">'+s.d+'</div>'
+   +(s.x!=='—'?'<div style="font-size:11.5px;color:var(--ink2);margin-top:7px">الرسالة: <span class="ltr">'+s.x+'</span></div>':'')+'</div>';
+
+  if(k==='03'&&mode==='future'){
+    h+='<div class="sec ai-sec" style="margin-top:16px"><div class="sec-h"><div class="num">◆</div><h3 style="font-size:15px">سبب عدم الاعتماد</h3><span class="tg tg-req">الحل · متطلب</span><span class="ref">CA01-T09 · حقل 7</span></div><div class="sec-b">'
+     +'<ul class="nlist"><li><div class="ni">1</div><div class="nb">نطاق خطاب الموافقة المرفق يشمل منطقة الرياض، وطلبكم يشمل الرياض والقصيم<div class="nc">BR-T-V05 (هـ)</div></div></li>'
+     +'<li><div class="ni">2</div><div class="nb">التقرير المالي لعام 2025 غير مرفق<div class="nc">تدقيق المرفقات</div></div></li></ul>'
+     +'<div class="box box-ai" style="margin:12px 0 0">المطلوب لإعادة التقدم: خطاب موافقة ساري يشمل نطاقكم الجغرافي كاملًا، والتقرير المالي لعام 2025.</div></div></div>';
+  }
+  if(k==='03'&&mode==='current'){
+    h+='<div style="margin-top:14px;font-size:13.5px;color:var(--ink2);background:#F4F6F5;border:1px solid var(--line);border-radius:10px;padding:14px">يمكنكم إعادة التقدم بعد استيفاء المتطلبات.</div>';
+  }
+  if(k==='00'){
+    h+='<div class="sec" style="margin-top:16px;border-color:var(--g-soft)"><div class="sec-b" style="text-align:center;padding:26px">'
+     +'<p style="font-size:13.5px;color:var(--ink2);margin-bottom:14px">لا يظهر سطر حالة التأهيل. ويُستبدل بزر صغير كما ينص البند (د):</p>'
+     +'<button class="btn">هل تنوي التشجير؟ تقدّم للتأهيل البيئي</button>'
+     +'<p style="font-size:12px;color:var(--ink2);margin-top:12px">ينقل إلى الإجراء <span class="ltr">5.8.5</span> «تعديل بيانات الجمعية»</p></div></div>'
+     +'<div class="box box-ai ai-only" style="margin-top:14px">◆ هذا هو <b>المدخل الرئيسي المتوقع عند الإطلاق</b>، لأن الجمعيات المسجّلة في المنصة تتقدم للتأهيل عبره دون إعادة تسجيل، بينما التسجيل الأول يخص الجمعيات الجديدة وحدها. <button class="refbtn" onclick="brd(\'S12\')">القسم 1.2 · ص 9 ⌕</button></div>';
+  }
+  if(k==='02'&&mode==='future'){
+    h+='<div class="box box-ai" style="margin-top:14px">◆ <b>رصد استباقي:</b> يتبقى على انتهاء خطاب الموافقة 75 يومًا. سيصلكم تنبيه تلقائي قبل الانتهاء بستين يومًا — <span class="ltr">BR-T-V12</span></div>';
+  }
+
+  document.getElementById('stBox').innerHTML=h;
+}
+
+
+
+// ===== line chart =====
+(function(){
+  var el=document.getElementById('lineChart'); if(!el)return;
+  var IN=[22,26,19,31,24,29,18,15], DN=[19,24,20,27,26,28,21,16], BK=[3,5,4,8,6,7,4,3];
+  var L=['أ1','أ2','أ3','أ4','أ5','أ6','أ7','أ8'];
+  var W=640,H=210,pl=34,pr=10,pt=14,pb=30;
+  var mx=35, iw=W-pl-pr, ih=H-pt-pb;
+  function X(i){return pl+iw-(i*(iw/(L.length-1)))}
+  function Y(v){return pt+ih-(v/mx*ih)}
+  function path(a){return a.map(function(v,i){return (i?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1)}).join(' ')}
+  var g='';
+  [0,10,20,30].forEach(function(v){g+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="#EFF2F0" stroke-width="1"/><text x="'+(W-pr+4)+'" y="'+(Y(v)+4)+'" font-size="10" fill="#8A9691" text-anchor="start">'+v+'</text>'});
+  var area='M'+X(0)+' '+(pt+ih)+' '+path(IN).substring(1)+' L'+X(L.length-1)+' '+(pt+ih)+' Z';
+  var dots='';
+  IN.forEach(function(v,i){dots+='<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="3.6" fill="#fff" stroke="#14708C" stroke-width="2"/>'});
+  DN.forEach(function(v,i){dots+='<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="3" fill="#2E7D52"/>'});
+  BK.forEach(function(v,i){dots+='<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="2.6" fill="#C08A2E" opacity=".8"/>'});
+  var lab=L.map(function(t,i){return '<text x="'+X(i)+'" y="'+(H-9)+'" font-size="11" fill="#667571" text-anchor="middle">'+t+'</text>'}).join('');
+  el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;overflow:visible">'
+    +'<defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14708C" stop-opacity=".16"/><stop offset="1" stop-color="#14708C" stop-opacity="0"/></linearGradient></defs>'
+    +g+'<path d="'+area+'" fill="url(#ag)"/>'
+    +'<path d="'+path(BK)+'" fill="none" stroke="#C08A2E" stroke-width="1.6" stroke-dasharray="4 3" stroke-linecap="round"/>'
+    +'<path d="'+path(DN)+'" fill="none" stroke="#2E7D52" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>'
+    +'<path d="'+path(IN)+'" fill="none" stroke="#14708C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>'
+    +dots+lab+'</svg>';
+})();
+
+
+// ===== init =====
+tog(); chk(); vview('proto'); bindCk(); vres(); st('02'); renderFiles(); setMode('future'); tStart();
+</script>
+</body>
+</html>
