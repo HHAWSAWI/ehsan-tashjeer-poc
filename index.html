@@ -271,6 +271,391 @@ body.mode-future .cur-only{display:none!important}
 .foot{text-align:center;padding:34px 0;color:var(--ink2);font-size:12.5px;border-top:1px solid var(--line);margin-top:30px}
 @media(max-width:1080px){.grid{grid-template-columns:1fr}.side{position:static}.d2{grid-template-columns:1fr}}
 @media(max-width:680px){.fr{grid-template-columns:1fr}.ptitle{font-size:23px}}
+
+/* ═══ document criteria panel ═══ */
+.docs{display:flex;flex-direction:column;gap:9px;margin-top:6px}
+.doc{border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+.doc.ok{border-color:#B6DCC5}
+.doc.bad{border-color:#E8CF8F}
+.doc-h{display:flex;align-items:center;gap:9px;padding:10px 13px;background:#FAFBFA;border-bottom:1px solid var(--line)}
+.doc.ok .doc-h{background:#F4FBF6;border-bottom-color:#DBEDE2}
+.doc.bad .doc-h{background:#FDF9EF;border-bottom-color:#F0E2C0}
+.doc-h .fi{width:22px;height:22px;flex:0 0 22px;display:flex;align-items:center;justify-content:center;border-radius:6px;background:#EFF2F0;color:var(--ink2);font-weight:700;font-size:11px}
+.doc.ok .doc-h .fi{background:#DBEDE2;color:var(--ok)}
+.doc.bad .doc-h .fi{background:#F7EBCF;color:var(--warn)}
+.doc-h .nm{flex:1 1 auto;min-width:0;font-size:12.5px;font-weight:600;line-height:1.4}
+.doc-h .nm small{display:block;font-weight:400;font-size:10px;color:var(--ink2);margin-top:1px}
+.doc-h .score{flex:0 0 auto;font-size:12px;font-weight:700;white-space:nowrap}
+.doc.ok .doc-h .score{color:var(--ok)}
+.doc.bad .doc-h .score{color:var(--warn)}
+.doc-b{padding:10px 13px 12px}
+
+.critgrid{display:grid;grid-template-columns:repeat(var(--nc,6),1fr);gap:6px;margin-top:2px}
+.crit{
+  position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:8px 4px 7px;border-radius:8px;border:1px solid #F3F6F4;background:#FAFBFA;
+  text-align:center;
+}
+.crit.pass{background:#F6FBF8;border-color:#E1F0E7}
+.crit.fail{background:#FEFAF1;border-color:#F3E6C4}
+.crit .mk{
+  width:16px;height:16px;flex:0 0 16px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:9px;font-weight:700;color:#fff;line-height:1;
+}
+.crit.pass .mk{background:var(--ok)}
+.crit.fail .mk{background:var(--warn)}
+.crit .ct{min-width:0;width:100%}
+.crit .ct b{font-weight:600;display:block;line-height:1.3;font-size:9.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crit .hlp{
+  position:absolute;top:3px;left:3px;width:14px;height:14px;flex:0 0 14px;border-radius:50%;
+  cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink2);
+  font-size:8.5px;font-weight:700;font-family:var(--f);display:flex;align-items:center;
+  justify-content:center;padding:0;line-height:1;
+}
+.crit .hlp:hover{border-color:var(--g-main);color:var(--g-main);background:#fff}
+.crit.fail .hlp{border-color:var(--warn);color:var(--warn)}
+.crit.only{border-style:dashed}
+.crit.only::after{content:'يخص هذا المستند';position:absolute;bottom:3px;left:0;right:0;text-align:center;font-size:8px;color:var(--ink2);opacity:.75;line-height:1}
+.crit.only .ct{margin-bottom:7px}
+@media (max-width:820px){.critgrid{grid-template-columns:repeat(3,1fr)}}
+
+.failnotes{margin:9px 0 0;padding:9px 12px;background:#FEFAF1;border:1px solid #F3E6C4;border-radius:8px;font-size:11.5px;line-height:1.8;color:var(--ink2)}
+.failnotes li{list-style:none;margin-bottom:3px}
+.failnotes li:last-child{margin-bottom:0}
+.failnotes b{color:var(--warn);font-weight:600}
+.docact{display:flex;gap:11px;flex-wrap:wrap;align-items:center;margin-top:13px;padding-top:13px;border-top:1px solid #F3F6F4}
+.dochint{font-size:11.5px;color:var(--ink2);line-height:1.6}
+
+/* ===== معاينة المستند: قبل/بعد ===== */
+.prevwrap{display:flex;gap:10px;align-items:flex-start;margin-top:11px;padding-top:11px;border-top:1px solid #F3F6F4;flex-wrap:wrap}
+.prevcol{display:flex;gap:9px}
+.prev{width:126px;flex:0 0 126px}
+.prev-t{font-size:10px;font-weight:600;margin-bottom:4px;text-align:center;line-height:1.4}
+.prev.bad .prev-t{color:var(--warn)}
+.prev.good .prev-t{color:var(--ok)}
+.prev-f{position:relative;width:126px;height:168px;border-radius:6px;overflow:hidden;background:#fff;border:1px solid var(--line);cursor:zoom-in}
+.prev-f svg{width:100%;height:100%;display:block}
+.prev-f .sh{position:absolute;inset:0;pointer-events:none}
+.prev.bad .prev-f{border-color:#E8CF8F}
+.prev.good .prev-f{border-color:#B6DCC5}
+.rawfx.fx-dim svg{filter:contrast(.34) brightness(1.34) saturate(.7)}
+.rawfx.fx-soft svg{filter:blur(1.5px) contrast(.82) saturate(.85)}
+.rawfx.fx-soft .sh{background:none}
+.rawfx.fx-dim .sh{background:linear-gradient(205deg,rgba(22,32,28,.42) 0%,rgba(22,32,28,.16) 40%,rgba(22,32,28,0) 62%)}
+.prevtxt{flex:1 1 190px;min-width:170px;font-size:11.5px;line-height:1.75;color:var(--ink2)}
+.prevtxt b{color:var(--ink);font-weight:600}
+.prevzoom{display:inline-flex;align-items:center;gap:5px;margin-top:7px;background:#fff;border:1px solid var(--line);color:var(--ink2);border-radius:7px;font-size:11px;font-weight:600;padding:5px 11px;cursor:pointer;font-family:var(--f)}
+.prevzoom:hover{border-color:var(--ai);color:var(--ai)}
+
+
+.pgtabs{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.pgtab{background:#fff;border:1px solid var(--line);border-radius:7px;padding:5px 11px;font-size:11.5px;font-weight:600;color:var(--ink2);cursor:pointer;font-family:var(--f);display:inline-flex;align-items:center;gap:5px}
+.pgtab em{font-style:normal;width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:700;color:#fff;background:var(--ok)}
+.pgtab em.f{background:var(--ok)} .pgtab.bad em{background:var(--warn)}
+.pgtab.on{border-color:var(--ai);color:var(--ai);background:var(--ai-bg)}
+.pgtab.bad{border-color:#E8CF8F;color:var(--warn);background:#FDF9EF}
+.pgtab.bad.on{border-color:var(--warn)}
+.pgnote{font-size:11px;color:var(--ink2);margin-right:4px;line-height:1.6}
+
+.sim{background:#fff;color:var(--ink);border:1px dashed #9AA6A1;padding:9px 17px;border-radius:8px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:var(--f);white-space:nowrap}
+.sim:hover{border-color:var(--g-main);color:var(--g-main)}
+.simtag{font-size:9.5px;font-weight:700;color:var(--cream-tx);background:var(--cream);border:1px solid #F0E3C4;border-radius:5px;padding:2px 7px;font-style:normal}
+/* المقارنة داخل النافذة */
+.cmp{position:relative;width:100%;max-width:400px;margin:0 auto;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff;user-select:none;touch-action:none}
+.cmp .lay{position:absolute;inset:0}
+.cmp .lay svg{width:100%;height:100%;display:block}
+.cmp .sp{width:100%;display:block;visibility:hidden}
+.cmp .lbl{position:absolute;bottom:9px;font-size:10.5px;font-weight:700;padding:3px 10px;border-radius:20px;z-index:4;pointer-events:none}
+.cmp .lbl.r{right:9px;background:#FDF6E3;color:var(--warn);border:1px solid #E8CF8F}
+.cmp .lbl.l{left:9px;background:#E8F5EC;color:var(--ok);border:1px solid #B6DCC5}
+
+/* نقاط الإخفاق على المستند */
+.pin{position:absolute;width:19px;height:19px;border-radius:50%;background:var(--bad);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px rgba(192,57,43,.2);z-index:6}
+.pinleg{margin-top:12px;display:flex;flex-direction:column;gap:6px}
+.pinleg div{display:flex;gap:8px;align-items:flex-start;font-size:11.5px;line-height:1.6;color:var(--ink2)}
+.pinleg em{flex:0 0 18px;width:18px;height:18px;border-radius:50%;background:var(--bad);color:#fff;font-style:normal;font-size:9.5px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+
+/* جدول الاستخراج */
+.extr{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:10px}
+.extr th{background:#FAFBFA;font-weight:600;font-size:10.5px;color:var(--ink2);padding:7px 9px;border:1px solid var(--line);text-align:right}
+.extr td{padding:7px 9px;border:1px solid var(--line);line-height:1.6}
+.extr .none{color:#9AA6A1;font-style:normal}
+.extr .mt{color:var(--ok);font-weight:600;white-space:nowrap}
+.extr .df{color:var(--warn);font-weight:600;white-space:nowrap}
+.extr .nr{color:var(--ink2);white-space:nowrap}
+.exnote{margin-top:9px;padding:9px 12px;border-radius:8px;font-size:11.5px;line-height:1.75}
+.exnote.warn{background:#FEFAF1;border:1px solid #F3E6C4;color:var(--ink2)}
+.exnote.info{background:var(--ai-bg);border:1px solid var(--ai-br);color:#0E4E63}
+.exnote b{font-weight:600}
+
+
+
+
+
+/* ═══ لوحة المؤشرات ═══ */
+.dfbar{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;background:#fff;
+  border:1px solid var(--line);border-radius:12px;padding:13px 16px;margin-bottom:14px}
+.dfg{display:flex;flex-direction:column;gap:5px}
+.dfg label{font-size:11px;font-weight:600;color:var(--ink2)}
+.dfg select{font-family:var(--f);font-size:12.5px;color:var(--ink);background:#FAFAFC;
+  border:1px solid var(--line);border-radius:8px;padding:7px 11px;min-width:140px}
+.dfsp{flex:1}
+.dfmeta{font-size:11.5px;color:var(--ink2);align-self:center}
+.dlt{font-size:11px;font-weight:700;border-radius:5px;padding:2px 7px}
+.dlt.up{background:#E8F5EC;color:#2E7D52}
+.dlt.dn{background:#EAF1F6;color:#14708C}
+.granbar{display:flex;align-items:center;gap:6px;margin-right:auto}
+.granl{font-size:11.5px;font-weight:600;color:var(--ink2)}
+.granb{background:#fff;border:1px solid var(--line);border-radius:7px;font-size:12px;
+  font-weight:600;color:var(--ink2);padding:6px 13px;cursor:pointer;font-family:var(--f)}
+.granb:hover{border-color:var(--g-main);color:var(--g-main)}
+.granb.on{background:var(--g-main);border-color:var(--g-main);color:#fff}
+.dlnote{font-size:11px;color:var(--ink2);margin-right:auto}
+
+.hb{margin-bottom:13px}
+.hb-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:5px}
+.hb-h span{font-size:12.5px;color:var(--ink);line-height:1.5}
+.hb-h b{font-size:13.5px;color:var(--ink);white-space:nowrap}
+.hb-t{height:9px;background:#F1F3F2;border-radius:5px;overflow:hidden}
+.hb-f{height:100%;border-radius:5px}
+.hb-n{font-size:11px;color:var(--ink2);margin-top:4px}
+
+.fn{margin-bottom:12px}
+.fn-h{display:flex;align-items:center;gap:9px;margin-bottom:5px}
+.fn-i{width:20px;height:20px;border-radius:50%;background:#EDEAF6;color:var(--g-main);
+  font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.fn-n{flex:1;font-size:13px;font-weight:600;color:var(--ink)}
+.fn-h b{font-size:15px;color:var(--ink)}
+.fn-p{font-size:11px;font-weight:700;color:var(--ink2);background:#F1F3F2;border-radius:5px;padding:2px 7px}
+.fn-t{height:11px;background:#F1F3F2;border-radius:6px;overflow:hidden}
+.fn-f{height:100%;border-radius:6px}
+.fn-d{font-size:11px;color:var(--ink2);margin-top:4px}
+/* ═══ وسم المستندات في القوائم ═══ */
+.tagpill{display:inline-flex;align-items:center;gap:6px;background:#FDF6E8;border:1px solid #E0C489;
+  border-radius:20px;padding:3px 11px 3px 7px;font-size:11.5px;font-weight:700;color:#8A6110;white-space:nowrap}
+.tagpill em{width:16px;height:16px;border-radius:50%;background:var(--warn);color:#fff;font-style:normal;
+  font-size:10px;display:flex;align-items:center;justify-content:center}
+.tagnone{font-size:11.5px;color:#8C86A0}
+tr.rtag td{background:#FEFBF4}
+tr.rtag td:first-child{box-shadow:inset -3px 0 0 var(--warn)}
+
+/* ═══ شريط الوسم في صفحة مراجعة الطلب ═══ */
+.tagbar{display:flex;gap:13px;align-items:flex-start;background:#FDF6E8;border:1.5px solid #E0C489;
+  border-radius:11px;padding:14px 16px;margin-bottom:18px}
+.tagbar .ti{flex:0 0 34px;width:34px;height:34px;border-radius:9px;background:var(--warn);color:#fff;
+  font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.tagbar .tb-b{flex:1}
+.tagbar .tb-t{font-size:15px;font-weight:700;color:#8A6110;margin-bottom:4px}
+.tagbar .tb-d{font-size:12.5px;line-height:1.8;color:#6E5218}
+.tagitem{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid #E8DCC0;
+  border-radius:9px;padding:10px 12px;margin-top:10px}
+.tagitem em{flex:0 0 18px;width:18px;height:18px;border-radius:50%;background:var(--warn);color:#fff;
+  font-style:normal;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.tagitem .tt{font-size:12.5px;line-height:1.8;color:var(--ink2)}
+.tagitem .tt b{color:var(--ink)}
+.tagitem .tt i{display:block;font-style:normal;color:var(--ai);font-weight:600;margin-top:3px}
+.tagitem .tbtn{background:#fff;border:1px solid var(--line);border-radius:7px;font-size:11.5px;
+  font-weight:600;color:var(--ink2);padding:6px 11px;cursor:pointer;font-family:var(--f);white-space:nowrap}
+.tagitem .tbtn:hover{border-color:var(--ai);color:var(--ai)}
+
+.scopenote{display:flex;gap:11px;align-items:flex-start;background:var(--ai-bg);
+  border:1px solid var(--ai-br);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.scopenote .sn-i{flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:var(--ai);
+  color:#fff;font-size:11.5px;font-weight:700;display:flex;align-items:center;
+  justify-content:center;margin-top:1px}
+.scopenote .sn-t{font-size:12.5px;line-height:1.85;color:#0E4E63}
+.scopenote .sn-t b{font-weight:700}
+/* ═══ مبدّل الوضعين ═══ */
+.dmodebar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px;
+  padding:11px 14px;background:#F7F6FB;border:1px solid var(--line);border-radius:10px}
+.dmbl{font-size:12px;font-weight:600;color:var(--ink2)}
+.dmbtn{display:inline-flex;align-items:center;gap:9px;background:#fff;border:1.5px solid var(--line);
+  border-radius:9px;padding:8px 13px;cursor:pointer;font-family:var(--f);text-align:right}
+.dmbtn em{width:26px;height:26px;border-radius:7px;background:#EDEAF6;color:var(--g-main);
+  font-style:normal;font-size:14px;display:flex;align-items:center;justify-content:center}
+.dmbtn b{display:block;font-size:13px;color:var(--ink);font-weight:700}
+.dmbtn small{display:block;font-size:10.5px;color:var(--ink2);margin-top:1px}
+.dmbtn.on{border-color:var(--g-main);background:#F4F8F5}
+.dmbtn.on em{background:var(--g-main);color:#fff}
+.dmodenote{font-size:12px;line-height:1.8;color:var(--ink2);background:var(--ai-bg);
+  border:1px solid var(--ai-br);border-radius:9px;padding:10px 13px;margin-bottom:14px}
+.dmodenote b{color:#0E4E63}
+
+/* ═══ واجهة مقدم الطلب ═══ */
+.ub{border:1px solid var(--line);border-radius:12px;background:#fff;margin-bottom:14px;overflow:hidden}
+.ub.warn{border-color:#E8CF8F} .ub.bad{border-color:#E8B3AA} .ub.ok{border-color:#B6DCC5}
+.ub-h{display:flex;align-items:center;gap:10px;padding:12px 15px;border-bottom:1px solid #F1F3F2}
+.ub.ok .ub-h{background:#F6FBF8} .ub.warn .ub-h{background:#FEFAF1} .ub.bad .ub-h{background:#FDF3F1}
+.ub-n{flex:1;font-size:14px;font-weight:600;color:var(--ink)}
+.ub-n small{display:block;font-size:11px;font-weight:400;color:var(--ink2);margin-top:2px}
+.ub-b{padding:14px 15px}
+.upl{display:flex;align-items:center;gap:11px;border:1.5px dashed #CFCBDA;border-radius:10px;
+  padding:11px 13px;background:#FAFAFC;margin-bottom:13px}
+.upl .fic{width:34px;height:34px;border-radius:8px;background:#EDEAF6;color:var(--g-main);
+  display:flex;align-items:center;justify-content:center;font-size:15px}
+.upl .fnm{flex:1;font-size:12.5px;color:var(--ink);font-weight:600}
+.upl .fnm small{display:block;font-size:11px;font-weight:400;color:var(--ink2);margin-top:2px}
+.upl .ubtn{background:#fff;border:1px solid var(--line);border-radius:7px;font-size:11.5px;
+  font-weight:600;color:var(--ink2);padding:6px 12px;cursor:pointer;font-family:var(--f)}
+.upl .ubtn:hover{border-color:var(--g-main);color:var(--g-main)}
+.ugrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+@media (max-width:860px){.ugrid{grid-template-columns:repeat(2,1fr)}}
+.uc{display:flex;align-items:center;gap:8px;border:1px solid;border-radius:9px;padding:9px 11px;font-size:12px}
+.uc.u-ok{background:#F6FBF8;border-color:#DCEEE4}
+.uc.u-warn{background:#FDF6E8;border-color:#F0DFB8}
+.uc.u-bad{background:#FCF0EE;border-color:#EFCEC8}
+.uc.u-na{background:#FAFAFC;border-color:var(--line);opacity:.72}
+.uc i{width:19px;height:19px;border-radius:50%;color:#fff;font-size:11px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;font-style:normal;flex:0 0 19px}
+.uc.u-ok i{background:var(--ok)} .uc.u-warn i{background:var(--warn)}
+.uc.u-bad i{background:var(--bad)} .uc.u-na i{background:#B0AABF}
+.uc span{font-weight:600;color:var(--ink);line-height:1.4}
+.unote{margin-top:13px;border-radius:10px;padding:12px 14px;border:1px solid}
+.unote.w{background:#FDF6E8;border-color:#E8CF8F}
+.unote.b{background:#FDF0EE;border-color:#E8B3AA}
+.unote .uh{font-size:13px;font-weight:700;margin-bottom:5px}
+.unote.w .uh{color:var(--warn)} .unote.b .uh{color:var(--bad)}
+.unote .ubd{font-size:12.5px;line-height:1.8;color:var(--ink2)}
+.ualert{display:flex;align-items:center;gap:9px;margin-top:11px;background:#fff;
+  border:1px solid #E8CF8F;border-radius:9px;padding:10px 13px}
+.ualert em{width:20px;height:20px;border-radius:50%;background:var(--warn);color:#fff;
+  font-style:normal;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.ualert span{font-size:12.5px;font-weight:600;color:#6E5218}
+.uact{display:flex;align-items:center;gap:10px;margin-top:13px;padding-top:12px;
+  border-top:1px solid #F3F6F4;flex-wrap:wrap}
+.ackbtn{background:var(--ai);color:#fff;border:none;border-radius:8px;font-size:12.5px;
+  font-weight:600;padding:9px 16px;cursor:pointer;font-family:var(--f)}
+.ackbtn:hover{filter:brightness(1.08)}
+.ackdone{display:inline-flex;align-items:center;gap:8px;background:#E8F5EC;border:1px solid #B6DCC5;
+  border-radius:8px;padding:8px 13px;font-size:12.5px;font-weight:600;color:var(--ok)}
+.uok{display:flex;align-items:center;gap:9px;margin-top:12px;background:#F1F9F4;
+  border:1px solid #B6DCC5;border-radius:9px;padding:10px 13px}
+.uok em{width:20px;height:20px;border-radius:50%;background:var(--ok);color:#fff;font-style:normal;
+  font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.uok span{font-size:12.5px;font-weight:600;color:#1F6242}
+
+/* نافذة الإقرار */
+.acktx{background:#FAFAFC;border:1px solid var(--line);border-radius:10px;padding:14px 16px;
+  font-size:12.5px;line-height:2;color:var(--ink2);max-height:210px;overflow-y:auto}
+.acktx b{color:var(--ink)}
+.acktx ol{margin:8px 10px 0 0;padding:0}
+.acktx li{margin-bottom:7px}
+.ackchk{display:flex;gap:10px;align-items:flex-start;margin-top:14px;background:var(--ai-bg);
+  border:1px solid var(--ai-br);border-radius:9px;padding:12px 14px}
+.ackchk input{margin-top:3px;width:17px;height:17px;flex:0 0 17px;accent-color:var(--ai);cursor:pointer}
+.ackchk label{font-size:12.5px;line-height:1.8;color:#0E4E63;cursor:pointer;font-weight:600}
+/* ═══ نموذج الطبقتين والسيناريوهات ═══ */
+.scenbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:16px;
+  padding:11px 14px;background:#FAFAFC;border:1px solid var(--line);border-radius:10px}
+.sbl{font-size:12px;font-weight:600;color:var(--ink2)}
+.sch{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);
+  border-radius:20px;padding:5px 12px 5px 7px;font-size:12px;font-weight:600;cursor:pointer;
+  font-family:var(--f);color:var(--ink)}
+.sch em{width:19px;height:19px;border-radius:50%;font-style:normal;font-size:11px;font-weight:700;
+  color:#fff;display:flex;align-items:center;justify-content:center}
+.sch:hover{box-shadow:0 2px 8px rgba(0,0,0,.10)}
+.sch.s-ok em{background:var(--ok)} .sch.s-ok{border-color:#B6DCC5}
+.sch.s-bad em{background:var(--bad)} .sch.s-bad{border-color:#E8B3AA}
+.sch.s-warn em{background:var(--warn)} .sch.s-warn{border-color:#E8CF8F}
+.sch.s-neu em{background:#8C86A0} .sch.s-neu{border-color:var(--line)}
+.doc2{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:14px;
+  background:#fff;transition:box-shadow .25s}
+.doc2.flash{box-shadow:0 0 0 3px rgba(31,111,168,.30)}
+.doc2.s-ok{border-color:#B6DCC5}
+.doc2.s-note{border-color:#E8CF8F}
+.doc2.s-rej{border-color:#E8B3AA}
+.d2h{display:flex;align-items:center;gap:11px;padding:13px 15px;border-bottom:1px solid #F1F3F2}
+.doc2.s-ok .d2h{background:#F6FBF8}
+.doc2.s-note .d2h{background:#FEFAF1}
+.doc2.s-rej .d2h{background:#FDF3F1}
+.doc2.s-out .d2h{background:#FAFAFC}
+.scb{flex:0 0 24px;width:24px;height:24px;border-radius:50%;color:#fff;font-size:12.5px;
+  font-weight:700;display:flex;align-items:center;justify-content:center}
+.scb.s-ok{background:var(--ok)} .scb.s-bad{background:var(--bad)}
+.scb.s-warn{background:var(--warn)} .scb.s-neu{background:#8C86A0}
+.d2n{flex:1;font-size:14px;font-weight:600;color:var(--ink);line-height:1.4}
+.d2n small{display:block;font-size:11px;font-weight:400;color:var(--ink2);margin-top:2px}
+.pill{font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:20px;white-space:nowrap}
+.pill.pok{background:#E8F5EC;color:var(--ok)}
+.pill.pwarn{background:#FDF6E8;color:var(--warn)}
+.pill.pbad{background:#FBEAE8;color:var(--bad)}
+.pill.pneu{background:#F2F2F5;color:#6B6680}
+.d2b{padding:14px 15px}
+.layer{margin-bottom:12px}
+.layer.dim{opacity:.72}
+.lhd{display:flex;align-items:flex-start;gap:9px;margin-bottom:9px}
+.lnum{flex:0 0 22px;width:22px;height:22px;border-radius:6px;color:#fff;font-size:12px;
+  font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.lnum.l1{background:var(--g-main)} .lnum.l2{background:var(--ai)} .lnum.lo{background:#B0AABF}
+.ltx b{display:block;font-size:13px;font-weight:700;color:var(--ink)}
+.ltx small{display:block;font-size:11px;color:var(--ink2);margin-top:1px}
+.chips{display:flex;gap:9px;flex-wrap:wrap}
+.chip{position:relative;display:inline-flex;align-items:center;gap:7px;border-radius:8px;
+  padding:8px 12px 8px 34px;border:1px solid;font-size:12.5px}
+.chip.cok{background:#F6FBF8;border-color:#DCEEE4}
+.chip.cbad{background:#FEFAF1;border-color:#F0DFB8}
+.cmk{width:17px;height:17px;border-radius:50%;color:#fff;font-size:10.5px;font-weight:700;
+  display:flex;align-items:center;justify-content:center}
+.chip.cok .cmk{background:var(--ok)} .chip.cbad .cmk{background:var(--warn)}
+.cnm{font-weight:600;color:var(--ink)}
+.chlp{position:absolute;left:8px;top:50%;transform:translateY(-50%);width:18px;height:18px;
+  border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink2);
+  font-size:10.5px;font-weight:700;cursor:pointer;font-family:var(--f);line-height:1}
+.chlp:hover{border-color:var(--ai);color:var(--ai)}
+.outnote{font-size:12px;line-height:1.75;color:var(--ink2);background:#FAFAFC;
+  border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.box{border-radius:9px;padding:11px 13px;margin-top:12px;border:1px solid}
+.bx-ok{background:#F1F9F4;border-color:#B6DCC5}
+.bx-warn{background:#FDF6E8;border-color:#E8CF8F}
+.bx-bad{background:#FDF0EE;border-color:#E8B3AA}
+.bxh{font-size:13px;font-weight:700;margin-bottom:5px}
+.bx-ok .bxh{color:var(--ok)} .bx-warn .bxh{color:var(--warn)} .bx-bad .bxh{color:var(--bad)}
+.bxb{font-size:12.5px;line-height:1.8;color:var(--ink2)}
+.bxb b{color:var(--ink)}
+.loc{display:inline-block;margin-top:4px;font-size:11.5px;color:var(--warn);font-weight:600}
+.ackbox{display:flex;gap:9px;align-items:flex-start;margin-top:11px;padding:10px 12px;
+  background:var(--ai-bg);border:1px solid var(--ai-br);border-radius:8px}
+.ackbox input{margin-top:3px;width:15px;height:15px;flex:0 0 15px;accent-color:var(--ai);cursor:pointer}
+.ackbox label{font-size:12px;line-height:1.75;color:#0E4E63;cursor:pointer}
+.hint2{font-size:11.5px;line-height:1.75;color:var(--ink2);margin-top:9px}
+.dact{display:flex;align-items:center;gap:9px;margin-top:12px;padding-top:11px;
+  border-top:1px solid #F3F6F4;flex-wrap:wrap}
+.gate.warn{background:#FEFAF1;border-color:#E8CF8F}
+.gate.warn .gh em{background:var(--warn)}
+.gate.warn .gh span{color:var(--warn)}
+.tagp{margin-top:14px;border:1px solid var(--ai-br);border-radius:10px;overflow:hidden;background:#fff}
+.tph{display:block;background:var(--ai-bg);color:#0E4E63;font-size:12px;font-weight:700;
+  padding:8px 13px;border-bottom:1px solid var(--ai-br)}
+.tprow{display:flex;gap:9px;padding:10px 13px;border-bottom:1px solid #F3F6F4;font-size:12px;
+  line-height:1.75;color:var(--ink2)}
+.tprow em{flex:0 0 18px;width:18px;height:18px;border-radius:50%;background:var(--warn);color:#fff;
+  font-style:normal;font-size:11px;font-weight:700;display:flex;align-items:center;
+  justify-content:center;margin-top:2px}
+.tprow b{color:var(--ink)} .tprow i{color:var(--ai);font-style:normal;font-weight:600}
+.tpb{display:block;padding:10px 13px;font-size:11.5px;line-height:1.75;color:var(--ink2)}
+.tagp.none .tpb{padding:12px 13px}
+.gate{margin-top:18px;border-radius:11px;padding:15px 18px;border:1px solid}
+.gate.ok{background:#F4FBF6;border-color:#B6DCC5}
+.gate.bad{background:#FDF9EF;border-color:#E8CF8F}
+.gate .gh{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700;line-height:1.5}
+.gate .gh em{width:20px;height:20px;flex:0 0 20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-style:normal;color:#fff}
+.gate.ok .gh{color:var(--ok)} .gate.ok .gh em{background:var(--ok)}
+.gate.bad .gh{color:var(--warn)} .gate.bad .gh em{background:var(--warn)}
+.gate .gd{font-size:12.5px;color:var(--ink2);margin-top:8px;line-height:1.8}
+
+.ack{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+.ackrow{display:flex;align-items:flex-start;gap:12px;padding:12px 15px;border:1px solid var(--line);border-radius:9px;background:#fff;font-size:12.5px;line-height:1.75}
+.ackrow input{width:17px;height:17px;flex:0 0 17px;accent-color:var(--g-main);cursor:pointer;margin-top:3px}
+.ackrow.extra{border-color:var(--ai-br);background:var(--ai-bg)}
+.ackrow label{cursor:pointer;flex:1 1 auto}
+
+.hbody{font-size:13px;line-height:1.9}
+.hbody .hstep{display:flex;gap:12px;margin-bottom:11px}
+.hbody .hstep i{width:21px;height:21px;flex:0 0 21px;border-radius:50%;background:var(--g-soft);color:var(--g-text);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px;font-style:normal;line-height:1}
+.guide{margin-top:16px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#FAFBFA}
+.guide-t{padding:9px 14px;font-size:11.5px;font-weight:700;background:#F1F4F2;border-bottom:1px solid var(--line)}
+.guide svg{display:block;width:100%;height:auto}
+
 </style>
 </head>
 <body class="mode-future">
@@ -321,6 +706,28 @@ body.mode-future .cur-only{display:none!important}
       <button class="btn btn-sm" onclick="saveVer()">حفظ نتيجة التحقق</button>
     </div>
   </div>
+</div></div>
+
+
+<div class="ovl hidden" id="hmodal" style="z-index:320"><div class="tcard" style="max-width:600px">
+  <div class="tc-h"><div class="step" id="hRef" style="font-family:ui-monospace,monospace;font-size:11px"></div><h3 id="hTitle"></h3></div>
+  <div class="tc-b" style="max-height:62vh;overflow-y:auto"><div class="hbody" id="hBody"></div></div>
+  <div class="tc-f"><span style="font-size:12px;color:var(--ink2)">إرشاد لاستيفاء المعيار</span><button class="btn btn-sm" onclick="document.getElementById('hmodal').classList.add('hidden')">إغلاق</button></div>
+</div></div>
+
+<div class="ovl hidden" id="amodal" style="z-index:340"><div class="tcard" style="max-width:600px">
+  <div class="tc-h"><div class="step" style="font-size:11px" id="aRef"></div><h3 id="aTitle"></h3></div>
+  <div class="tc-b" style="max-height:62vh;overflow-y:auto"><div id="aBody"></div></div>
+  <div class="tc-f">
+    <button class="btn btn-sm" style="background:#fff;color:var(--ink2);border:1px solid var(--line)" onclick="document.getElementById('amodal').classList.add('hidden')">إلغاء</button>
+    <button class="btn btn-sm" id="aOk" onclick="confirmAck()">موافق · أقرّ بذلك</button>
+  </div>
+</div></div>
+
+<div class="ovl hidden" id="pmodal" style="z-index:330"><div class="tcard" style="max-width:640px">
+  <div class="tc-h"><div class="step" style="font-size:11px">معاينة المرفق</div><h3 id="pTitle"></h3></div>
+  <div class="tc-b" style="max-height:66vh;overflow-y:auto"><div id="pBody"></div></div>
+  <div class="tc-f"><span id="pFoot" style="font-size:12px;color:var(--ink2)"></span><button class="btn btn-sm" onclick="document.getElementById('pmodal').classList.add('hidden')">إغلاق</button></div>
 </div></div>
 
 <div class="banner">◆ نموذج لعرض الحل فقط — الواجهة قد تختلف عند التطبيق الفعلي.</div>
@@ -391,6 +798,24 @@ body.mode-future .cur-only{display:none!important}
       <div class="f"><label>حالة الطلب</label><div class="ro">قيد المراجعة</div></div>
 
     </div></div>
+
+    <!-- وسم المستندات -->
+    <div class="ai-only tagbar">
+      <div class="ti">!</div>
+      <div class="tb-b">
+        <div class="tb-t">هذا الطلب موسوم: مستند عليه ملاحظة أقرّ مقدم الطلب بصحته</div>
+        <div class="tb-d">رُصدت ملاحظة على محتوى مستند، وأقرّ مقدم الطلب بصحته تحت مسؤوليته فأُرسل الطلب.
+          والوسم يحدد المستند المعني ونص الملاحظة، فتفتحه مباشرة دون مراجعة المرفقات كلها. والقرار بيدك.</div>
+        <div class="tagitem">
+          <em>!</em>
+          <div class="tt"><b>خطاب موافقة عام من المرجع الفني</b> — سريان تاريخ الوثيقة:
+            تاريخ انتهاء الوثيقة <span class="ltr">2026-08-31</span>، وقد مضى.
+            <br>الموضع: الصفحة 1 · حقل «صالح حتى» أعلى الخطاب.
+            <i>أقرّ مقدم الطلب بصحة المستند بتاريخ <span class="ltr">2026-09-08</span> — عبدالله محمد الشهري</i></div>
+          <button class="tbtn" onclick="ev('scope')">عرض المستند</button>
+        </div>
+      </div>
+    </div>
 
     <!-- 2 : AI SUMMARY -->
     <div class="sec imp-sec ai-only"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18a8.5 8.5 0 1 1 16 0"/><path d="M12 14l3.5-3.5"/></svg></div><h3>ملخص فحص المطابقة</h3><span class="tg tg-imp">الحل · تحسين</span><span class="ref">مخرج معلن في وثيقة إثبات المفهوم</span></div>
@@ -618,13 +1043,30 @@ body.mode-future .cur-only{display:none!important}
     <div class="sec-b"><p style="color:var(--ink2);font-size:13.5px">الأقسام الأربعة المتبقية من النموذج القائم، معروضة مطوية في هذا النموذج الأولي لتركيز العرض على مسار التأهيل البيئي.</p></div>
   </div>
 
-  <div class="sec imp-sec ai-only"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18a8.5 8.5 0 1 1 16 0"/><path d="M12 14l3.5-3.5"/></svg></div><h3>الفحص الفوري قبل الإرسال</h3><span class="tg tg-imp">الحل · تحسين</span><span class="ref">يقلّل دورات الرد</span></div>
+  <div class="sec imp-sec ai-only"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l2 2 4-4"/><path d="M20.5 12a8.5 8.5 0 1 1-3.2-6.6"/></svg></div><h3>مراجعة المستندات على طبقتين</h3><span class="tg tg-imp">الحل · تحسين</span><span class="ref">قبل إرسال الطلب</span></div>
     <div class="sec-b">
-      <div class="bar"><div class="bar-h"><span>اكتمال الطلب</span><b id="pctT">14 من 15 عنصرًا</b></div><div class="bar-t"><div class="bar-f" id="barF" style="width:93%;background:var(--ai)"></div></div></div>
-      <ul class="nlist" id="issues"></ul>
+      <p style="font-size:12.5px;color:var(--ink2);margin-bottom:14px;line-height:1.85">يُراجع النظام كل مرفق على طبقتين. <b>الطبقة الأولى</b> قواعد ثابتة بلا ذكاء اصطناعي، ونتيجتها قاطعة: إن لم تُستوفَ لم يُقبل المرفق. و<b>الطبقة الثانية</b> تدقيق لمحتوى المستند بالذكاء الاصطناعي، ومخرجه ملاحظة لا منع: تعدّل المستند فتزول، أو تقرّ بصحته فيُرسل الطلب موسومًا ويفصل الموظف في الملاحظة.<br>واضغط <b>i</b> بجانب أي بند لمعرفة تفصيله، أو اضغط أحد السيناريوهات الأربعة أدناه للانتقال إلى مثاله.</p>
+      <div class="scopenote"><span class="sn-i">i</span><span class="sn-t"><b>نطاق التدقيق بالذكاء الاصطناعي:</b> يقتصر تدقيق محتوى المستند على المستندات المحددة قليلة الصفحات، ولا يشمل المرفقات كبيرة الحجم كسجل المشاريع السابقة. وتلك تُقبل بعد استيفاء قواعد قبول الملف، وتُراجع ضمن المراجعة الشاملة للطلب. وسبب ذلك أن تدقيق مستند يتجاوز خمسين صفحة يستهلك زمنًا وتكلفة معالجة مرتفعة، ويتكرر عند كل إعادة رفع.</span></div>
+      <div class="dmodebar">
+        <span class="dmbl">اعرض المسار بوضع:</span>
+        <button id="mbBack" class="dmbtn on" onclick="setMode('back')">
+          <em>⚙</em><span><b>الباك إند</b><small>كيف يتم التحقق داخليًا</small></span></button>
+        <button id="mbFront" class="dmbtn" onclick="setMode('front')">
+          <em>◱</em><span><b>الفرونت إند</b><small>ما يراه مقدم الطلب فعلًا</small></span></button>
+      </div>
+      <div id="dModeNote" class="dmodenote"></div>
+      <div class="docs" id="docs"></div>
+      <div class="docs hidden" id="docsUser"></div>
+      <div class="gate" id="gate"></div>
+      <div class="ack" id="ackBox"></div>
+      <div id="tagPrev"></div>
     </div>
   </div>
-  <div style="margin-bottom:60px"><button class="btn" id="sub">إرسال طلب التأهيل البيئي</button></div>
+  <div style="margin-bottom:60px">
+    <button class="btn" id="sub2" disabled style="opacity:.45">إرسال طلب التأهيل البيئي</button>
+    <div class="hint ai-only" style="margin-top:8px">يُفعّل الزر بعد استيفاء معايير جميع المستندات والإقرار.</div>
+    <button class="btn cur-only" id="sub">إرسال طلب التأهيل البيئي</button>
+  </div>
 </section>
 
 <!-- ══════════════ PAGE: FILES ══════════════ -->
@@ -641,7 +1083,7 @@ body.mode-future .cur-only{display:none!important}
     <div class="sec-b">
       <label style="display:flex;align-items:center;gap:9px;font-size:13.5px;margin-bottom:15px;cursor:pointer"><input type="checkbox" id="filt" onchange="filt()" style="width:17px;height:17px;accent-color:var(--g-main)"> عرض المؤهلات للتشجير فقط <span class="tg tg-cons">إضافة الاستشاري</span></label>
       <div class="tw"><table id="tbl">
-        <thead><tr><th>الكود</th><th>الجمعية</th><th>المنطقة</th><th>التصنيف البيئي <span class="tg tg-cons">إضافة</span></th><th>الشارة</th><th class="ai-only">حالة النظام <span class="tg tg-imp">الحل · تحسين</span></th></tr></thead>
+        <thead><tr><th>الكود</th><th>الجمعية</th><th>المنطقة</th><th>التصنيف البيئي <span class="tg tg-cons">إضافة</span></th><th>الشارة</th><th class="ai-only">حالة النظام <span class="tg tg-imp">الحل · تحسين</span></th><th class="ai-only">وسم المستندات <span class="tg tg-imp">الحل · تحسين</span></th></tr></thead>
         <tbody></tbody>
       </table></div>
     </div>
@@ -718,130 +1160,156 @@ body.mode-future .cur-only{display:none!important}
 
   <div id="dashFut">
 
-    <div class="dhead">
-      <div><b>الفترة:</b> يوليو 2026 · <span style="color:var(--ink2)">آخر تحديث قبل 4 دقائق</span></div>
-      <div class="dhead-r">جميع المؤشرات مشتقة من سجل المراجعة · أرقام توضيحية لأغراض العرض</div>
+    <!-- شريط الفلاتر -->
+    <div class="dfbar">
+      <div class="dfg"><label>الفترة</label>
+        <select><option>سنة 2026</option><option>الربع الثالث 2026</option><option>يوليو 2026</option><option>آخر 12 شهرًا</option></select></div>
+      <div class="dfg"><label>المنطقة</label>
+        <select><option>جميع المناطق</option><option>الرياض</option><option>مكة</option><option>القصيم</option><option>عسير</option></select></div>
+      <div class="dfg"><label>نوع الطلب</label>
+        <select><option>الكل</option><option>تأهيل بيئي</option><option>تسجيل عام</option></select></div>
+      <div class="dfsp"></div>
+      <div class="dfmeta">آخر تحديث قبل 4 دقائق · أرقام توضيحية لأغراض العرض</div>
     </div>
 
-    <!-- KPI ROW -->
+    <!-- المؤشرات -->
     <div class="kpis">
       <div class="kpi"><div class="kl">الطلبات الواردة</div><div class="kv">184</div>
-        <div class="kmeta"><span>يوليو 2026</span></div></div>
+        <div class="kmeta"><span class="dlt up">▲ 12%</span><span>عن يونيو</span></div></div>
       <div class="kpi"><div class="kl">قيد المراجعة الآن</div><div class="kv">18</div>
-        <div class="kmeta"><span class="chip chip-a">6 تجاوزت 3 أيام</span></div></div>
+        <div class="kmeta"><span class="chip chip-a">6 تجاوزت المدة المستهدفة</span></div></div>
+      <div class="kpi"><div class="kl">الطلبات المعتمدة</div><div class="kv">126</div>
+        <div class="kmeta"><span class="dlt up">▲ 9%</span><span>عن يونيو</span></div></div>
+      <div class="kpi"><div class="kl">الطلبات المعادة</div><div class="kv">31</div>
+        <div class="kmeta"><span class="dlt dn">▼ 26%</span><span>تحسّن</span></div></div>
+      <div class="kpi"><div class="kl">الطلبات المرفوضة</div><div class="kv">9</div>
+        <div class="kmeta"><span class="dlt dn">▼ 18%</span><span>عن يونيو</span></div></div>
+    </div>
+    <div class="kpis" style="margin-top:12px">
       <div class="kpi"><div class="kl">متوسط زمن المراجعة</div><div class="kv">21<span class="unit">دقيقة</span></div>
-        <div class="kmeta"><span>على 184 طلبًا</span></div></div>
+        <div class="kmeta"><span class="dlt dn">▼ 25%</span><span>من الوصول إلى الإغلاق</span></div></div>
       <div class="kpi"><div class="kl">مكتملة من أول تقديم</div><div class="kv">76<span class="unit">%</span></div>
-        <div class="kmeta"><span>139 من 184</span></div></div>
+        <div class="kmeta"><span class="dlt up">▲ 8 نقاط</span><span>139 من 184</span></div></div>
       <div class="kpi"><div class="kl">متوسط دورات الرد</div><div class="kv">1.3</div>
-        <div class="kmeta"><span>لكل طلب أُعيد</span></div></div>
+        <div class="kmeta"><span class="dlt dn">▼ 28%</span><span>لكل طلب أُعيد</span></div></div>
+      <div class="kpi"><div class="kl">مستندات عليها ملاحظة</div><div class="kv">32</div>
+        <div class="kmeta"><span>أُرسلت موسومة بإقرار</span></div></div>
+      <div class="kpi"><div class="kl">خطابات تقارب الانتهاء</div><div class="kv">14</div>
+        <div class="kmeta"><span class="chip chip-a">رصد استباقي · 60 يومًا</span></div></div>
     </div>
 
-    <!-- ROW 2 -->
-    <div class="d3">
-      <div class="sec span2"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4M4 20h16"/><path d="M7 15l3.5-4 3 2.5L20 8"/></svg></div><h3 style="font-size:16px">حركة الطلبات الأسبوعية</h3><span class="ref">آخر 8 أسابيع</span></div>
-        <div class="sec-b">
-          <div id="lineChart"></div>
-          <div class="dl" style="margin-top:12px">
-            <span><i class="sw" style="background:#14708C"></i> واردة</span>
-            <span><i class="sw" style="background:#2E7D52"></i> مُنجَزة</span>
-            <span><i class="sw" style="background:#C08A2E;border-radius:50%"></i> متراكمة في نهاية الأسبوع</span>
-          </div>
+    <!-- حركة الطلبات -->
+    <div class="sec" style="margin-top:16px"><div class="sec-h">
+      <div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4M4 20h16"/><path d="M7 15l3.5-4 3 2.5L20 8"/></svg></div>
+      <h3 style="font-size:16px">حركة الطلبات</h3>
+      <span class="ref" id="trendSub"></span>
+      <div class="granbar">
+        <span class="granl">التجميع:</span>
+        <button id="gb-year"  class="granb" onclick="setGran('year')">سنوات</button>
+        <button id="gb-month" class="granb on" onclick="setGran('month')">شهور</button>
+        <button id="gb-day"   class="granb" onclick="setGran('day')">أيام</button>
+      </div>
+    </div>
+      <div class="sec-b">
+        <div id="trendChart"></div>
+        <div class="dl" style="margin-top:10px">
+          <span><i class="sw" style="background:#14708C"></i> الطلبات الواردة</span>
+          <span><i class="sw" style="background:#2E7D52"></i> الطلبات المُنجَزة</span>
+          <span><i class="sw" style="background:#C08A2E"></i> الطلبات المعادة</span>
+          <span class="dlnote">بدّل التجميع بين السنوات والشهور والأيام من الأزرار أعلاه.</span>
         </div>
       </div>
+    </div>
 
+    <!-- المسار والمآل -->
+    <div class="d3">
+      <div class="sec span2"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8v6l-4 2v-8L3 5z"/></svg></div><h3 style="font-size:16px">مسار الطلب من الورود إلى الاعتماد</h3><span class="ref">يوليو 2026</span></div>
+        <div class="sec-b"><div id="funnel"></div></div>
+      </div>
       <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9h-9V3z"/></svg></div><h3 style="font-size:16px">مآل الطلبات</h3></div>
         <div class="sec-b">
           <div class="donut">
             <svg viewBox="0 0 42 42" width="150" height="150">
               <circle cx="21" cy="21" r="15.9" fill="none" stroke="#EFF2F0" stroke-width="5.2"/>
-              <circle cx="21" cy="21" r="15.9" fill="none" stroke="#2E7D52" stroke-width="5.2" stroke-dasharray="78 22" stroke-dashoffset="25"/>
-              <circle cx="21" cy="21" r="15.9" fill="none" stroke="#C08A2E" stroke-width="5.2" stroke-dasharray="12 88" stroke-dashoffset="-53"/>
-              <circle cx="21" cy="21" r="15.9" fill="none" stroke="#C0392B" stroke-width="5.2" stroke-dasharray="10 90" stroke-dashoffset="-65"/>
+              <circle cx="21" cy="21" r="15.9" fill="none" stroke="#2E7D52" stroke-width="5.2" stroke-dasharray="68.5 31.5" stroke-dashoffset="25"/>
+              <circle cx="21" cy="21" r="15.9" fill="none" stroke="#C08A2E" stroke-width="5.2" stroke-dasharray="16.8 83.2" stroke-dashoffset="-43.5"/>
+              <circle cx="21" cy="21" r="15.9" fill="none" stroke="#C0392B" stroke-width="5.2" stroke-dasharray="4.9 95.1" stroke-dashoffset="-60.3"/>
+              <circle cx="21" cy="21" r="15.9" fill="none" stroke="#98A5A0" stroke-width="5.2" stroke-dasharray="9.8 90.2" stroke-dashoffset="-65.2"/>
             </svg>
             <div class="donut-c"><b>184</b><span>طلبًا</span></div>
           </div>
-          <div class="lrow"><span><i class="sw" style="background:#2E7D52"></i> معتمدة</span><b>143</b></div>
-          <div class="lrow"><span><i class="sw" style="background:#C08A2E"></i> أُعيدت للتعديل</span><b>22</b></div>
-          <div class="lrow"><span><i class="sw" style="background:#C0392B"></i> مرفوضة</span><b>19</b></div>
+          <div class="lrow"><span><i class="sw" style="background:#2E7D52"></i> معتمدة</span><b>126</b></div>
+          <div class="lrow"><span><i class="sw" style="background:#C08A2E"></i> معادة للتعديل</span><b>31</b></div>
+          <div class="lrow"><span><i class="sw" style="background:#C0392B"></i> مرفوضة</span><b>9</b></div>
+          <div class="lrow"><span><i class="sw" style="background:#98A5A0"></i> قيد المراجعة</span><b>18</b></div>
         </div>
       </div>
     </div>
 
-    <!-- ROW 3 -->
+    <!-- الملاحظات والمناطق -->
     <div class="d2">
-      <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h12l-2.2 3.6L17 11H5"/></svg></div><h3 style="font-size:16px">أكثر الملاحظات تكرارًا</h3><span class="ref">2,562 فحصًا</span></div>
-        <div class="sec-b">
-          <div class="bar"><div class="bar-h"><span>تأكيد اعتماد الجهة المصدرة</span><b>142</b></div><div class="bar-t"><div class="bar-f" style="width:92%;background:#14708C"></div></div><div class="bar-n"><span class="ref">BR-T-V05 (ب)</span></div></div>
-          <div class="bar"><div class="bar-h"><span>النطاق الجغرافي في الخطاب أضيق من المدخل</span><b>87</b></div><div class="bar-t"><div class="bar-f" style="width:57%;background:#14708C"></div></div><div class="bar-n"><span class="ref">BR-T-V05 (هـ)</span></div></div>
-          <div class="bar"><div class="bar-h"><span>نقص في التقارير المالية</span><b>64</b></div><div class="bar-t"><div class="bar-f" style="width:42%;background:#14708C"></div></div><div class="bar-n"><span class="ref">تدقيق المرفقات</span></div></div>
-          <div class="bar"><div class="bar-h"><span>سنوات الخبرة دون الحد الأدنى</span><b>39</b></div><div class="bar-t"><div class="bar-f" style="width:26%;background:#14708C"></div></div><div class="bar-n"><span class="ref">BR-T-V02</span></div></div>
-          <div class="bar" style="margin-bottom:0"><div class="bar-h"><span>الختم يحتاج تأكيدًا في مرفق ممسوح</span><b>28</b></div><div class="bar-t"><div class="bar-f" style="width:18%;background:#14708C"></div></div><div class="bar-n"><span class="ref">BR-T-V05 (د)</span></div></div>
-          <div class="insight">الملاحظة الأولى تمثل <b>24%</b> من الإجمالي، ومعالجتها ترفع نسبة الاعتماد من أول مراجعة بشكل ملحوظ.</div>
+      <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4M5 4h12l-2.2 3.6L17 11H5"/></svg></div><h3 style="font-size:16px">أكثر الملاحظات تكرارًا</h3><span class="ref">372 ملاحظة</span></div>
+        <div class="sec-b"><div id="barNotes"></div>
+          <div class="box box-ai" style="margin-top:6px">◆ ترتيب الملاحظات الأكثر رصدًا يوجّه التحسين: أعلاها انتهاء تاريخ الوثيقة، وهو ما يعالجه الرصد الاستباقي أدناه.</div>
         </div>
       </div>
-
-      <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6z"/><path d="M10 19a2.2 2.2 0 0 0 4 0"/></svg></div><h3 style="font-size:16px">الرصد الاستباقي لصلاحية خطابات التأهيل البيئي</h3><span class="ref">BR-T-V12</span></div>
-        <div class="sec-b">
-          <div class="minik">
-            <div class="mk"><b style="color:var(--ok)">96</b><span>خطاب ساري</span></div>
-            <div class="mk"><b style="color:var(--warn)">5</b><span>ينتهي خلال 60 يومًا</span></div>
-            <div class="mk"><b style="color:var(--bad)">7</b><span>منتهٍ دون تجديد</span></div>
-          </div>
-          <div class="tw"><table>
-            <thead><tr><th>الجمعية</th><th>الانتهاء</th><th>المتبقي</th><th>الحالة</th></tr></thead>
-            <tbody>
-              <tr><td>جمعية الواحة الخضراء</td><td><span class="ltr">2026-09-28</span></td><td><b style="color:var(--warn)">39 يومًا</b></td><td><span class="st-badge" style="background:#FDF6E3;color:var(--warn)">تنبيه مرسل</span></td></tr>
-              <tr><td>جمعية نماء البيئية</td><td><span class="ltr">2026-10-11</span></td><td><b style="color:var(--warn)">52 يومًا</b></td><td><span class="st-badge" style="background:#FDF6E3;color:var(--warn)">تنبيه مرسل</span></td></tr>
-              <tr><td>جمعية أرض الخير</td><td><span class="ltr">2026-10-19</span></td><td><b style="color:var(--warn)">60 يومًا</b></td><td><span class="st-badge" style="background:#FDF6E3;color:var(--warn)">تنبيه اليوم</span></td></tr>
-              <tr><td>جمعية البيئة المستدامة</td><td><span class="ltr">2026-11-03</span></td><td>75 يومًا</td><td><span class="st-badge" style="background:#E8F5EC;color:var(--ok)">ساري</span></td></tr>
-              <tr><td>جمعية رواد الاستدامة</td><td><span class="ltr">2026-06-14</span></td><td><b style="color:var(--bad)">منتهٍ</b></td><td><span class="st-badge" style="background:#EFF2F0;color:#5F6C66">ENV-Q-04</span></td></tr>
-            </tbody>
-          </table></div>
-          <div class="insight">التنبيه يُرسل آليًا قبل الانتهاء بستين يومًا عبر <span class="ltr">CA01-T10</span>، والانتقال إلى <span class="ltr">ENV-Q-04</span> يتم آليًا عند الانتهاء.</div>
-        </div>
+      <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></div><h3 style="font-size:16px">توزيع الطلبات على المناطق</h3><span class="ref">مع جودة التقديم</span></div>
+        <div class="sec-b"><div id="barRegions"></div></div>
       </div>
     </div>
 
-    <!-- ROW 4 -->
-    <div class="d3">
-      <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c0 9-5.5 14-12 14M8 18C5 15 4 9 8 6c3.5-2.6 9-2 12-2"/></svg></div><h3 style="font-size:16px">حالات التأهيل البيئي</h3></div>
-        <div class="sec-b">
-          <div class="lrow lg"><span><span class="st-badge" style="background:#E8F5EC;color:#2E7D52">ENV-Q-02</span> مؤهلة</span><b>96</b></div>
-          <div class="lrow lg"><span><span class="st-badge" style="background:#FDF6E3;color:#A97B2B">ENV-Q-01</span> قيد المراجعة</span><b>18</b></div>
-          <div class="lrow lg"><span><span class="st-badge" style="background:#FBEAE8;color:#C0392B">ENV-Q-03</span> مرفوضة</span><b>12</b></div>
-          <div class="lrow lg"><span><span class="st-badge" style="background:#EFF2F0;color:#5F6C66">ENV-Q-04</span> منتهية</span><b>7</b></div>
-          <div class="lrow lg"><span><span class="st-badge" style="background:#FBF0E4;color:#9E5F26">ENV-Q-05</span> معلّقة</span><b style="color:var(--ink2)">—</b></div>
-        </div>
-      </div>
-
-      <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg></div><h3 style="font-size:16px">توزيع الطلبات على المناطق</h3></div>
-        <div class="sec-b">
-          <div class="bar"><div class="bar-h"><span>الرياض</span><b>62</b></div><div class="bar-t"><div class="bar-f" style="width:100%;background:#1B5E3A"></div></div></div>
-          <div class="bar"><div class="bar-h"><span>القصيم</span><b>34</b></div><div class="bar-t"><div class="bar-f" style="width:55%;background:#2E7D52"></div></div></div>
-          <div class="bar"><div class="bar-h"><span>عسير</span><b>29</b></div><div class="bar-t"><div class="bar-f" style="width:47%;background:#4E9C72"></div></div></div>
-          <div class="bar"><div class="bar-h"><span>المدينة المنورة</span><b>24</b></div><div class="bar-t"><div class="bar-f" style="width:39%;background:#76B893"></div></div></div>
-          <div class="bar"><div class="bar-h"><span>الشرقية</span><b>21</b></div><div class="bar-t"><div class="bar-f" style="width:34%;background:#9BCEB1"></div></div></div>
-          <div class="bar" style="margin-bottom:0"><div class="bar-h"><span>مناطق أخرى</span><b>14</b></div><div class="bar-t"><div class="bar-f" style="width:23%;background:#C1E0CE"></div></div></div>
-        </div>
-      </div>
-
-      <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 19a6 6 0 0 1 12 0"/><path d="M16 6.2a3 3 0 0 1 0 5.6M17.5 19a6 6 0 0 0-2-4.5"/></svg></div><h3 style="font-size:16px">حمل المراجعين</h3></div>
-        <div class="sec-b">
-          <div class="rvw"><div class="av">م.أ</div><div class="rv-b"><div class="rv-t"><span>مراجع 1</span><b>68 طلبًا</b></div><div class="bar-t"><div class="bar-f" style="width:100%;background:#14708C"></div></div></div></div>
-          <div class="rvw"><div class="av">م.ب</div><div class="rv-b"><div class="rv-t"><span>مراجع 2</span><b>61 طلبًا</b></div><div class="bar-t"><div class="bar-f" style="width:90%;background:#14708C"></div></div></div></div>
-          <div class="rvw"><div class="av">م.ج</div><div class="rv-b"><div class="rv-t"><span>مراجع 3</span><b>55 طلبًا</b></div><div class="bar-t"><div class="bar-f" style="width:81%;background:#14708C"></div></div></div></div>
-          <div class="minik" style="margin:16px 0 0">
-            <div class="mk"><b>61</b><span>متوسط لكل مراجع</span></div>
-            <div class="mk"><b>3.2</b><span>طلبات في الساعة</span></div>
+    <!-- التأهيل وحمل المراجعين -->
+    <div class="d2">
+      <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c0 9-5.5 14-12 14M8 18C5 15 4 9 8 6c3.5-2.6 9-2 12-2"/></svg></div><h3 style="font-size:16px">حالات التأهيل البيئي</h3><span class="ref">بحسب المنطقة</span></div>
+        <div class="sec-b"><div id="stackEnv"></div>
+          <div class="dl" style="margin-top:10px">
+            <span><i class="sw" style="background:#2E7D52"></i> ساري</span>
+            <span><i class="sw" style="background:#C08A2E"></i> يقارب الانتهاء</span>
+            <span><i class="sw" style="background:#C0392B"></i> منتهٍ</span>
           </div>
-          <div class="insight">توزيع الحمل متقارب، ما يدل على ثبات معيار التوزيع بعد إدخال الفحص الآلي.</div>
         </div>
+      </div>
+      <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><path d="M17 8h4M19 6v4"/></svg></div><h3 style="font-size:16px">حمل المراجعين</h3><span class="ref">يوليو 2026</span></div>
+        <div class="sec-b"><div id="barLoad"></div></div>
+      </div>
+    </div>
+
+    <!-- الرصد الاستباقي -->
+    <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v5l3 2"/><circle cx="12" cy="12" r="9"/></svg></div><h3 style="font-size:16px">الرصد الاستباقي لصلاحية خطابات التأهيل البيئي</h3><span class="ref">14 خطابًا خلال 60 يومًا</span></div>
+      <div class="sec-b">
+        <p style="font-size:12.5px;color:var(--ink2);margin-bottom:12px;line-height:1.8">الخطابات التي تقترب صلاحيتها من الانتهاء، مرتبة بالأقرب. ويتيح ذلك تنبيه الجمعية قبل انتهاء خطابها بدل اكتشاف الانتهاء عند تقديم طلب جديد.</p>
+        <div class="tw"><table>
+          <thead><tr><th>الجمعية</th><th>المنطقة</th><th>تاريخ الانتهاء</th><th>المتبقي</th><th>الحالة</th></tr></thead>
+          <tbody>
+            <tr><td>جمعية بذور العطاء</td><td>حائل</td><td><span class="ltr">2026-09-24</span></td><td><span class="ltr">12</span> يومًا</td><td><span class="res r-bad">يقارب الانتهاء</span></td></tr>
+            <tr><td>جمعية غراس الشمال</td><td>الجوف</td><td><span class="ltr">2026-10-06</span></td><td><span class="ltr">24</span> يومًا</td><td><span class="res r-warn">تنبيه</span></td></tr>
+            <tr><td>جمعية أرض الخير</td><td>تبوك</td><td><span class="ltr">2026-10-19</span></td><td><span class="ltr">37</span> يومًا</td><td><span class="res r-warn">تنبيه</span></td></tr>
+            <tr><td>جمعية نماء البيئية</td><td>عسير</td><td><span class="ltr">2026-11-02</span></td><td><span class="ltr">51</span> يومًا</td><td><span class="res r-warn">تنبيه</span></td></tr>
+            <tr><td>جمعية الواحة الخضراء</td><td>القصيم</td><td><span class="ltr">2026-11-09</span></td><td><span class="ltr">58</span> يومًا</td><td><span class="res r-warn">تنبيه</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- مقارنة الفترات -->
+    <div class="sec"><div class="sec-h"><div class="num"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4M4 20h16"/><rect x="7" y="11" width="3.4" height="6" rx=".6"/><rect x="13.6" y="7" width="3.4" height="10" rx=".6"/></svg></div><h3 style="font-size:16px">مقارنة الطلبات لفترات محددة</h3><span class="ref">الفترة قابلة للاختيار</span></div>
+      <div class="sec-b">
+        <p style="font-size:12.5px;color:var(--ink2);margin-bottom:13px;line-height:1.8">مقارنة حجم الطلبات ونتائجها بين فترتين أو أكثر، شهرًا بشهر أو ربعًا بربع أو سنة بسنة، مع بيان نسبة التغيّر ارتفاعًا أو انخفاضًا.</p>
+        <div class="tw"><table>
+          <thead><tr><th>المؤشر</th><th>يونيو 2026</th><th>يوليو 2026</th><th>التغيّر</th></tr></thead>
+          <tbody>
+            <tr><td>الطلبات الواردة</td><td><span class="ltr">164</span></td><td><span class="ltr">184</span></td><td><span class="res r-ok">▲ 12%</span></td></tr>
+            <tr><td>الطلبات المعادة</td><td><span class="ltr">42</span></td><td><span class="ltr">31</span></td><td><span class="res r-ok">▼ 26%</span></td></tr>
+            <tr><td>مكتملة من أول تقديم</td><td><span class="ltr">68%</span></td><td><span class="ltr">76%</span></td><td><span class="res r-ok">▲ 8 نقاط</span></td></tr>
+            <tr><td>متوسط زمن المراجعة</td><td><span class="ltr">28</span> دقيقة</td><td><span class="ltr">21</span> دقيقة</td><td><span class="res r-ok">▼ 25%</span></td></tr>
+            <tr><td>متوسط دورات الرد</td><td><span class="ltr">1.8</span></td><td><span class="ltr">1.3</span></td><td><span class="res r-ok">▼ 28%</span></td></tr>
+            <tr><td>الطلبات المرفوضة</td><td><span class="ltr">11</span></td><td><span class="ltr">9</span></td><td><span class="res r-ok">▼ 18%</span></td></tr>
+          </tbody>
+        </table></div>
       </div>
     </div>
 
   </div>
-  <div style="height:50px"></div>
 </section>
 
 
@@ -930,14 +1398,16 @@ var TOUR=[
  {n:null,p:null,t:'كيف تقرأ الوسوم',
   b:'كل قسم يحمل وسمًا يبيّن مصدره:<div class="kv2"><b>أصلي</b> — قائم قبل ملحق التشجير<br><b>إضافة الاستشاري</b> — أضافه ملحق خدمة التشجير<br><b>الحل · متطلب</b> — يحقق قاعدة منصوصة في الوثيقة، ومعه كودها<br><b>الحل · تحسين</b> — يضيفه الحل، وغير مطلوب في الوثيقة</div><div class="kv2">وبجانب كل قسم زر بكود القاعدة، يفتح نصها من وثيقة متطلبات الأعمال مباشرة.</div>'},
  {n:'assocside',p:'form',t:'واجهة الجمعية',
-  b:'<b>نموذج تسجيل الجمعية:</b> سبعة أقسام، ويظهر بينها قسم التأهيل البيئي بستة حقول وثلاثة مرفقات عند اختيار المجال البيئي.<br><b>صفحة الجمعية:</b> تعرض حالة التأهيل، وبها مبدّل لحالات العرض الأربع لمعاينة ما يصل الجمعية في كل حالة.<div class="kv2">في الوضع المستقبلي يظهر فحص فوري أسفل النموذج يكشف النواقص قبل الإرسال.</div>'},
+  b:'<b>نموذج تسجيل الجمعية:</b> سبعة أقسام، ويظهر بينها قسم التأهيل البيئي بستة حقول وثلاثة مرفقات عند اختيار المجال البيئي.<br><b>صفحة الجمعية:</b> تعرض حالة التأهيل، وبها مبدّل لحالات العرض الأربع لمعاينة ما يصل الجمعية في كل حالة.<div class="kv2">في الوضع المستقبلي تُراجع المرفقات على طبقتين قبل الإرسال: قواعد قبول الملف، ثم تدقيق المحتوى بالذكاء الاصطناعي.</div>'},
+ {n:'assocside',p:'form',t:'الطبقتان والسيناريوهات الأربعة',
+  b:'تُراجع المرفقات على طبقتين:<div class="kv2"><b>الطبقة الأولى — قواعد قبول الملف:</b> الصيغة والحجم. قواعد ثابتة بلا ذكاء اصطناعي، ونتيجتها قاطعة فلا يُقبل المرفق دون استيفائها.<br><b>الطبقة الثانية — تدقيق المحتوى:</b> سريان تاريخ الوثيقة واكتمال بياناتها، بالذكاء الاصطناعي. ومخرجه ملاحظة تُعرض مع خانة إقرار، ولا يمنع إرسال الطلب.</div><div class="kv2">وتعرض الشاشة أربعة مرفقات، كل واحد منها يمثل سيناريو: مطابق من أول مرة، مرفق غير مقبول، خارج نطاق التدقيق، وملاحظة على المحتوى. واضغط أي سيناريو في الشريط الأعلى للانتقال إلى مثاله.</div>'},
  {n:'staff',p:'review',t:'واجهة الموظف المراجع',
   b:'ثلاث شاشات:<br><b>لوحة المراجعة الذكية:</b> بيانات الطلب، ملخص المطابقة، تدقيق المرفقات، التحقق الإداري بست نقاط، رصد التعارضات، القراران المنفصلان، وسجل المراجعة.<br><b>إدارة ملفات الجمعيات:</b> جدول الجمعيات وحالات تأهيلها.<br><b>لوحة المؤشرات التشغيلية:</b> أداء المراجعة والرصد الاستباقي.<div class="kv2">القرار يبقى بيد المراجع في كل الحالات. النظام يرصد وينبّه ولا يقرر.</div>'},
 ];
 var ti=0;
 function tRender(){
   var s=TOUR[ti];
-  document.getElementById('tStep').textContent='خطوة '+(ti+1)+' من '+TOUR.length;
+  document.getElementById('tStep').textContent='جولة '+(ti+1);
   document.getElementById('tTitle').textContent=s.t;
   document.getElementById('tBody').innerHTML=s.b;
   document.getElementById('tDots').innerHTML=TOUR.map(function(_,i){return '<i class="'+(i===ti?'on':'')+'"></i>'}).join('');
@@ -955,6 +1425,7 @@ function show(p){
     document.getElementById('p-'+x).classList.toggle('hidden',x!==p);
   });
   document.querySelectorAll('.tab[data-p]').forEach(function(x){x.classList.toggle('on',x.dataset.p===p)});
+  if(p==='dash') initDash();
   window.scrollTo(0,0);
 }
 document.querySelectorAll('.tab[data-p]').forEach(function(t){
@@ -1102,6 +1573,842 @@ function save(){
     : '✓ حُفظ القراران: قبول التسجيل العام + رفض التأهيل البيئي. الحالة: <span class="ltr">ENV-Q-03</span> · إشعار <span class="ltr">CA01-T09</span>';
 }
 
+
+// ═══ معاينة المستند (خطاب الموافقة — ثلاث صفحات) ═══
+var PGHEAD = `<rect width="300" height="400" fill="#FFFEFC"/>
+<g opacity=".9">
+<circle cx="34" cy="30" r="12.5" fill="none" stroke="#2E7D52" stroke-width="1.3"/>
+<path d="M40 23c0 9.5-4.5 13-9 13" stroke="#2E7D52" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+<path d="M30 36c-2.6-2.6-3-7 .4-9.2 2.6-1.7 6-1.4 8.6-1.4" stroke="#2E7D52" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+</g>
+<text x="278" y="26" text-anchor="start" font-size="8" font-weight="700" fill="#123023">الجهة المرجعية الفنية المعتمدة</text>
+<text x="278" y="37" text-anchor="start" font-size="6.2" fill="#5A6660">إدارة الاعتماد والتراخيص البيئية</text>
+<line x1="22" y1="48" x2="278" y2="48" stroke="#2E7D52" stroke-width="1"/>
+<line x1="22" y1="50.6" x2="278" y2="50.6" stroke="#2E7D52" stroke-width=".45"/>`;
+
+function pgFoot(n){ return `<line x1="22" y1="368" x2="278" y2="368" stroke="#E5E9E7" stroke-width=".8"/>
+<text x="278" y="380" text-anchor="start" font-size="5.6" fill="#8A9691">خطاب رقم ن ت / 2026 / 4187</text>
+<text x="22" y="380" text-anchor="end" font-size="5.6" fill="#8A9691">صفحة ${n} من 3</text>`; }
+
+function docSVG(pg, expired){
+  pg = pg || 1;
+  var VALID = expired ? '2026-08-31' : '2027-08-31';
+  var body = '';
+  if(pg===1){
+    body = `<text x="278" y="68" text-anchor="start" font-size="6.6" fill="#5A6660">رقم الخطاب</text>
+<text x="228" y="68" text-anchor="start" font-size="6.8" font-weight="600" fill="#1A1A1A">ن ت / 2026 / 4187</text>
+<text x="278" y="80" text-anchor="start" font-size="6.6" fill="#5A6660">تاريخ الإصدار</text>
+<text x="228" y="80" text-anchor="start" font-size="6.8" font-weight="600" fill="#1A1A1A">2026-03-12</text>
+<text x="278" y="92" text-anchor="start" font-size="6.6" fill="#5A6660">صالح حتى</text>
+<text x="228" y="92" text-anchor="start" font-size="6.8" font-weight="600" fill="#1A1A1A">${VALID}</text>
+<rect x="60" y="104" width="180" height="17" rx="3" fill="#F1F6F3"/>
+<text x="150" y="116" text-anchor="middle" font-size="8.2" font-weight="700" fill="#123023">خطاب موافقة عام على منهجية العناية</text>
+<text x="278" y="140" text-anchor="start" font-size="6.8" fill="#2B3630">تشهد الجهة المرجعية الفنية المعتمدة بموافقتها على منهجية العناية</text>
+<text x="278" y="152" text-anchor="start" font-size="6.8" fill="#2B3630">بالغطاء النباتي المقدَّمة من الجمعية الموضحة أدناه:</text>
+<rect x="150" y="160" width="128" height="15" rx="3" fill="#FBFDFB" stroke="#DDE6E1" stroke-width=".7"/>
+<text x="271" y="171" text-anchor="start" font-size="7.4" font-weight="700" fill="#123023">جمعية الواحة الخضراء</text>
+<text x="278" y="190" text-anchor="start" font-size="6.8" fill="#2B3630">وذلك بعد مراجعة الخطة الفنية المرفقة، والتحقق من ملاءمة الأنواع</text>
+<text x="278" y="202" text-anchor="start" font-size="6.8" fill="#2B3630">النباتية المقترحة للبيئة المحلية، واتساق الموسم الزراعي المحدد</text>
+<text x="278" y="214" text-anchor="start" font-size="6.8" fill="#2B3630">فيها مع تلك الأنواع، وكفاية خطة العناية اللاحقة للغرس.</text>
+<text x="278" y="232" text-anchor="start" font-size="6.8" fill="#2B3630">ويُعمل بهذا الخطاب حتى تاريخ انتهائه المبيّن أعلاه، ولا يُعد</text>
+<text x="278" y="244" text-anchor="start" font-size="6.8" fill="#2B3630">إقرارًا بأي مشروع لم يُدرج ضمن الخطة المعتمدة.</text>
+<text x="278" y="262" text-anchor="start" font-size="6.8" fill="#2B3630">وتفاصيل الخطة الفنية مبيّنة في الصفحتين التاليتين.</text>`;
+  } else if(pg===2){
+    var rows='';
+    var data=[['الغاف','خريف','1,200','ري تكميلي 18 شهرًا'],['السدر','خريف','800','ري تكميلي 18 شهرًا'],['الطلح','ربيع','650','ري تكميلي 12 شهرًا'],['السلم','ربيع','400','ري تكميلي 12 شهرًا']];
+    for(var i=0;i<data.length;i++){
+      var y=110+i*17;
+      rows += `<rect x="22" y="${y-11}" width="256" height="17" fill="${i%2?'#FBFCFB':'#fff'}"/>
+<text x="272" y="${y}" text-anchor="start" font-size="6.4" fill="#2B3630">${data[i][0]}</text>
+<text x="205" y="${y}" text-anchor="start" font-size="6.4" fill="#2B3630">${data[i][1]}</text>
+<text x="140" y="${y}" text-anchor="start" font-size="6.4" fill="#2B3630">${data[i][2]}</text>
+<text x="95" y="${y}" text-anchor="start" font-size="6.2" fill="#2B3630">${data[i][3]}</text>`;
+    }
+    body = `<text x="278" y="72" text-anchor="start" font-size="7.6" font-weight="700" fill="#123023">أولًا: الأنواع النباتية والموسم الزراعي</text>
+<rect x="22" y="84" width="256" height="15" fill="#F1F6F3"/>
+<text x="272" y="94" text-anchor="start" font-size="6.2" font-weight="700" fill="#123023">النوع</text>
+<text x="205" y="94" text-anchor="start" font-size="6.2" font-weight="700" fill="#123023">الموسم</text>
+<text x="140" y="94" text-anchor="start" font-size="6.2" font-weight="700" fill="#123023">العدد</text>
+<text x="95" y="94" text-anchor="start" font-size="6.2" font-weight="700" fill="#123023">خطة الري</text>
+${rows}
+<line x1="22" y1="184" x2="278" y2="184" stroke="#E5E9E7" stroke-width=".8"/>
+<text x="278" y="204" text-anchor="start" font-size="7.6" font-weight="700" fill="#123023">ثانيًا: خطة العناية اللاحقة</text>
+<text x="278" y="222" text-anchor="start" font-size="6.8" fill="#2B3630">تلتزم الجمعية بالمتابعة الدورية للغراس خلال الأشهر الأربعة والعشرين</text>
+<text x="278" y="234" text-anchor="start" font-size="6.8" fill="#2B3630">التالية للغرس، وتشمل الري التكميلي وفق الجدول أعلاه، ومعالجة</text>
+<text x="278" y="246" text-anchor="start" font-size="6.8" fill="#2B3630">الآفات، واستبدال الغراس التالفة بما لا يقل عن نسبة البقاء المتفق عليها.</text>
+<text x="278" y="264" text-anchor="start" font-size="6.8" fill="#2B3630">ويُرفع تقرير حالة عند نهاية كل مرحلة من مراحل المشروع الأربع.</text>`;
+  } else {
+    body = `<text x="278" y="72" text-anchor="start" font-size="7.6" font-weight="700" fill="#123023">ثالثًا: بيانات الموقع المعتمد</text>
+<text x="278" y="92" text-anchor="start" font-size="6.6" fill="#5A6660">المنطقة</text>
+<text x="222" y="92" text-anchor="start" font-size="6.8" fill="#1A1A1A">منطقة الرياض</text>
+<text x="278" y="106" text-anchor="start" font-size="6.6" fill="#5A6660">الإحداثيات</text>
+<text x="222" y="106" text-anchor="start" font-size="6.8" fill="#1A1A1A">24.7136 N , 46.6753 E</text>
+<text x="278" y="120" text-anchor="start" font-size="6.6" fill="#5A6660">المساحة</text>
+<text x="222" y="120" text-anchor="start" font-size="6.8" fill="#1A1A1A">14.5 هكتار</text>
+<rect x="150" y="132" width="128" height="74" rx="3" fill="#F4F8F5" stroke="#DDE6E1" stroke-width=".7"/>
+<path d="M158 196 L182 168 L200 182 L222 152 L246 174 L270 158" stroke="#8FBFA3" stroke-width="1.1" fill="none"/>
+<circle cx="214" cy="170" r="3" fill="#2E7D52" opacity=".7"/>
+<text x="214" y="200" text-anchor="middle" font-size="5.4" fill="#8A9691">حدود الموقع المعتمد</text>
+<line x1="22" y1="222" x2="278" y2="222" stroke="#E5E9E7" stroke-width=".8"/>
+<text x="278" y="240" text-anchor="start" font-size="6.6" fill="#5A6660">مدير إدارة الاعتماد والتراخيص البيئية</text>
+<path d="M232 264c8-11 13 6 20-3s10 5 17-4" stroke="#1B3A6B" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".85"/>
+<path d="M240 270h32" stroke="#1B3A6B" stroke-width=".9" opacity=".55"/>
+<g transform="translate(66,268) rotate(-11)" opacity=".62">
+<circle r="27" fill="none" stroke="#1B4F8C" stroke-width="1.6"/>
+<circle r="21.5" fill="none" stroke="#1B4F8C" stroke-width=".8"/>
+<text y="-6" text-anchor="middle" font-size="6" font-weight="700" fill="#1B4F8C">الجهة المرجعية</text>
+<text y="3" text-anchor="middle" font-size="7.6" font-weight="700" fill="#1B4F8C">معتمد</text>
+<text y="12" text-anchor="middle" font-size="5.4" fill="#1B4F8C">2026-03-12</text>
+</g>
+<text x="150" y="330" text-anchor="middle" font-size="5.6" fill="#8A9691">هذا الخطاب صادر إلكترونيًا ويُتحقق من صحته عبر الجهة المصدرة</text>`;
+  }
+  return '<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Sans Arabic,Tajawal,sans-serif">'
+       + PGHEAD + body + pgFoot(pg) + '</svg>';
+}
+
+function regSVG(){
+  var rows='';
+  var data=[['1','حزام الرياض الأخضر','منطقة الرياض','2024','3,400','مكتمل'],
+            ['2','تشجير وادي حنيفة','منطقة الرياض','2024','1,850','مكتمل'],
+            ['3','واحة الخرج','منطقة الرياض','2025','2,100','مكتمل'],
+            ['4','تشجير طريق الثمامة','منطقة الرياض','2025','980','قائم'],
+            ['5','مشروع الغاف بالقصب','منطقة الرياض','2026','1,250','قائم']];
+  for(var i=0;i<data.length;i++){
+    var y=126+i*18;
+    rows += '<rect x="22" y="'+(y-12)+'" width="256" height="18" fill="'+(i%2?'#FBFCFB':'#fff')+'"/>'
+      + '<text x="274" y="'+y+'" text-anchor="start" font-size="6" fill="#2B3630">'+data[i][0]+'</text>'
+      + '<text x="262" y="'+y+'" text-anchor="start" font-size="6.3" fill="#2B3630">'+data[i][1]+'</text>'
+      + '<text x="176" y="'+y+'" text-anchor="start" font-size="6.3" fill="#2B3630">'+data[i][2]+'</text>'
+      + '<text x="126" y="'+y+'" text-anchor="start" font-size="6.3" fill="#2B3630">'+data[i][3]+'</text>'
+      + '<text x="90" y="'+y+'" text-anchor="start" font-size="6.3" fill="#2B3630">'+data[i][4]+'</text>'
+      + '<text x="52" y="'+y+'" text-anchor="start" font-size="6.3" fill="#2B3630">'+data[i][5]+'</text>';
+  }
+  return '<svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Sans Arabic,Tajawal,sans-serif">'
+  + '<rect width="300" height="400" fill="#FFFEFC"/>'
+  + '<text x="278" y="30" text-anchor="start" font-size="8" font-weight="700" fill="#123023">جمعية الواحة الخضراء</text>'
+  + '<text x="278" y="41" text-anchor="start" font-size="6.2" fill="#5A6660">سجل المشاريع التشجيرية المنفذة</text>'
+  + '<line x1="22" y1="52" x2="278" y2="52" stroke="#2E7D52" stroke-width="1"/>'
+  + '<text x="278" y="72" text-anchor="start" font-size="6.6" fill="#5A6660">تاريخ الإصدار</text>'
+  + '<text x="228" y="72" text-anchor="start" font-size="6.8" font-weight="600" fill="#1A1A1A">2026-02-20</text>'
+  + '<text x="278" y="86" text-anchor="start" font-size="6.6" fill="#5A6660">عدد المشاريع</text>'
+  + '<text x="228" y="86" text-anchor="start" font-size="6.8" font-weight="600" fill="#1A1A1A">5 مشاريع</text>'
+  + '<rect x="22" y="100" width="256" height="16" fill="#F1F6F3"/>'
+  + '<text x="274" y="111" text-anchor="start" font-size="6" font-weight="700" fill="#123023">م</text>'
+  + '<text x="262" y="111" text-anchor="start" font-size="6.2" font-weight="700" fill="#123023">اسم المشروع</text>'
+  + '<text x="176" y="111" text-anchor="start" font-size="6.2" font-weight="700" fill="#123023">المنطقة</text>'
+  + '<text x="126" y="111" text-anchor="start" font-size="6.2" font-weight="700" fill="#123023">السنة</text>'
+  + '<text x="90" y="111" text-anchor="start" font-size="6.2" font-weight="700" fill="#123023">الأشجار</text>'
+  + '<text x="52" y="111" text-anchor="start" font-size="6.2" font-weight="700" fill="#123023">الحالة</text>'
+  + rows
+  + '<line x1="22" y1="222" x2="278" y2="222" stroke="#E5E9E7" stroke-width=".8"/>'
+  + '<text x="278" y="240" text-anchor="start" font-size="6.8" fill="#2B3630">إجمالي الأشجار المغروسة خلال الأعوام الثلاثة الماضية: 9,580 شجرة.</text>'
+  + '<text x="278" y="252" text-anchor="start" font-size="6.8" fill="#2B3630">ونسبة البقاء المسجّلة في المشاريع المكتملة لا تقل عن 82%.</text>'
+  + '<text x="278" y="278" text-anchor="start" font-size="6.6" fill="#5A6660">المدير التنفيذي للجمعية</text>'
+  + '<path d="M228 302c9-12 14 7 21-3s11 5 18-4" stroke="#1B3A6B" stroke-width="1.5" fill="none" stroke-linecap="round" opacity=".85"/>'
+  + '<path d="M236 308h34" stroke="#1B3A6B" stroke-width=".9" opacity=".55"/>'
+  + '<g transform="translate(68,300) rotate(-8)" opacity=".55">'
+  + '<circle r="25" fill="none" stroke="#2E7D52" stroke-width="1.5"/><circle r="20" fill="none" stroke="#2E7D52" stroke-width=".7"/>'
+  + '<text y="-4" text-anchor="middle" font-size="5.4" font-weight="700" fill="#2E7D52">جمعية الواحة</text>'
+  + '<text y="5" text-anchor="middle" font-size="6.4" font-weight="700" fill="#2E7D52">الخضراء</text></g>'
+  + '<line x1="22" y1="368" x2="278" y2="368" stroke="#E5E9E7" stroke-width=".8"/>'
+  + '<text x="22" y="380" text-anchor="end" font-size="5.6" fill="#8A9691">صفحة 1 من 1</text>'
+  + '</svg>';
+}
+
+function docSVGFor(D,pg){ return D.svg==='reg' ? regSVG() : docSVG(pg, hasNote(D)); }
+
+// ═══ معايير قبول المستندات ═══
+var GUIDE_SVG = `<div class="guide"><div class="guide-t">الطريقة الصحيحة مقابل الخاطئة</div>
+<svg viewBox="0 0 640 224" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern id="hz" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 4 L4 0" stroke="#C9D2CE" stroke-width="1"/></pattern>
+</defs>
+<g font-family="IBM Plex Sans Arabic,sans-serif">
+<!-- الصف الصحيح -->
+<rect x="546" y="6" width="84" height="20" rx="10" fill="#E8F5EC"/><text x="588" y="20" text-anchor="middle" font-size="11" font-weight="700" fill="#2E7D52">صحيح ✓</text>
+<g transform="translate(470,40)">
+<rect x="0" y="0" width="86" height="112" rx="3" fill="#fff" stroke="#2E7D52" stroke-width="1.6"/>
+<g stroke="#5A6660" stroke-width="2.4" stroke-linecap="round">
+<path d="M14 22h58M14 34h58M14 46h44M14 62h58M14 74h50M14 90h34"/></g>
+<text x="43" y="128" text-anchor="middle" font-size="9.5" fill="#5A6660">معتدل وكامل</text>
+</g>
+<g transform="translate(355,40)">
+<rect x="0" y="0" width="86" height="112" rx="3" fill="#fff" stroke="#2E7D52" stroke-width="1.6"/>
+<g stroke="#5A6660" stroke-width="2.4" stroke-linecap="round">
+<path d="M14 22h58M14 34h58M14 46h44M14 62h58M14 74h50M14 90h34"/></g>
+<circle cx="43" cy="-8" r="7" fill="none" stroke="#B08733" stroke-width="1.6"/>
+<path d="M43 -18v-5M43 7v4M33 -8h-5M58 -8h4M36 -15l-3-3M50 -1l3 3M36 -1l-3 3M50 -15l3-3" stroke="#B08733" stroke-width="1.4" stroke-linecap="round"/>
+<text x="43" y="128" text-anchor="middle" font-size="9.5" fill="#5A6660">إضاءة متساوية</text>
+</g>
+<g transform="translate(240,40)">
+<rect x="0" y="0" width="86" height="112" rx="3" fill="#fff" stroke="#2E7D52" stroke-width="1.6"/>
+<g stroke="#3A4742" stroke-width="2.6" stroke-linecap="round">
+<path d="M14 22h58M14 34h58M14 46h44M14 62h58M14 74h50M14 90h34"/></g>
+<text x="43" y="128" text-anchor="middle" font-size="9.5" fill="#5A6660">نص حاد مقروء</text>
+</g>
+<!-- الصف الخاطئ -->
+<rect x="118" y="6" width="80" height="20" rx="10" fill="#FBEAE8"/><text x="158" y="20" text-anchor="middle" font-size="11" font-weight="700" fill="#C0392B">خاطئ ✕</text>
+<g transform="translate(115,40) rotate(-9 43 56)">
+<rect x="0" y="0" width="86" height="112" rx="3" fill="#fff" stroke="#C0392B" stroke-width="1.6"/>
+<g stroke="#8A9691" stroke-width="2.4" stroke-linecap="round">
+<path d="M14 22h58M14 34h58M14 46h44M14 62h58M14 74h50M14 90h34"/></g>
+</g>
+<text x="158" y="168" text-anchor="middle" font-size="9.5" fill="#5A6660">مائل أو مقصوص</text>
+<g transform="translate(12,40)">
+<rect x="0" y="0" width="86" height="112" rx="3" fill="#fff" stroke="#C0392B" stroke-width="1.6"/>
+<g stroke="#A8B4AE" stroke-width="2.4" stroke-linecap="round">
+<path d="M14 22h58M14 34h58M14 46h44M14 62h58M14 74h50M14 90h34"/></g>
+<path d="M0 52 L86 30 L86 112 L0 112 Z" fill="#0C1A14" opacity=".26"/>
+<text x="43" y="128" text-anchor="middle" font-size="9.5" fill="#5A6660">ظل على النص</text>
+</g>
+</g>
+</svg></div>`;
+
+// ═══════════════════════════════════════════════════════
+//  الطبقة الأولى: قواعد قبول الملف — قواعد ثابتة بلا ذكاء اصطناعي
+// ═══════════════════════════════════════════════════════
+var RULES = {
+  fmt: {n:'صيغة الملف', d:'PDF',
+    h:['احفظ المستند بصيغة <b>PDF</b> لا صورة JPG أو PNG.',
+       'أغلب تطبيقات المسح في الجوال تتيح اختيار الصيغة قبل الحفظ. اختر PDF.',
+       'وإن كان لديك صورة، افتحها في تطبيق الملفات واختر «طباعة» ثم «حفظ بصيغة PDF».']},
+  size:{n:'حجم الملف', d:'ضمن الحد المسموح',
+    h:['تأكد أن حجم الملف ضمن الحد الموضح بجانب كل مرفق.',
+       'إن كان أكبر، اختر جودة «متوسطة» بدل «عالية» عند الحفظ.',
+       'أو استخدم خيار «ضغط PDF» المتاح في أغلب تطبيقات المسح.']}
+};
+var RORDER = ['fmt','size'];
+
+// ═══════════════════════════════════════════════════════
+//  الطبقة الثانية: تدقيق المحتوى — بالذكاء الاصطناعي، مخرجه ملاحظة
+// ═══════════════════════════════════════════════════════
+var CHECKS = {
+  exp: {n:'سريان تاريخ الوثيقة',
+    h:['يتحقق النظام من أن تاريخ انتهاء الوثيقة لم يمضِ.',
+       'إن كانت الوثيقة منتهية، فأرفق نسخة سارية من الجهة المصدرة.',
+       'وإن كانت سارية ورُصدت ملاحظة، فأقرّ بصحتها وأرسل الطلب، ويتحقق الموظف بنفسه.']},
+  cmp: {n:'اكتمال البيانات المطلوبة',
+    h:['يتحقق النظام من وجود البيانات المطلوبة في المستند.',
+       'راجع الملاحظة المعروضة، فهي تحدد البيان الناقص بعينه.',
+       'وإن كان البيان موجودًا ورُصدت ملاحظة، فأقرّ بصحة المستند وأرسل الطلب.']}
+};
+var CORDER = ['exp','cmp'];
+
+// ═══════════════════════════════════════════════════════
+//  المرفقات — أربعة مرفقات تعرض السيناريوهات الأربعة
+// ═══════════════════════════════════════════════════════
+var DOCS = [
+  {id:'d1', sc:1, nm:'شهادة تسجيل الجمعية', ref:'مرفق 3 · PDF ≤ 5MB',
+   inScope:true, np:1, badpg:9, fx:'dim', svg:'reg',
+   rl:{fmt:1,size:1}, ck:{exp:1,cmp:1}},
+
+  {id:'d2', sc:4, nm:'خطاب موافقة عام من المرجع الفني', ref:'مرفق 9 · PDF ≤ 5MB',
+   inScope:true, np:3, badpg:9, fx:'dim', svg:'letter',
+   rl:{fmt:1,size:1}, ck:{exp:0,cmp:1},
+   note:{k:'exp', t:'تاريخ انتهاء الوثيقة <b>2026-08-31</b>، وقد مضى.',
+         loc:'الصفحة 1 · حقل «صالح حتى» أعلى الخطاب'}},
+
+  {id:'d3', sc:2, nm:'وثيقة الترخيص السارية', ref:'مرفق 5 · PDF ≤ 5MB',
+   inScope:true, np:1, badpg:9, fx:'dim', svg:'reg',
+   rl:{fmt:0,size:1}, ck:{exp:1,cmp:1},
+   rnote:'الملف مرفوع بصيغة JPG، والصيغة المطلوبة PDF.'},
+
+  {id:'d4', sc:3, nm:'سجل المشاريع التشجيرية السابقة', ref:'مرفق 7 · PDF ≤ 10MB',
+   inScope:false, np:1, badpg:9, fx:'dim', svg:'reg',
+   rl:{fmt:1,size:1}, ck:{}}
+];
+
+var SCEN = {
+  1:{t:'مطابق من أول مرة',      c:'ok'},
+  2:{t:'المرفق غير مقبول',      c:'bad'},
+  3:{t:'خارج نطاق التدقيق',     c:'neu'},
+  4:{t:'ملاحظة على المحتوى',    c:'warn'}
+};
+
+function rulesOk(D){ return RORDER.every(function(k){ return D.rl[k]===1; }); }
+function checksOk(D){ return !D.inScope || CORDER.every(function(k){ return D.ck[k]===1; }); }
+function hasNote(D){ return rulesOk(D) && D.inScope && !checksOk(D); }
+function docState(D){
+  if(!rulesOk(D))  return 'rej';    // لا يُقبل المرفق
+  if(hasNote(D))   return 'note';   // ملاحظة وإقرار
+  if(!D.inScope)   return 'out';    // خارج نطاق التدقيق
+  return 'ok';                       // مستوفٍ
+}
+
+// ═══════════════════════════════════════════════════════
+//  العرض
+// ═══════════════════════════════════════════════════════
+function chip(label, ok, key, kind){
+  return '<div class="chip '+(ok?'cok':'cbad')+'">'
+    + '<span class="cmk">'+(ok?'✓':'!')+'</span>'
+    + '<span class="cnm">'+label+'</span>'
+    + '<button class="chlp" onclick="showHelp(\''+kind+'\',\''+key+'\')" title="كيف أستوفي هذا؟">i</button>'
+    + '</div>';
+}
+
+function renderDocs(){
+  var host=document.getElementById('docs'); if(!host)return;
+  var dn=document.getElementById('dModeNote');
+  if(dn && !dn.innerHTML) setMode(DMODE);
+
+  var strip = '<div class="scenbar"><span class="sbl">السيناريوهات الأربعة في هذه الشاشة:</span>'
+    + DOCS.slice().sort(function(a,b){return a.sc-b.sc;}).map(function(D){
+        return '<button class="sch s-'+SCEN[D.sc].c+'" onclick="focusDoc(\''+D.id+'\')">'
+             + '<em>'+D.sc+'</em>'+SCEN[D.sc].t+'</button>';
+      }).join('') + '</div>';
+
+  renderUser();
+  host.innerHTML = strip + DOCS.map(function(D){
+    var st = docState(D);
+    var pill = {ok:['مستوفٍ','pok'], note:['ملاحظة وإقرار','pwarn'],
+                rej:['لا يُقبل المرفق','pbad'], out:['خارج نطاق التدقيق','pneu']}[st];
+
+    // ── الطبقة الأولى ──
+    var l1 = '<div class="layer"><div class="lhd"><span class="lnum l1">1</span>'
+      + '<span class="ltx"><b>قواعد قبول الملف</b><small>قواعد ثابتة بلا ذكاء اصطناعي · نتيجتها قاطعة</small></span></div>'
+      + '<div class="chips">' + RORDER.map(function(k){
+          return chip(RULES[k].n, D.rl[k]===1, k, 'rule'); }).join('') + '</div></div>';
+
+    // ── الطبقة الثانية ──
+    var l2;
+    if(!D.inScope){
+      l2 = '<div class="layer dim"><div class="lhd"><span class="lnum lo">–</span>'
+        + '<span class="ltx"><b>تدقيق المحتوى</b><small>لا يجري على هذا المرفق</small></span></div>'
+        + '<div class="outnote">هذا المرفق خارج نطاق تدقيق المحتوى، لأنه كبير الحجم كثير الصفحات. '
+        + 'ويُرفق بالطلب بعد استيفاء قواعد قبول الملف، ويُراجَع ضمن المراجعة الشاملة للطلب.</div></div>';
+    } else if(!rulesOk(D)){
+      l2 = '<div class="layer dim"><div class="lhd"><span class="lnum lo">–</span>'
+        + '<span class="ltx"><b>تدقيق المحتوى</b><small>لم يجرِ بعد</small></span></div>'
+        + '<div class="outnote">لا يجري تدقيق المحتوى قبل استيفاء قواعد قبول الملف، لأن المرفق لم يُقبل أصلًا.</div></div>';
+    } else {
+      l2 = '<div class="layer"><div class="lhd"><span class="lnum l2">2</span>'
+        + '<span class="ltx"><b>تدقيق المحتوى</b><small>بالذكاء الاصطناعي · مخرجه ملاحظة لا منع</small></span></div>'
+        + '<div class="chips">' + CORDER.map(function(k){
+            return chip(CHECKS[k].n, D.ck[k]===1, k, 'check'); }).join('') + '</div></div>';
+    }
+
+    // ── الحالة والإجراء ──
+    var body = '';
+    if(st==='rej'){
+      body = '<div class="box bx-bad"><div class="bxh">لا يُقبل المرفق</div>'
+        + '<div class="bxb">'+(D.rnote||'')+' فلا يُرفق بالطلب، ولا يجري عليه تدقيق محتوى.'
+        + '<br>وإن كان المستند مطلوبًا، فلن يُفتح زر الإرسال حتى يُرفع ملف مطابق.</div></div>'
+        + '<div class="dact"><button class="sim" onclick="fixRule(\''+D.id+'\')">رفع الملف بصيغة PDF</button>'
+        + '<span class="simtag">محاكاة</span></div>';
+    }
+    else if(st==='note'){
+      var N=D.note;
+      body = '<div class="box bx-warn"><div class="bxh">ملاحظة على محتوى المستند</div>'
+        + '<div class="bxb"><b>'+CHECKS[N.k].n+':</b> '+N.t
+        + '<br><span class="loc">الموضع: '+N.loc+'</span></div></div>'
+        + '<div class="ackbox"><input type="checkbox" id="ak-'+D.id+'"'+(D.acked?' checked':'')+' onchange="DOCS.filter(function(z){return z.id===\''+D.id+'\'})[0].acked=this.checked;gateSubmit()">'
+        + '<label for="ak-'+D.id+'">أقر بأن هذا المستند صحيح وأتحمل مسؤولية إقراري، ليُمكَّن إرسال الطلب.</label></div>'
+        + '<div class="hint2">أمامك مسارَان: تعدّل المستند وترفعه من جديد فتزول الملاحظة، أو تقرّ بصحته '
+        + 'فيُرسل الطلب موسومًا ويفصل الموظف في الملاحظة.</div>'
+        + '<div class="dact"><button class="sim" onclick="fixCheck(\''+D.id+'\')">تعديل المستند ورفعه من جديد</button>'
+        + '<span class="simtag">محاكاة</span>'
+        + '<button class="prevzoom" onclick="openPrev(\''+D.id+'\')">عرض موضع الملاحظة في المستند</button></div>';
+    }
+    else if(st==='out'){
+      body = '';
+    }
+    else {
+      body = '<div class="box bx-ok"><div class="bxh">المستند مستوفٍ</div>'
+        + '<div class="bxb">'+(D.fixedBy==='check'
+            ? 'رُفع مستند مطابق، فزالت الملاحظة وزالت خانة الإقرار معها. ولا يبقى في الطلب أثر لإشكال زال.'
+            : 'استوفى قواعد قبول الملف، ولم تُرصد على محتواه ملاحظة. فيُرفق بالطلب دون أي إجراء إضافي.')
+        + '</div></div>'
+        + '<div class="dact"><button class="prevzoom" onclick="openPrev(\''+D.id+'\')">عرض المستند</button></div>';
+    }
+
+    return '<div class="doc2 s-'+st+'" id="'+D.id+'">'
+      + '<div class="d2h"><span class="scb s-'+SCEN[D.sc].c+'">'+D.sc+'</span>'
+      + '<span class="d2n">'+D.nm+'<small>'+D.ref+'</small></span>'
+      + '<span class="pill '+pill[1]+'">'+pill[0]+'</span></div>'
+      + '<div class="d2b">'+l1+l2+body+'</div></div>';
+  }).join('');
+  renderGate();
+}
+
+function focusDoc(id){
+  var el=document.getElementById(id); if(!el)return;
+  el.scrollIntoView({behavior:'smooth', block:'center'});
+  el.classList.add('flash');
+  setTimeout(function(){ el.classList.remove('flash'); }, 1400);
+}
+
+// محاكاة: رفع ملف مطابق لقواعد قبول الملف
+function fixRule(id){
+  var D=DOCS.filter(function(x){return x.id===id;})[0]; if(!D)return;
+  RORDER.forEach(function(k){ D.rl[k]=1; });
+  D.fixedBy='rule'; renderDocs(); focusDoc(id);
+}
+// محاكاة: تعديل المستند ورفعه، فيزول سبب الملاحظة
+function fixCheck(id){
+  var D=DOCS.filter(function(x){return x.id===id;})[0]; if(!D)return;
+  CORDER.forEach(function(k){ D.ck[k]=1; });
+  D.fixedBy='check'; D.note=null; renderDocs(); focusDoc(id);
+}
+
+// ═══════════════════════════════════════════════════════
+//  البوابة
+// ═══════════════════════════════════════════════════════
+function renderGate(){
+  var rej = DOCS.filter(function(D){ return !rulesOk(D); });
+  var nts = DOCS.filter(hasNote);
+  var g=document.getElementById('gate'); if(!g)return;
+
+  if(rej.length){
+    g.className='gate bad';
+    g.innerHTML = '<div class="gh"><em>!</em><span>'+rej.length+' مرفق لم يُقبل</span></div>'
+      + '<div class="gd">زر الإرسال معطّل حتى تُستوفى قواعد قبول الملف في المرفقات المطلوبة. '
+      + 'وهذه قواعد قاطعة لأن نتيجتها لا تحتمل التقدير: الصيغة والحجم معلومان يقينًا.</div>';
+  } else if(nts.length){
+    g.className='gate warn';
+    g.innerHTML = '<div class="gh"><em>!</em><span>'+nts.length+' مرفق عليه ملاحظة على المحتوى</span></div>'
+      + '<div class="gd">الملاحظة لا تحجب الإرسال. تعدّل المستند فتزول، أو تقرّ بصحته فيُفتح الإرسال '
+      + 'ويصل الطلب موسومًا ليفصل الموظف في الملاحظة. فلا يتوقف تقديم الطلب على حكم النظام.</div>';
+  } else {
+    g.className='gate ok';
+    g.innerHTML = '<div class="gh"><em>✓</em><span>المرفقات جاهزة</span></div>'
+      + '<div class="gd">استوفت المرفقات قواعد القبول، ولم تبقَ عليها ملاحظة. فتصل جاهزة للتدقيق، '
+      + 'ولا تُعاد إليك دورة رد بسبب نقص كان يمكن كشفه عند الرفع.</div>';
+  }
+  renderAck();
+}
+
+var ACK1 = false;
+function renderAck(){
+  var a=document.getElementById('ackBox'); if(!a)return;
+  a.innerHTML = '<div class="ackrow"><input type="checkbox" id="ack1"'+(ACK1?' checked':'')
+    + ' onchange="ACK1=this.checked;gateSubmit()">'
+    + '<label for="ack1">أقر بأن المستندات المرفقة صحيحة ومطابقة للبيانات المدخلة في النموذج.</label></div>';
+  gateSubmit();
+}
+
+function gateSubmit(){
+  var noRej = DOCS.every(rulesOk);
+  var acks  = DOCS.filter(hasNote).every(function(D){
+    if(DMODE==='front') return !!D.acked;
+    var c=document.getElementById('ak-'+D.id); return c && c.checked; });
+  var a1=document.getElementById('ack1');
+  var ok = noRej && acks && a1 && a1.checked;
+  var sub=document.getElementById('sub2');
+  if(sub){ sub.disabled=!ok; sub.style.opacity = ok?1:.45; }
+  var tg=document.getElementById('tagPrev');
+  if(tg) tg.innerHTML = tagPreview();
+}
+
+// ما يظهر للموظف المراجع
+function tagPreview(){
+  var nts=DOCS.filter(hasNote);
+  if(!nts.length){
+    return '<div class="tagp none"><span class="tph">ما يظهر للموظف المراجع</span>'
+      + '<span class="tpb">لا وسم على أي مرفق. فوصول الطلب بلا وسم إشارة بنفسها إلى أن '
+      + 'المرفقات اكتمل التحقق منها.</span></div>';
+  }
+  return '<div class="tagp"><span class="tph">ما يظهر للموظف المراجع</span>'
+    + nts.map(function(D){
+        return '<div class="tprow"><em>!</em><span><b>'+D.nm+'</b> — '
+             + CHECKS[D.note.k].n+': '+D.note.t
+             + '<br><i>'+(document.getElementById('ak-'+D.id) && document.getElementById('ak-'+D.id).checked
+                ? 'أقرّ مقدم الطلب بصحة المستند، والقرار للموظف.'
+                : 'بانتظار إقرار مقدم الطلب.')+'</i></span></div>';
+      }).join('')
+    + '<span class="tpb">يفتح الموظف المستند الموسوم ويتحقق: إن كانت الملاحظة صحيحة طالب '
+    + 'بالتصحيح، وإن كان المستند سليمًا أكمل المراجعة. والقرار بيده في الحالين.</span></div>';
+}
+
+
+// ═══════════════════════════════════════════════════════
+//  وضعا العرض: الباك إند وواجهة مقدم الطلب
+// ═══════════════════════════════════════════════════════
+var DMODE = 'back';
+
+function setMode(m){
+  DMODE = m;
+  document.getElementById('mbBack').className  = 'dmbtn' + (m==='back'  ? ' on' : '');
+  document.getElementById('mbFront').className = 'dmbtn' + (m==='front' ? ' on' : '');
+  document.getElementById('docs').classList.toggle('hidden', m!=='back');
+  document.getElementById('docsUser').classList.toggle('hidden', m!=='front');
+  var note = document.getElementById('dModeNote');
+  note.innerHTML = (m==='back')
+    ? '<b>وضع الباك إند:</b> يعرض كيف يتم التحقق داخل النظام. التحقق يجري على طبقتين: '
+      + 'قواعد قبول الملف بلا ذكاء اصطناعي ونتيجتها قاطعة، ثم تدقيق المحتوى بالذكاء الاصطناعي '
+      + 'ومخرجه ملاحظة لا منع. وهذا التقسيم داخلي، ولا يظهر لمقدم الطلب.'
+    : '<b>وضع الفرونت إند:</b> يعرض ما يراه مقدم الطلب على الشاشة. أربعة معايير معروضة معًا '
+      + 'بلا تقسيم إلى طبقات، وبجانب كل معيار علامته. فإن ظهرت ملاحظة، عُرضت أسفل المرفق '
+      + 'مع تنبيه بتعديل الملف، وخيار الإقرار الذي يُمكّنه من إرسال الطلب.';
+  renderDocs();
+}
+
+// المعايير الأربعة كما تُعرض لمقدم الطلب، بلا تقسيم
+var UCRIT = [
+  {k:'fmt',  g:'rule',  n:'صيغة الملف'},
+  {k:'size', g:'rule',  n:'حجم الملف'},
+  {k:'exp',  g:'check', n:'سريان تاريخ الوثيقة'},
+  {k:'cmp',  g:'check', n:'اكتمال البيانات المطلوبة'}
+];
+
+function renderUser(){
+  var host = document.getElementById('docsUser'); if(!host) return;
+  host.innerHTML = DOCS.map(function(D){
+    var st = docState(D);
+    var cls = (st==='rej') ? 'bad' : (st==='note' ? 'warn' : 'ok');
+    var fname = D.nm.replace(/\s+/g,'_') + (st==='rej' ? '.jpg' : '.pdf');
+
+    // شريط الملف المرفوع
+    var upl = '<div class="upl"><span class="fic">⎙</span>'
+      + '<span class="fnm">'+fname+'<small>'+D.ref+'</small></span>'
+      + '<button class="ubtn" onclick="'+(st==='rej'?'fixRule':'fixCheck')+'(\''+D.id+'\')">'
+      + 'ارفق المستند</button></div>';
+    if(st==='ok' || st==='out'){
+      upl = '<div class="upl"><span class="fic">⎙</span>'
+        + '<span class="fnm">'+fname+'<small>'+D.ref+'</small></span>'
+        + '<button class="ubtn">ارفق المستند</button></div>';
+    }
+
+    // المعايير الأربعة
+    var chips = UCRIT.map(function(c){
+      var ok, kind;
+      if(c.g==='rule'){ ok = D.rl[c.k]===1; kind = ok ? 'u-ok' : 'u-bad'; }
+      else {
+        if(!D.inScope || !rulesOk(D)){ kind='u-na'; ok=null; }
+        else { ok = D.ck[c.k]===1; kind = ok ? 'u-ok' : 'u-warn'; }
+      }
+      var mk = (kind==='u-ok') ? '✓' : (kind==='u-bad' ? '✕' : (kind==='u-warn' ? '!' : '–'));
+      return '<div class="uc '+kind+'"><i>'+mk+'</i><span>'+c.n+'</span></div>';
+    }).join('');
+
+    // الحالة أسفل المعايير
+    var body = '';
+    if(st==='rej'){
+      body = '<div class="unote b"><div class="uh">المرفق غير مقبول</div>'
+        + '<div class="ubd">'+(D.rnote||'')+'</div></div>'
+        + '<div class="ualert"><em>!</em><span>الرجاء تعديل الملف حسب المتطلبات وإعادة رفعه. '
+        + 'ولا يمكن إرسال الطلب قبل ذلك.</span></div>';
+    } else if(st==='note'){
+      var signed = !!D.acked;
+      body = '<div class="unote w"><div class="uh">ملاحظة على المستند</div>'
+        + '<div class="ubd">'+D.note.t+'<br><b>الموضع:</b> '+D.note.loc+'</div></div>'
+        + '<div class="ualert"><em>!</em><span>الرجاء تعديل الملف حسب المتطلبات وإعادة رفعه. '
+        + 'وفي حال تعديل الملف حسب الملاحظة وما زالت الملاحظة موجودة، الرجاء الاطلاع على الإقرار.</span></div>'
+        + '<div class="uact">'
+        + (signed
+            ? '<span class="ackdone">✓ تم التوقيع على الإقرار · يمكنك إرسال الطلب</span>'
+            : '<button class="ackbtn" onclick="openAck(\''+D.id+'\')">خانة الإقرار</button>')
+        + '</div>';
+    } else if(st==='out'){
+      body = '<div class="uok"><em>✓</em><span>المرفق مقبول. ولا ينطبق عليه التحقق من '
+        + 'المحتوى لأنه مستند كبير متعدد الصفحات.</span></div>';
+    } else {
+      body = '<div class="uok"><em>✓</em><span>المستند مطابق. لا يلزمك أي إجراء إضافي.</span></div>';
+    }
+
+    return '<div class="ub '+cls+'"><div class="ub-h">'
+      + '<span class="ub-n">'+D.nm+'</span></div>'
+      + '<div class="ub-b">'+upl+'<div class="ugrid">'+chips+'</div>'+body+'</div></div>';
+  }).join('');
+}
+
+// ── نافذة الإقرار ──
+var ACKID = null;
+function openAck(id){
+  ACKID = id;
+  var D = DOCS.filter(function(x){return x.id===id;})[0]; if(!D)return;
+  document.getElementById('aTitle').textContent = 'الإقرار بصحة المستند';
+  document.getElementById('aRef').textContent = D.nm;
+  document.getElementById('aBody').innerHTML =
+    '<div class="acktx">'
+    + '<b>أقر أنا مقدم الطلب بما يلي:</b>'
+    + '<ol>'
+    + '<li>أنني اطلعت على المستند المرفق كاملًا، وعلى الملاحظة المرصودة عليه وموضعها.</li>'
+    + '<li>أن المستند صحيح ومستوفٍ للمتطلبات، وأن الملاحظة المعروضة لا تنطبق عليه.</li>'
+    + '<li>أنني أتحمل المسؤولية الكاملة عن صحة هذا المستند وما يترتب على إقراري هذا.</li>'
+    + '<li>أنه إن تبيّن خلاف ذلك عند مراجعة الطلب، فإنني أتحمل ما ينتج عنه من تأخير في '
+    + 'مراجعة الطلب أو إعادته، وأي التزامات أخرى تترتب على ذلك.</li>'
+    + '<li>أن هذا الإقرار يُسجَّل باسمي وتاريخه في سجل الطلب، ويطّلع عليه الموظف المراجع.</li>'
+    + '</ol></div>'
+    + '<div class="ackchk"><input type="checkbox" id="aChk" onchange="ackReady()">'
+    + '<label for="aChk">قرأت الإقرار أعلاه بالكامل، وأوافق على ما جاء فيه.</label></div>';
+  var b = document.getElementById('aOk');
+  b.disabled = true; b.style.opacity = .45;
+  document.getElementById('amodal').classList.remove('hidden');
+}
+function ackReady(){
+  var c = document.getElementById('aChk'), b = document.getElementById('aOk');
+  b.disabled = !c.checked; b.style.opacity = c.checked ? 1 : .45;
+}
+function confirmAck(){
+  var D = DOCS.filter(function(x){return x.id===ACKID;})[0];
+  if(D) D.acked = true;
+  document.getElementById('amodal').classList.add('hidden');
+  renderDocs(); focusDoc(ACKID);
+}
+
+// ═══════════════════════════════════════════════════════
+//  لوحة المؤشرات · البيانات ومحرك الرسوم
+// ═══════════════════════════════════════════════════════
+var DC = {ink:'#1F2A26', ink2:'#667571', grid:'#EDF0EE', axis:'#98A5A0',
+          blue:'#14708C', green:'#2E7D52', gold:'#C08A2E', red:'#C0392B',
+          purple:'#5A4E8C', teal:'#3D8BC4'};
+
+// سلاسل زمنية بثلاثة مستويات تجميع
+var DSERIES = {
+  year: {
+    lab:['2022','2023','2024','2025','2026'],
+    inc:[612, 784, 968, 1240, 1486],
+    don:[588, 742, 931, 1197, 1428],
+    ret:[201, 232, 244, 268, 241],
+    sub:'خمس سنوات · إجمالي سنوي'
+  },
+  month: {
+    lab:['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'],
+    inc:[96,104,131,118,142,164,184,171,158,139,101,78],
+    don:[92,101,126,114,138,157,177,166,152,134,98,73],
+    ret:[24,26,31,27,35,42,31,29,26,22,17,11],
+    sub:'سنة 2026 · إجمالي شهري'
+  },
+  day: {
+    lab:['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15',
+         '16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'],
+    inc:[4,7,9,6,3,2,8,11,9,7,5,3,2,9,12,10,8,6,3,2,7,10,9,8,6,3,2,8,9,6],
+    don:[3,6,9,6,3,2,7,10,9,7,5,3,2,8,11,10,8,6,3,2,6,10,9,7,6,3,2,7,9,6],
+    ret:[1,2,2,1,0,0,2,3,2,1,1,0,0,2,3,2,1,1,0,0,1,2,2,1,1,0,0,2,2,1],
+    sub:'يوليو 2026 · إجمالي يومي'
+  }
+};
+var DGRAN = 'month';
+
+function setGran(g){
+  DGRAN = g;
+  ['year','month','day'].forEach(function(k){
+    var b=document.getElementById('gb-'+k);
+    if(b) b.className = 'granb' + (k===g ? ' on' : '');
+  });
+  drawTrend();
+}
+
+// ── رسم بياني خطي متعدد السلاسل ──
+function drawTrend(){
+  var el = document.getElementById('trendChart'); if(!el) return;
+  var D = DSERIES[DGRAN], L = D.lab;
+  var sub = document.getElementById('trendSub'); if(sub) sub.textContent = D.sub;
+
+  var W=1000, H=290, pl=52, pr=16, pt=18, pb=42;
+  var iw=W-pl-pr, ih=H-pt-pb;
+  var mx = Math.max.apply(null, D.inc);
+  var step = Math.pow(10, String(Math.round(mx)).length-1);
+  var top = Math.ceil(mx/step)*step; if(top < mx*1.08) top += step/2;
+  var n = L.length;
+
+  function X(i){ return pl + iw - (i*(iw/(n-1))); }
+  function Y(v){ return pt + ih - (v/top*ih); }
+  function line(a){ return a.map(function(v,i){
+      return (i?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1); }).join(' '); }
+
+  // شبكة ومحور
+  var ticks=5, g='';
+  for(var t=0;t<=ticks;t++){
+    var v = top*t/ticks, y = Y(v);
+    g += '<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y.toFixed(1)+'" y2="'+y.toFixed(1)
+       + '" stroke="'+DC.grid+'" stroke-width="1"/>'
+       + '<text x="'+(W-pr+6)+'" y="'+(y+4).toFixed(1)+'" font-size="12" fill="'+DC.axis
+       + '" text-anchor="start">'+Math.round(v)+'</text>';
+  }
+
+  // مساحة الواردة
+  var area = 'M'+X(0)+' '+(pt+ih)+' '+line(D.inc).substring(1)
+           + ' L'+X(n-1)+' '+(pt+ih)+' Z';
+
+  // النقاط وتلميحاتها
+  var dots='';
+  for(var i=0;i<n;i++){
+    dots += '<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(D.inc[i]).toFixed(1)+'" r="4" fill="#fff" stroke="'
+          + DC.blue+'" stroke-width="2.2"><title>'+L[i]+' · واردة: '+D.inc[i]+'</title></circle>'
+          + '<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(D.don[i]).toFixed(1)+'" r="3.2" fill="'+DC.green
+          + '"><title>'+L[i]+' · مُنجَزة: '+D.don[i]+'</title></circle>';
+  }
+
+  // تسميات المحور الأفقي (تخفيف عند كثرة النقاط)
+  var every = n>20 ? 3 : 1, lab='';
+  for(var j=0;j<n;j++){
+    if(j%every!==0 && j!==n-1) continue;
+    lab += '<text x="'+X(j).toFixed(1)+'" y="'+(H-14)+'" font-size="12" fill="'+DC.ink2
+         + '" text-anchor="middle">'+L[j]+'</text>';
+  }
+
+  el.innerHTML = '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;display:block">'
+    + '<defs><linearGradient id="gIn" x1="0" y1="0" x2="0" y2="1">'
+    + '<stop offset="0" stop-color="'+DC.blue+'" stop-opacity=".22"/>'
+    + '<stop offset="1" stop-color="'+DC.blue+'" stop-opacity="0"/></linearGradient></defs>'
+    + g
+    + '<path d="'+area+'" fill="url(#gIn)"/>'
+    + '<path d="'+line(D.ret)+'" fill="none" stroke="'+DC.gold+'" stroke-width="2" stroke-dasharray="7 5" stroke-linejoin="round"/>'
+    + '<path d="'+line(D.don)+'" fill="none" stroke="'+DC.green+'" stroke-width="2.4" stroke-linejoin="round"/>'
+    + '<path d="'+line(D.inc)+'" fill="none" stroke="'+DC.blue+'" stroke-width="3" stroke-linejoin="round"/>'
+    + dots + lab
+    + '</svg>';
+}
+
+// ── أعمدة أفقية ──
+function hBars(id, rows, color){
+  var el=document.getElementById(id); if(!el)return;
+  var mx = Math.max.apply(null, rows.map(function(r){return r[1];}));
+  el.innerHTML = rows.map(function(r){
+    var w = Math.round(r[1]/mx*100);
+    return '<div class="hb"><div class="hb-h"><span>'+r[0]+'</span><b>'+r[1]+(r[2]||'')+'</b></div>'
+         + '<div class="hb-t"><div class="hb-f" style="width:'+w+'%;background:'+(r[3]||color)+'"></div></div>'
+         + (r[4] ? '<div class="hb-n">'+r[4]+'</div>' : '') + '</div>';
+  }).join('');
+}
+
+// ── أعمدة مكدّسة ──
+function stackBars(id, cats, series){
+  var el=document.getElementById(id); if(!el)return;
+  var W=520,H=210,pl=8,pr=8,pt=14,pb=34, iw=W-pl-pr, ih=H-pt-pb;
+  var tot = cats.map(function(_,i){ return series.reduce(function(a,s){return a+s.v[i];},0); });
+  var mx = Math.max.apply(null,tot);
+  var bw = Math.min(58, iw/cats.length*0.56);
+  var out='';
+  cats.forEach(function(c,i){
+    var x = pl + iw - ((i+0.5)*(iw/cats.length)) - bw/2;
+    var y = pt+ih, acc=0;
+    series.forEach(function(s){
+      var h = s.v[i]/mx*ih; y -= h;
+      out += '<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)
+           + '" height="'+Math.max(h,0).toFixed(1)+'" fill="'+s.c+'" rx="2">'
+           + '<title>'+c+' · '+s.n+': '+s.v[i]+'</title></rect>';
+      acc += s.v[i];
+    });
+    out += '<text x="'+(x+bw/2).toFixed(1)+'" y="'+(y-7).toFixed(1)+'" font-size="12" font-weight="700" fill="'
+         + DC.ink+'" text-anchor="middle">'+acc+'</text>'
+         + '<text x="'+(x+bw/2).toFixed(1)+'" y="'+(H-12)+'" font-size="12" fill="'+DC.ink2
+         + '" text-anchor="middle">'+c+'</text>';
+  });
+  el.innerHTML = '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;display:block">'
+    + '<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+(pt+ih)+'" y2="'+(pt+ih)+'" stroke="'+DC.grid+'" stroke-width="1.5"/>'
+    + out + '</svg>';
+}
+
+// ── قمع المسار ──
+function drawFunnel(){
+  var el=document.getElementById('funnel'); if(!el)return;
+  var steps=[
+    {n:'واردة',            v:184, c:DC.blue,   d:'إجمالي ما قُدّم'},
+    {n:'اجتازت قواعد القبول', v:171, c:DC.teal,   d:'13 مرفقًا لم يُقبل'},
+    {n:'بلا ملاحظة محتوى',  v:139, c:DC.purple, d:'32 عليها ملاحظة'},
+    {n:'أُنجزت مراجعتها',    v:166, c:DC.green,  d:'18 ما زالت مفتوحة'},
+    {n:'اعتُمدت',           v:126, c:DC.green,  d:'40 معادة أو مرفوضة'}
+  ];
+  var mx=steps[0].v;
+  el.innerHTML = steps.map(function(s,i){
+    var w=Math.round(s.v/mx*100);
+    var pct=Math.round(s.v/mx*100);
+    return '<div class="fn"><div class="fn-h"><span class="fn-i">'+(i+1)+'</span>'
+      + '<span class="fn-n">'+s.n+'</span><b>'+s.v+'</b>'
+      + '<span class="fn-p">'+pct+'%</span></div>'
+      + '<div class="fn-t"><div class="fn-f" style="width:'+w+'%;background:'+s.c+'"></div></div>'
+      + '<div class="fn-d">'+s.d+'</div></div>';
+  }).join('');
+}
+
+function initDash(){
+  if(!document.getElementById('trendChart')) return;
+  setGran('month');
+  drawFunnel();
+  hBars('barNotes', [
+    ['تاريخ الوثيقة منتهٍ أو يقارب الانتهاء', 142, '', DC.blue,  'سريان تاريخ الوثيقة'],
+    ['بيان مطلوب غير موجود في المستند',        98, '', DC.teal,  'اكتمال البيانات'],
+    ['الملف بصيغة غير مقبولة',                 63, '', DC.gold,  'قواعد قبول الملف'],
+    ['حجم الملف يتجاوز الحد المسموح',          41, '', DC.gold,  'قواعد قبول الملف'],
+    ['اسم الجمعية في المستند لا يطابق السجل',  28, '', DC.purple,'تدقيق المحتوى']
+  ], DC.blue);
+  hBars('barRegions', [
+    ['الرياض',  52, ' طلبًا', DC.blue,  '82% مكتملة من أول تقديم'],
+    ['مكة',     34, ' طلبًا', DC.blue,  '74% مكتملة من أول تقديم'],
+    ['القصيم',  27, ' طلبًا', DC.teal,  '79% مكتملة من أول تقديم'],
+    ['عسير',    21, ' طلبًا', DC.teal,  '68% مكتملة من أول تقديم'],
+    ['المدينة', 18, ' طلبًا', DC.purple,'71% مكتملة من أول تقديم'],
+    ['مناطق أخرى', 32, ' طلبًا', DC.purple, '—']
+  ], DC.blue);
+  hBars('barLoad', [
+    ['مراجع أ', 46, ' طلبًا', DC.green, 'متوسط 18 دقيقة'],
+    ['مراجع ب', 41, ' طلبًا', DC.green, 'متوسط 22 دقيقة'],
+    ['مراجع ج', 38, ' طلبًا', DC.gold,  'متوسط 27 دقيقة'],
+    ['مراجع د', 35, ' طلبًا', DC.gold,  'متوسط 24 دقيقة'],
+    ['مراجع هـ', 24, ' طلبًا', DC.blue, 'متوسط 19 دقيقة']
+  ], DC.green);
+  stackBars('stackEnv', ['الرياض','مكة','القصيم','عسير','المدينة'], [
+    {n:'ساري',            c:DC.green, v:[38,24,20,15,13]},
+    {n:'يقارب الانتهاء',  c:DC.gold,  v:[9, 7, 4, 4, 3]},
+    {n:'منتهٍ',           c:DC.red,   v:[5, 3, 3, 2, 2]}
+  ]);
+}
+
+// ═══ معاينة المرفق ═══
+var PCUR = {};
+function curPg(D){ return PCUR[D.id] || 1; }
+function setPg(n,id){ PCUR[id]=n; openPrev(id); }
+var SPACER = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="300" height="400"/>');
+
+// موضع الملاحظة على صفحة المستند
+var NOTEPIN = { d2: {pg:1, x:'26%', y:'20.6%', t:'حقل «صالح حتى» أعلى الخطاب'} };
+
+function pgTabs(D){
+  if(D.np<2) return '';
+  var c=curPg(D), np=NOTEPIN[D.id], t='';
+  for(var i=1;i<=D.np;i++){
+    var mark = (np && np.pg===i && hasNote(D));
+    t += '<button class="pgtab'+(c===i?' on':'')+(mark?' bad':'')+'" onclick="setPg('+i+',\''+D.id+'\')">صفحة '+i
+       + (mark?' <em>!</em>':' <em class="g">✓</em>')+'</button>';
+  }
+  return '<div class="pgtabs">'+t+'<span class="pgnote">'
+    + (hasNote(D) ? 'الملاحظة على الصفحة '+(np?np.pg:1)+' وحدها.' : 'لا ملاحظة على أي صفحة.')
+    + '</span></div>';
+}
+
+function openPrev(id){
+  var D = DOCS.filter(function(x){return x.id===id;})[0]; if(!D)return;
+  var pg = curPg(D), np = NOTEPIN[D.id], note = hasNote(D);
+  var onPin = note && np && np.pg===pg;
+  document.getElementById('pTitle').textContent = D.nm;
+  document.getElementById('pFoot').textContent = D.np>1 ? 'مستند من '+D.np+' صفحات' : 'مستند من صفحة واحدة';
+  var h = pgTabs(D);
+
+  h += '<div class="cmp"><img class="sp" src="'+SPACER+'">'
+     + '<div class="lay">'+docSVGFor(D,pg)+'</div>'
+     + (onPin ? '<div class="pin" style="right:'+np.x+';top:'+np.y+'">!</div>' : '')
+     + '<span class="lbl '+(onPin?'r':'l')+'">'+(onPin?'موضع الملاحظة':'لا ملاحظة على هذه الصفحة')+'</span>'
+     + '</div>';
+
+  if(onPin){
+    h += '<div class="pinleg"><div><em>!</em><span><b>'+CHECKS[D.note.k].n+':</b> '+D.note.t
+       + '<br>الموضع المرصود: '+np.t+' في أعلى المستند.</span></div></div>';
+    h += '<div class="exnote warn">تُبيَّن الملاحظة في موضعها من المستند، فيعرف مقدم الطلب ما يلزم '
+       + 'تعديله تحديدًا بدل رسالة عامة. وله أن يعدّل ويرفع من جديد فتزول الملاحظة، أو يقرّ بصحة '
+       + 'المستند فيُرسل الطلب موسومًا ويفصل الموظف فيها.</div>';
+  } else if(note){
+    h += '<div class="exnote info">هذه الصفحة لا ملاحظة عليها. والملاحظة على الصفحة '
+       + (np?np.pg:1)+' وحدها.</div>';
+  } else {
+    h += '<div class="exnote info">لم تُرصد على هذا المستند ملاحظة. استوفى قواعد قبول الملف '
+       + 'واكتمل تدقيق محتواه، فيُرفق بالطلب دون أي إجراء إضافي.</div>';
+  }
+  document.getElementById('pBody').innerHTML = h;
+  document.getElementById('pmodal').classList.remove('hidden');
+}
+
+function showHelp(kind, k){
+  var C = (kind==='rule') ? RULES[k] : CHECKS[k]; if(!C)return;
+  document.getElementById('hRef').textContent =
+    (kind==='rule') ? 'الطبقة الأولى · قواعد قبول الملف' : 'الطبقة الثانية · تدقيق المحتوى';
+  document.getElementById('hTitle').textContent = C.n;
+  document.getElementById('hBody').innerHTML =
+    C.h.map(function(t,i){ return '<div class="hstep"><i>'+(i+1)+'</i><span>'+t+'</span></div>'; }).join('');
+  document.getElementById('hmodal').classList.remove('hidden');
+}
+
 // ===== form =====
 function tog(){
   var on=document.getElementById('fld').value==='بيئي';
@@ -1119,31 +2426,31 @@ function chk(){
     iss.push(['شهادة الشراكة الفنية غير مرفوعة — اختيارية عند توفر سجل المشاريع','مرفق بديل']);
   }
   var tot=env?15:9, done=tot-iss.filter(function(x){return x[1].indexOf('CA01')>-1}).length;
-  var ul=document.getElementById('issues');
+  var ul=document.getElementById('issues'); if(!ul) return;
   var ok=iss.filter(function(x){return x[1].indexOf('CA01')>-1}).length===0;
   ul.innerHTML = ok
     ? '<li style="border-color:#B6DCC5;background:#F4FBF6"><div class="ni" style="background:var(--ok)">✓</div><div class="nb"><b>الطلب مكتمل وجاهز للإرسال</b><div class="nc">لا نواقص إلزامية</div></div></li>'
       + (iss.length?'<li><div class="ni" style="background:#C08A2E">i</div><div class="nb">'+iss[iss.length-1][0]+'<div class="nc">'+iss[iss.length-1][1]+'</div></div></li>':'')
     : iss.map(function(x,i){return '<li><div class="ni" style="background:'+(x[1].indexOf('CA01')>-1?'var(--bad)':'#C08A2E')+'">'+(i+1)+'</div><div class="nb">'+x[0]+'<div class="nc">'+x[1]+'</div></div></li>'}).join('');
   var pct=Math.round(done/tot*100);
-  document.getElementById('barF').style.width=pct+'%';
-  document.getElementById('barF').style.background = ok?'var(--ok)':'var(--warn)';
-  document.getElementById('pctT').textContent=done+' من '+tot+' عنصرًا';
-  document.getElementById('sub').disabled=!ok;
-  document.getElementById('sub').style.opacity=ok?1:.5;
+  var bf=document.getElementById('barF'); if(!bf) return;
+  bf.style.width=pct+'%';
+  bf.style.background = ok?'var(--ok)':'var(--warn)';
+  var pt=document.getElementById('pctT'); if(pt) pt.textContent=done+' من '+tot+' عنصرًا';
+  var sb=document.getElementById('sub'); if(sb){sb.disabled=!ok; sb.style.opacity=ok?1:.5;}
 }
 
 // ===== files table =====
 var ROWS=[
- ['ASSOC-1043','جمعية البيئة المستدامة','الرياض','حضري','02'],
- ['ASSOC-0876','جمعية الواحة الخضراء','القصيم','ريفي','02'],
- ['ASSOC-1188','جمعية نماء البيئية','عسير','حِمائي','02'],
- ['ASSOC-2077','جمعية غراس الشمال','الجوف','ريفي','01'],
- ['ASSOC-0912','جمعية رواد الاستدامة','المدينة','ساحلي','04'],
- ['ASSOC-1655','جمعية أرض الخير','تبوك','عام','05'],
- ['ASSOC-1490','جمعية بذور العطاء','حائل','حضري','03'],
- ['ASSOC-1301','جمعية عطاء الخير','الرياض','—','—'],
- ['ASSOC-1422','جمعية بناء المجتمع','جدة','—','—']
+ ['ASSOC-4471','جمعية البيئة المستدامة','الرياض','حضري','02',1],
+ ['ASSOC-0876','جمعية الواحة الخضراء','القصيم','ريفي','02',0],
+ ['ASSOC-1188','جمعية نماء البيئية','عسير','حِمائي','02',0],
+ ['ASSOC-2077','جمعية غراس الشمال','الجوف','ريفي','01',2],
+ ['ASSOC-0912','جمعية رواد الاستدامة','المدينة','ساحلي','04',0],
+ ['ASSOC-1655','جمعية أرض الخير','تبوك','عام','05',0],
+ ['ASSOC-1490','جمعية بذور العطاء','حائل','حضري','03',0],
+ ['ASSOC-1301','جمعية عطاء الخير','الرياض','—','—',0],
+ ['ASSOC-1422','جمعية بناء المجتمع','جدة','—','—',0]
 ];
 var STN={'01':'قيد المراجعة','02':'مؤهلة','03':'مرفوضة','04':'منتهية الصلاحية','05':'معلّقة إداريًا'};
 var STC={'01':'#FDF6E3;color:#A97B2B','02':'#E8F5EC;color:#2E7D52','03':'#FBEAE8;color:#C0392B','04':'#EFF2F0;color:#5F6C66','05':'#FBF0E4;color:#9E5F26'};
@@ -1157,8 +2464,13 @@ function renderFiles(){
       : '<span style="color:var(--ink2)">—</span>';
     var sys = r[4]==='—' ? '<span style="color:var(--ink2)">لم تتقدم</span>'
       : '<span class="st-badge" style="background:'+STC[r[4]]+'"><span class="ltr">ENV-Q-'+r[4]+'</span> · '+STN[r[4]]+'</span>';
-    return '<tr><td><span class="ltr">'+r[0]+'</span></td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td>'+badge+'</td>'
-      +(mode==='future'?'<td>'+sys+'</td>':'')+'</tr>';
+    var tag = r[5]>0
+      ? '<span class="tagpill"><em>!</em>'+r[5]+' مستند عليه ملاحظة</span>'
+      : (r[4]==='—' ? '<span style="color:var(--ink2)">—</span>'
+                    : '<span class="tagnone">لا وسم</span>');
+    return '<tr'+(mode==='future'&&r[5]>0?' class="rtag"':'')+'>'
+      +'<td><span class="ltr">'+r[0]+'</span></td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td>'+badge+'</td>'
+      +(mode==='future'?'<td>'+sys+'</td><td>'+tag+'</td>':'')+'</tr>';
   }).join('');
 }
 function filt(){renderFiles()}
@@ -1205,36 +2517,11 @@ function st(k){
 
 
 
-// ===== line chart =====
-(function(){
-  var el=document.getElementById('lineChart'); if(!el)return;
-  var IN=[22,26,19,31,24,29,18,15], DN=[19,24,20,27,26,28,21,16], BK=[3,5,4,8,6,7,4,3];
-  var L=['أ1','أ2','أ3','أ4','أ5','أ6','أ7','أ8'];
-  var W=640,H=210,pl=34,pr=10,pt=14,pb=30;
-  var mx=35, iw=W-pl-pr, ih=H-pt-pb;
-  function X(i){return pl+iw-(i*(iw/(L.length-1)))}
-  function Y(v){return pt+ih-(v/mx*ih)}
-  function path(a){return a.map(function(v,i){return (i?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1)}).join(' ')}
-  var g='';
-  [0,10,20,30].forEach(function(v){g+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="#EFF2F0" stroke-width="1"/><text x="'+(W-pr+4)+'" y="'+(Y(v)+4)+'" font-size="10" fill="#8A9691" text-anchor="start">'+v+'</text>'});
-  var area='M'+X(0)+' '+(pt+ih)+' '+path(IN).substring(1)+' L'+X(L.length-1)+' '+(pt+ih)+' Z';
-  var dots='';
-  IN.forEach(function(v,i){dots+='<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="3.6" fill="#fff" stroke="#14708C" stroke-width="2"/>'});
-  DN.forEach(function(v,i){dots+='<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="3" fill="#2E7D52"/>'});
-  BK.forEach(function(v,i){dots+='<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="2.6" fill="#C08A2E" opacity=".8"/>'});
-  var lab=L.map(function(t,i){return '<text x="'+X(i)+'" y="'+(H-9)+'" font-size="11" fill="#667571" text-anchor="middle">'+t+'</text>'}).join('');
-  el.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;overflow:visible">'
-    +'<defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14708C" stop-opacity=".16"/><stop offset="1" stop-color="#14708C" stop-opacity="0"/></linearGradient></defs>'
-    +g+'<path d="'+area+'" fill="url(#ag)"/>'
-    +'<path d="'+path(BK)+'" fill="none" stroke="#C08A2E" stroke-width="1.6" stroke-dasharray="4 3" stroke-linecap="round"/>'
-    +'<path d="'+path(DN)+'" fill="none" stroke="#2E7D52" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>'
-    +'<path d="'+path(IN)+'" fill="none" stroke="#14708C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>'
-    +dots+lab+'</svg>';
-})();
+
 
 
 // ===== init =====
-tog(); chk(); vview('proto'); bindCk(); vres(); st('02'); renderFiles(); setMode('future'); tStart();
+tog(); chk(); renderDocs(); vview('proto'); bindCk(); vres(); st('02'); renderFiles(); setMode('future'); tStart();
 </script>
 </body>
 </html>
